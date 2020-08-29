@@ -1,9 +1,147 @@
-/* add css module styles here (optional) */
+.searchContainer {
+  background: #fff;
+  display: flex;
+  border: 1px solid #999;
+  box-shadow: none;
+  height: 39px;
+  width: 690px;
+  border-radius: 24px;
+  z-index: 3;
+  height: 44px;
+  border: 1px solid #bbb;
+  border-color: rgba(223, 225, 229, 0);
+}
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+.topContainer .searchContainer {
+  border: 1px solid #bbb;
+  width: calc(100% - 2px);
+}
+
+.sbfc .searchContainer {
+  border: 1px solid #bbb;
+  border-color: rgba(223, 225, 229, 0);
+}
+
+.sbfc .searchIconContainer,
+.topContainer .searchIconContainer {
+   padding-right: 14px;
+   margin-left: -1px;
+}
+
+.searchIconContainer span {
+  display: none;
+}
+
+.sbfc .searchIconContainer span,
+.topContainer .searchIconContainer span {
+  display: block;
+}
+
+.topContainerExpanded .searchContainer {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.flexContainer {
+  flex: 1;
+  display: flex;
+  padding: 5px 4px 0 16px;
+  padding-left: 14px;
+}
+
+.searchIconContainer {
+  display: flex;
+  align-items: center;
+  padding-right: 6px;
+  margin-top: -7px;
+}
+
+.searchIcon {
+  color: #9aa0a6;
+  height: 20px;
+  width: 20px;
+}
+
+.inputField {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.87);
+  word-wrap: break-word;
+  outline: none;
+  display: flex;
+  flex: 100%;
+  -webkit-tap-highlight-color: transparent;
+  margin-top: -37px;
+  height: 34px;
+  font: 16px arial, sans-serif;
+  line-height: 34px;
+}
+
+.inputContainer {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.inputFieldContainer {
+  color: transparent;
+  flex: 100%;
+  white-space: pre;
+  height: 34px;
+}
+
+.inputFieldContainer span {
+  padding: 0 0 10px 0;
+}
+
+.resultContainerCollapsed {
+  display: none;
+}
+
+.resultContainer {
+  text-align: left;
+  margin-top: -2px;
+  z-index: 989;
+  cursor: default;
+  -webkit-user-select: none;
+}
+
+.resultListContainer {
+  background: #fff;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #bbb;
+  border-radius: 0 0 24px 24px;
+  padding-bottom: 4px;
+  overflow: hidden;
+  border-top: 0;
+}
+
+.resultList {
+  flex: auto;
+  padding-bottom: 16px;
+}
+
+.resultSeperator {
+  border-top: 1px solid #e8eaed;
+  margin: 0 14px;
+  padding-bottom: 4px;
+}
+
+.resultListItem {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  max-height: none;
+  padding: 0;
+}
+
+.resultItem {
+  margin: 8px;
 }

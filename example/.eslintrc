@@ -3,9 +3,6 @@
   "extends": [
     "standard",
     "standard-react",
-    // "plugin:prettier/recommended",
-    // "prettier/standard",
-    // "prettier/react",
     "plugin:@typescript-eslint/eslint-recommended"
   ],
   "env": {
@@ -34,6 +31,7 @@
     "jsx-quotes": ["error", "prefer-double"],
     "quotes": ["error", "double"],
     "semi": [2, "always"],
+    "no-unused-vars": "off",
     "operator-linebreak": ["error", "before"]
   }
 }

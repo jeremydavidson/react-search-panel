@@ -24,7 +24,7 @@
 
 .sbfc .searchIconContainer,
 .topContainer .searchIconContainer {
-   padding-right: 14px;
+   padding-right: 8px;
    margin-left: -1px;
 }
 
@@ -125,7 +125,7 @@
 
 .resultList {
   flex: auto;
-  padding-bottom: 16px;
+  padding-left: 30px;
 }
 
 .resultSeperator {
@@ -144,4 +144,10 @@
 
 .resultItem {
   margin: 8px;
+}
+
+.resultItemLabel {
+  padding-left: 8px;
+  font-family: arial, sans-serif;
+  font-size: 16px;
 }

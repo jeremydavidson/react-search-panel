@@ -10,16 +10,61 @@ interface Props {
   choices: Array<SearchPanelChoice>,
   placeholder: string,
   onChange: () => void,
+  onSelectionChange: (selectedKeys: Array<string>) => void,
   value: string,
 }
 
-export const SearchPanel = ({ choices, onChange, placeholder, value }: Props) => {
+const SearchPanel = (props: Props) => {
+  const {
+    choices,
+    onChange,
+    onSelectionChange,
+    placeholder,
+    value,
+  } = props;
   const [isFocused, setIsFocused] = React.useState(false);
+  const [selectedKeys, setSelectedKeys] = React.useState<Array<string>>([]);
+  const fieldsetId: string = "choiceGroup";
+
+  const handleCheckChanged = (event: React.ChangeEvent, selectedKey: string) => {
+    const target = event.target as HTMLInputElement;
+    const updateKeys = [...selectedKeys];
+    if (target.checked) {
+      updateKeys.push(selectedKey);
+    } else {
+      const index: number = updateKeys.indexOf(selectedKey);
+      if (index > -1) {
+        updateKeys.splice(index, 1);
+      }
+    }
+    setSelectedKeys(updateKeys);
+    onSelectionChange(updateKeys);
+  };
+
+  interface ChoiceItemProps {
+    choice: SearchPanelChoice,
+  }
+  const ChoiceItem = ({ choice }: ChoiceItemProps) => {
+    const choiceId = `choice_${choice.key}_${Math.random()}`;
+    const inputType: string = "checkbox";
+    return (
+      <div className="resultItem">
+        <input
+          id={choiceId}
+          name={fieldsetId}
+          type={inputType}
+          onChange={event => handleCheckChanged(event, choice.key)}
+          value={choice.key}
+          checked={selectedKeys.indexOf(choice.key) > -1}
+        />
+        <label htmlFor={choiceId} className="resultItemLabel">{choice.description}</label>
+      </div>
+    );
+  };
 
   return (
-    <div
+    <form
       className={`topContainer ${isFocused ? "topContainerExpanded" : ""}`}
-      onBlur={() => setIsFocused(false)}
       onClick={() => setIsFocused(true)}
     >
       <div className="searchContainer">
@@ -58,19 +103,19 @@ export const SearchPanel = ({ choices, onChange, placeholder, value }: Props) =>
         </div>
       </div>
       <div className={`resultContainer ${isFocused ? "" : "resultContainerCollapsed"}`}>
-        <div className="resultListContainer">
+        <fieldset id={fieldsetId} className="resultListContainer">
           <div className="resultSeperator" />
           <ul className="resultList" role="listbox">
             {choices.map(choice => (
               <li key={choice.key} className="resultListItem" role="presentation">
-                <div className="resultItem">
-                  <span>{choice.description}</span>
-                </div>
+                <ChoiceItem choice={choice} />
               </li>
             ))}
           </ul>
-        </div>
+        </fieldset>
       </div>
-    </div>
+    </form>
   );
 };
+
+export default SearchPanel;

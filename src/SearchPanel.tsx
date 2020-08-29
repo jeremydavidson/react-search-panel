@@ -1,52 +1,140 @@
 import * as React from "react";
 import "./styles.module.css";
 
+/**
+ * Definition of a SearchPanelChoice
+ */
 export interface SearchPanelChoice {
   key: string;
   description: string;
 }
 
+/**
+ * Definition of props for SearchPanel
+ */
 interface Props {
   choices: Array<SearchPanelChoice>,
-  placeholder: string,
-  onChange: () => void,
+  isMultiSelect?: boolean,
+  isSelectionOptional?: boolean,
+  noChoiceItem?: SearchPanelChoice,
+  onChange: (event: React.ChangeEvent) => void,
   onSelectionChange: (selectedKeys: Array<string>) => void,
+  placeholder: string,
   value: string,
 }
 
+/**
+ * SearchPanel component
+ * @param props
+ */
 const SearchPanel = (props: Props) => {
   const {
     choices,
+    isMultiSelect,
+    isSelectionOptional,
+    noChoiceItem,
     onChange,
     onSelectionChange,
     placeholder,
-    value,
+    value
   } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const [selectedKeys, setSelectedKeys] = React.useState<Array<string>>([]);
   const fieldsetId: string = "choiceGroup";
 
-  const handleCheckChanged = (event: React.ChangeEvent, selectedKey: string) => {
-    const target = event.target as HTMLInputElement;
-    const updateKeys = [...selectedKeys];
-    if (target.checked) {
-      updateKeys.push(selectedKey);
-    } else {
-      const index: number = updateKeys.indexOf(selectedKey);
-      if (index > -1) {
-        updateKeys.splice(index, 1);
-      }
+  /**
+   * Remove a selected key
+   * @param key
+   * @param updateKeys
+   */
+  const removeSelectedKey = (key: string, updateKeys: Array<string>) => {
+    const index: number = updateKeys.indexOf(key);
+    if (index > -1) {
+      updateKeys.splice(index, 1);
     }
-    setSelectedKeys(updateKeys);
-    onSelectionChange(updateKeys);
   };
 
+  /**
+   * Add a selected key, if not multi-select, remove any previous selected key.
+   * @param key
+   * @param updateKeys
+   */
+  const setSelectedKey = (key: string, updateKeys: Array<string>) => {
+    if (isMultiSelect) {
+      updateKeys.push(key);
+    }
+    else {
+      updateKeys.splice(0, updateKeys.length);
+      updateKeys.push(key);
+    }
+  };
+
+  /**
+   * Handle when an item is selected.
+   * Handle cases where item is single or multi select.
+   * @param event
+   * @param selectedKey
+   */
+  const handleCheckChanged = (event: React.ChangeEvent, selectedKey: string) => {
+    const target = event.target as HTMLInputElement;
+    let updateKeys = [...selectedKeys];
+    let isNoneSelected = false;
+
+    // Set selected key if checked, remove it otherwise.
+    if (target.checked) {
+      setSelectedKey(selectedKey, updateKeys);
+    }
+    else {
+      removeSelectedKey(selectedKey, updateKeys);
+    }
+
+    // Handle the "None" option
+    if (isSelectionOptional) {
+      // If the "None" option was selected, make it the only selected item.
+      if (noChoiceItem && selectedKey === noChoiceItem.key) {
+        if (target.checked) {
+          updateKeys = [selectedKey];
+          // Special case for "None" option, consumer should get an empty array
+          // while the "None" option is checked on screen.
+          isNoneSelected = true;
+        }
+      }
+      // If any other item was selected, uncheck the "None" item
+      else {
+        if (noChoiceItem) {
+          removeSelectedKey(noChoiceItem.key, updateKeys);
+        }
+      }
+    }
+    // Set state
+    setSelectedKeys(updateKeys);
+
+    // Notify the consumer of the currently selected keys
+    if (isNoneSelected) {
+      onSelectionChange([]);
+    }
+    else {
+      onSelectionChange(updateKeys);
+    }
+  };
+
+  /**
+   * Definition of ChoiceItem properties
+   */
   interface ChoiceItemProps {
     choice: SearchPanelChoice,
   }
+
+  /**
+   * Definition of ChoiceItem, radio or checkbox input.
+   * @param param0
+   */
   const ChoiceItem = ({ choice }: ChoiceItemProps) => {
     const choiceId = `choice_${choice.key}_${Math.random()}`;
-    const inputType: string = "checkbox";
+    let inputType: string = "radio";
+    if (isMultiSelect) {
+      inputType = "checkbox";
+    }
     return (
       <div className="resultItem">
         <input
@@ -93,11 +181,11 @@ const SearchPanel = (props: Props) => {
               autoCorrect="off"
               role="combobox"
               spellCheck="false"
-              title="Search"
-              value={value}
+              title={placeholder}
+              aria-label={placeholder}
               placeholder={placeholder}
-              aria-label="Search"
               onChange={onChange}
+              value={value}
             />
           </div>
         </div>
@@ -106,6 +194,11 @@ const SearchPanel = (props: Props) => {
         <fieldset id={fieldsetId} className="resultListContainer">
           <div className="resultSeperator" />
           <ul className="resultList" role="listbox">
+            {isSelectionOptional && noChoiceItem && (
+              <li key={noChoiceItem.key} className="resultListItem" role="presentation">
+                <ChoiceItem choice={noChoiceItem} />
+              </li>
+            )}
             {choices.map(choice => (
               <li key={choice.key} className="resultListItem" role="presentation">
                 <ChoiceItem choice={choice} />

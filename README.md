@@ -4,4 +4,4 @@ A react search panel that expands, autocompletes, and support single or multi se
 
 ## License
 
-MIT © [jeremyfdavidson](https://github.com/jeremyfdavidson)
+MIT © [jeremydavidson](https://github.com/jeremydavidson)

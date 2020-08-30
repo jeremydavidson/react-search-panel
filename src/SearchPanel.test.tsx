@@ -2,7 +2,7 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import SearchPanel, { SearchPanelChoice } from "./SearchPanel";
+import SearchPanel, { SearchPanelChoice } from ".";
 
 const mockHandleChange = jest.fn();
 const mockHandleSelectionChange = jest.fn();

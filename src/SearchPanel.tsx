@@ -44,7 +44,8 @@ const SearchPanel = (props: Props) => {
   } = props;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [selectedKeys, setSelectedKeys] = React.useState<Array<string>>([]);
-  const fieldsetId: string = "choiceGroup";
+  const fieldsetId: string = "ChoiceGroup";
+  const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
@@ -152,7 +153,7 @@ const SearchPanel = (props: Props) => {
    * Handle changing search input
    * @param event
    */
-  const handleSearchChange = async(event: React.ChangeEvent) => {
+  const handleSearchChange = async (event: React.ChangeEvent) => {
     await onChange(event);
     if (choices.length) {
       setIsExpanded(true);
@@ -177,18 +178,18 @@ const SearchPanel = (props: Props) => {
       inputType = "checkbox";
     }
     return (
-      <div
-        className={`${styles.resultItem} ${small ? "small" : ""}`}
-      >
+      <div className={`${styles.resultItem} ${small ? styles.small : ""}`}>
         <input
           id={choiceId}
           name={fieldsetId}
           type={inputType}
-          onChange={event => handleCheckChanged(event, choice.key)}
+          onChange={(event) => handleCheckChanged(event, choice.key)}
           value={choice.key}
           checked={selectedKeys.indexOf(choice.key) > -1}
         />
-        <label htmlFor={choiceId} className={styles.resultItemLabel}>{choice.description}</label>
+        <label htmlFor={choiceId} className={styles.resultItemLabel}>
+          {choice.description}
+        </label>
       </div>
     );
   };
@@ -213,18 +214,21 @@ const SearchPanel = (props: Props) => {
       onSubmit={handleSubmit}
     >
       <div
-        className={`${styles.searchContainer} ${isExpanded ? styles.searchContainerExpanded : ""} ${small ? styles.small : ""}`}
+        className={`
+            ${styles.searchContainer}
+            ${isExpanded ? styles.searchContainerExpanded : ""}
+            ${small ? styles.small : ""}
+          `}
       >
         <div className={styles.flexContainer}>
           <div className={styles.searchIconContainer}>
             <span className={styles.searchIcon}>
               <svg
-                focusable="false" xmlns="http://www.w3.org/2000/svg"
+                focusable="false"
+                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
-                <path
-                  d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-                />
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
               </svg>
             </span>
           </div>
@@ -243,6 +247,8 @@ const SearchPanel = (props: Props) => {
               spellCheck="false"
               title={placeholder}
               aria-label={placeholder}
+              aria-controls={resultContainerId}
+              aria-expanded={isExpanded}
               placeholder={placeholder}
               onChange={handleSearchChange}
               value={value}
@@ -250,17 +256,31 @@ const SearchPanel = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className={`${styles.resultContainer} ${isExpanded ? "" : styles.resultContainerCollapsed}`}>
+      <div
+        id={resultContainerId}
+        className={`
+          ${styles.resultContainer}
+          ${isExpanded ? "" : styles.resultContainerCollapsed}
+        `}
+      >
         <fieldset id={fieldsetId} className={styles.resultListContainer}>
           <div className={styles.resultSeperator} />
           <ul className={styles.resultList} role="listbox">
             {isSelectionOptional && noChoiceItem && (
-              <li key={noChoiceItem.key} className={styles.resultListItem} role="presentation">
+              <li
+                key={noChoiceItem.key}
+                className={styles.resultListItem}
+                role="presentation"
+              >
                 <ChoiceItem choice={noChoiceItem} />
               </li>
             )}
-            {choices.map(choice => (
-              <li key={choice.key} className={styles.resultListItem} role="presentation">
+            {choices.map((choice) => (
+              <li
+                key={choice.key}
+                className={styles.resultListItem}
+                role="presentation"
+              >
                 <ChoiceItem choice={choice} />
               </li>
             ))}

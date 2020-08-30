@@ -7,11 +7,7 @@ declare module "*.css" {
   export default content;
 }
 
-interface SvgrComponent extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
-
-declare module "*.svg" {
-  const svgUrl: string;
-  const svgComponent: SvgrComponent;
-  export default svgUrl;
-  export { svgComponent as ReactComponent };
+declare module "react-use-keypress" {
+  function useKeypress(keys: string | string[], callback: () => void): void;
+  export = useKeypress;
 }

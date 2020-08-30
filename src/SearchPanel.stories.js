@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import SearchPanel from "./SearchPanel";
+import { ExampleComponent } from "./test";
 
 export default {
   title: "SearchPanel",
+};
+
+const styles = {
+  constrained: {
+    width: "300px",
+  }
 };
 
 export const Default = () => {
@@ -13,6 +20,20 @@ export const Default = () => {
       choices={[]}
       placeholder="Mock search"
       onChange={event => setInput(event.target.value)}
+      value={input}
+    />
+  );
+};
+
+export const SizeSmall = () => {
+  const [input, setInput] = useState("");
+
+  return (
+    <SearchPanel
+      choices={[]}
+      placeholder="Mock search"
+      onChange={event => setInput(event.target.value)}
+      small
       value={input}
     />
   );
@@ -64,5 +85,53 @@ export const WithMultiSelect = () => {
       placeholder="Mock search"
       value={input}
     />
+  );
+};
+
+export const SmallWithMultiSelect = () => {
+  const [input, setInput] = useState("");
+  const handleSelectionChange = (selectedKeys) => {
+    console.log("handleSelectionChange: " + selectedKeys);
+  };
+  return (
+    <SearchPanel
+      choices={mockChoices}
+      isMultiSelect
+      isSelectionOptional
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={handleSelectionChange}
+      noChoiceItem={noChoiceItem}
+      placeholder="Mock search"
+      small
+      value={input}
+    />
+  );
+};
+
+export const SmallConstrained = () => {
+  const [input, setInput] = useState("");
+  const handleSelectionChange = (selectedKeys) => {
+    console.log("handleSelectionChange: " + selectedKeys);
+  };
+  return (
+    <div style={styles.constrained}>
+      <SearchPanel
+        choices={mockChoices}
+        isMultiSelect
+        isSelectionOptional
+        onChange={event => setInput(event.target.value)}
+        onSelectionChange={handleSelectionChange}
+        noChoiceItem={noChoiceItem}
+        placeholder="Mock search"
+        small
+        value={input}
+      />
+    </div>
+  );
+};
+
+export const Test = () => {
+  return (
+    <ExampleComponent text="Create React Library Example 😄" />
   );
 };

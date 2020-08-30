@@ -1,45 +1,35 @@
+.topContainer {
+  font: 16px arial, sans-serif;
+  color: #444;
+  fill: #999;
+}
+.topContainer.small {
+  font: 14px arial, sans-serif;
+}
+
 .searchContainer {
   background: #fff;
   display: flex;
-  border: 1px solid #999;
   box-shadow: none;
   height: 39px;
-  width: 690px;
   border-radius: 24px;
   z-index: 3;
   height: 44px;
   border: 1px solid #bbb;
-  border-color: rgba(223, 225, 229, 0);
+  /* width: calc(100% - 2px); */
+}
+.searchContainer.small {
+  border-radius: 16px;
+  height: 30px;
 }
 
-.topContainer .searchContainer {
-  border: 1px solid #bbb;
-  width: calc(100% - 2px);
+.searchContainerExpanded {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
-.sbfc .searchContainer {
-  border: 1px solid #bbb;
-  border-color: rgba(223, 225, 229, 0);
-}
-
-.sbfc .searchIconContainer,
-.topContainer .searchIconContainer {
-   padding-right: 8px;
-   margin-left: -1px;
-}
-
-.searchIconContainer span {
-  display: none;
-}
-
-.sbfc .searchIconContainer span,
-.topContainer .searchIconContainer span {
-  display: block;
-}
-
-.topContainerExpanded .searchContainer {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+.searchIconContainer {
+  padding-right: 8px;
 }
 
 .flexContainer {
@@ -52,7 +42,7 @@
 .searchIconContainer {
   display: flex;
   align-items: center;
-  padding-right: 6px;
+  padding-right: 7px;
   margin-top: -7px;
 }
 
@@ -63,11 +53,12 @@
 }
 
 .inputField {
+  color: #444;
+  font: 16px arial, sans-serif;
   background-color: transparent;
   border: none;
   margin: 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.87);
   word-wrap: break-word;
   outline: none;
   display: flex;
@@ -75,8 +66,14 @@
   -webkit-tap-highlight-color: transparent;
   margin-top: -37px;
   height: 34px;
-  font: 16px arial, sans-serif;
   line-height: 34px;
+}
+
+.inputField.small {
+  font: 14px arial, sans-serif;
+  margin-top: -41px;
+  /* height: 34px;
+  line-height: 34px; */
 }
 
 .inputContainer {
@@ -93,7 +90,7 @@
 }
 
 .inputFieldContainer span {
-  padding: 0 0 10px 0;
+  padding: 0;
 }
 
 .resultContainerCollapsed {
@@ -117,15 +114,15 @@
   margin: 0;
   padding: 0;
   border: 1px solid #bbb;
-  border-radius: 0 0 24px 24px;
-  padding-bottom: 4px;
+  border-radius: 0 0 16px 16px;
   overflow: hidden;
   border-top: 0;
 }
 
 .resultList {
   flex: auto;
-  padding-left: 30px;
+  padding-left: 7px;
+  margin-top: 4px;
 }
 
 .resultSeperator {
@@ -146,8 +143,10 @@
   margin: 8px;
 }
 
+.resultItem.small {
+  margin: 5px;
+}
+
 .resultItemLabel {
   padding-left: 8px;
-  font-family: arial, sans-serif;
-  font-size: 16px;
 }

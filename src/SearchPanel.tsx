@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./styles.module.css";
+import styles from "./styles.module.css";
 import useOnclickOutside from "react-cool-onclickoutside";
 import useKeypress from "react-use-keypress";
 
@@ -21,6 +21,7 @@ interface Props {
   noChoiceItem?: SearchPanelChoice,
   onChange: (event: React.ChangeEvent) => void,
   onSelectionChange: (selectedKeys: Array<string>) => void,
+  small?: boolean,
   placeholder: string,
   value: string,
 }
@@ -38,6 +39,7 @@ const SearchPanel = (props: Props) => {
     onChange,
     onSelectionChange,
     placeholder,
+    small,
     value
   } = props;
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -175,7 +177,9 @@ const SearchPanel = (props: Props) => {
       inputType = "checkbox";
     }
     return (
-      <div className="resultItem">
+      <div
+        className={`${styles.resultItem} ${small ? "small" : ""}`}
+      >
         <input
           id={choiceId}
           name={fieldsetId}
@@ -184,7 +188,7 @@ const SearchPanel = (props: Props) => {
           value={choice.key}
           checked={selectedKeys.indexOf(choice.key) > -1}
         />
-        <label htmlFor={choiceId} className="resultItemLabel">{choice.description}</label>
+        <label htmlFor={choiceId} className={styles.resultItemLabel}>{choice.description}</label>
       </div>
     );
   };
@@ -203,15 +207,17 @@ const SearchPanel = (props: Props) => {
 
   return (
     <form
+      className={`${styles.topContainer} ${small ? styles.small : ""}`}
       ref={clickOutsideRef}
-      className={`topContainer ${isExpanded ? "topContainerExpanded" : ""}`}
       onFocus={handleOnFocus}
       onSubmit={handleSubmit}
     >
-      <div className="searchContainer">
-        <div className="flexContainer">
-          <div className="searchIconContainer">
-            <span className="searchIcon">
+      <div
+        className={`${styles.searchContainer} ${isExpanded ? styles.searchContainerExpanded : ""} ${small ? styles.small : ""}`}
+      >
+        <div className={styles.flexContainer}>
+          <div className={styles.searchIconContainer}>
+            <span className={styles.searchIcon}>
               <svg
                 focusable="false" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -222,11 +228,11 @@ const SearchPanel = (props: Props) => {
               </svg>
             </span>
           </div>
-          <div className="inputContainer">
-            <div className="inputFieldContainer" />
+          <div className={styles.inputContainer}>
+            <div className={styles.inputFieldContainer} />
             <input
               ref={searchField}
-              className="inputField"
+              className={`${styles.inputField} ${small ? styles.small : ""}`}
               type="text"
               aria-autocomplete="both"
               aria-haspopup="false"
@@ -244,17 +250,17 @@ const SearchPanel = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className={`resultContainer ${isExpanded ? "" : "resultContainerCollapsed"}`}>
-        <fieldset id={fieldsetId} className="resultListContainer">
-          <div className="resultSeperator" />
-          <ul className="resultList" role="listbox">
+      <div className={`${styles.resultContainer} ${isExpanded ? "" : styles.resultContainerCollapsed}`}>
+        <fieldset id={fieldsetId} className={styles.resultListContainer}>
+          <div className={styles.resultSeperator} />
+          <ul className={styles.resultList} role="listbox">
             {isSelectionOptional && noChoiceItem && (
-              <li key={noChoiceItem.key} className="resultListItem" role="presentation">
+              <li key={noChoiceItem.key} className={styles.resultListItem} role="presentation">
                 <ChoiceItem choice={noChoiceItem} />
               </li>
             )}
             {choices.map(choice => (
-              <li key={choice.key} className="resultListItem" role="presentation">
+              <li key={choice.key} className={styles.resultListItem} role="presentation">
                 <ChoiceItem choice={choice} />
               </li>
             ))}

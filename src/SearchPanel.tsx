@@ -1,5 +1,7 @@
 import * as React from "react";
 import "./styles.module.css";
+import useOnclickOutside from "react-cool-onclickoutside";
+import useKeypress from "react-use-keypress";
 
 /**
  * Definition of a SearchPanelChoice
@@ -38,9 +40,35 @@ const SearchPanel = (props: Props) => {
     placeholder,
     value
   } = props;
-  const [isFocused, setIsFocused] = React.useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const [selectedKeys, setSelectedKeys] = React.useState<Array<string>>([]);
   const fieldsetId: string = "choiceGroup";
+  const searchField = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    if (choices.length > 0) {
+      setIsExpanded(true);
+    }
+  }, [choices]);
+
+  /**
+   * Handle event when user presses outside this component.
+   */
+  const handlePressOutside = () => {
+    if (searchField.current) {
+      searchField.current.blur();
+    }
+    setIsExpanded(false);
+  };
+
+  /**
+   * Handle event when component receives focus.
+   */
+  const handleOnFocus = () => {
+    if (choices.length) {
+      setIsExpanded(true);
+    }
+  };
 
   /**
    * Remove a selected key
@@ -119,6 +147,17 @@ const SearchPanel = (props: Props) => {
   };
 
   /**
+   * Handle changing search input
+   * @param event
+   */
+  const handleSearchChange = async(event: React.ChangeEvent) => {
+    await onChange(event);
+    if (choices.length) {
+      setIsExpanded(true);
+    }
+  };
+
+  /**
    * Definition of ChoiceItem properties
    */
   interface ChoiceItemProps {
@@ -150,10 +189,24 @@ const SearchPanel = (props: Props) => {
     );
   };
 
+  /**
+   * Handle event when form it submitted.
+   * @param event
+   */
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleOnFocus();
+  };
+
+  const clickOutsideRef = useOnclickOutside(handlePressOutside);
+  useKeypress("Escape", handlePressOutside);
+
   return (
     <form
-      className={`topContainer ${isFocused ? "topContainerExpanded" : ""}`}
-      onClick={() => setIsFocused(true)}
+      ref={clickOutsideRef}
+      className={`topContainer ${isExpanded ? "topContainerExpanded" : ""}`}
+      onFocus={handleOnFocus}
+      onSubmit={handleSubmit}
     >
       <div className="searchContainer">
         <div className="flexContainer">
@@ -172,6 +225,7 @@ const SearchPanel = (props: Props) => {
           <div className="inputContainer">
             <div className="inputFieldContainer" />
             <input
+              ref={searchField}
               className="inputField"
               type="text"
               aria-autocomplete="both"
@@ -184,13 +238,13 @@ const SearchPanel = (props: Props) => {
               title={placeholder}
               aria-label={placeholder}
               placeholder={placeholder}
-              onChange={onChange}
+              onChange={handleSearchChange}
               value={value}
             />
           </div>
         </div>
       </div>
-      <div className={`resultContainer ${isFocused ? "" : "resultContainerCollapsed"}`}>
+      <div className={`resultContainer ${isExpanded ? "" : "resultContainerCollapsed"}`}>
         <fieldset id={fieldsetId} className="resultListContainer">
           <div className="resultSeperator" />
           <ul className="resultList" role="listbox">

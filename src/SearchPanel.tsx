@@ -21,6 +21,7 @@ interface Props {
   noChoiceItem?: SearchPanelChoice,
   onChange: (event: React.ChangeEvent) => void,
   onSelectionChange: (selectedKeys: Array<string>) => void,
+  shadow?: boolean,
   small?: boolean,
   placeholder: string,
   value: string,
@@ -39,8 +40,9 @@ const SearchPanel = (props: Props) => {
     onChange,
     onSelectionChange,
     placeholder,
+    shadow,
     small,
-    value
+    value,
   } = props;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [selectedKeys, setSelectedKeys] = React.useState<Array<string>>([]);
@@ -208,7 +210,10 @@ const SearchPanel = (props: Props) => {
 
   return (
     <form
-      className={`${styles.topContainer} ${small ? styles.small : ""}`}
+      className={`
+        ${styles.topContainer}
+        ${small ? styles.small : ""}
+      `}
       ref={clickOutsideRef}
       onFocus={handleOnFocus}
       onSubmit={handleSubmit}
@@ -217,7 +222,9 @@ const SearchPanel = (props: Props) => {
         className={`
             ${styles.searchContainer}
             ${isExpanded ? styles.searchContainerExpanded : ""}
+            ${isExpanded ? styles.searchContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
+            ${shadow ? styles.searchContainerShadow : ""}
           `}
       >
         <div className={styles.flexContainer}>
@@ -263,7 +270,15 @@ const SearchPanel = (props: Props) => {
           ${isExpanded ? "" : styles.resultContainerCollapsed}
         `}
       >
-        <fieldset id={fieldsetId} className={styles.resultListContainer}>
+        <fieldset
+          id={fieldsetId}
+          className={`
+            ${styles.resultListContainer}
+            ${isExpanded ? styles.resultListContainerExpanded : ""}
+            ${isExpanded ? styles.resultListContainerExpandedShadow : ""}
+            ${small ? styles.small : ""}
+          `}
+        >
           <div className={styles.resultSeperator} />
           <ul className={styles.resultList} role="listbox">
             {isSelectionOptional && noChoiceItem && (

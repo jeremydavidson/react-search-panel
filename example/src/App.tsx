@@ -4,9 +4,12 @@ import SearchPanel from "react-search-panel";
 import "react-search-panel/dist/index.css";
 
 const styles = {
+  container: {
+    padding: "40px",
+  },
   constrained: {
-    margin: "100px auto",
-    width: "300px",
+    // margin: "auto",
+    // width: "400px",
   }
 };
 
@@ -29,17 +32,46 @@ const App = () => {
   };
 
   return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        choices={mockChoices}
-        isMultiSelect
-        isSelectionOptional
-        onChange={handleSearchChange}
-        onSelectionChange={handleSelectionChange}
-        noChoiceItem={noChoiceItem}
-        placeholder="Mock search"
-        value={input}
-      />
+    <div style={styles.container}>
+      <div style={styles.constrained}>
+        <SearchPanel
+          choices={mockChoices}
+          isMultiSelect
+          isSelectionOptional
+          onChange={handleSearchChange}
+          onSelectionChange={handleSelectionChange}
+          noChoiceItem={noChoiceItem}
+          placeholder="Mock search"
+          shadow
+          value={input}
+          // width={searchWidth}
+        />
+      </div>
+      <p>
+        Here is some content underneath. Here is some content underneath. Here is some content underneath.
+        Here is some content underneath. Here is some content underneath. <br />
+        Here is some content underneath. Here is some content underneath. <br />
+      </p>
+      <p>
+        Here is some content underneath. Here is some content underneath. Here is some content underneath.
+        Here is some content underneath. Here is some content underneath. <br />
+        Here is some content underneath. Here is some content underneath. <br />
+      </p>
+      <p>
+        Here is some content underneath. Here is some content underneath. Here is some content underneath.
+        Here is some content underneath. Here is some content underneath. <br />
+        Here is some content underneath. Here is some content underneath. <br />
+      </p>
+      <p>
+        Here is some content underneath. Here is some content underneath. Here is some content underneath.
+        Here is some content underneath. Here is some content underneath. <br />
+        Here is some content underneath. Here is some content underneath. <br />
+      </p>
+      <p>
+        Here is some content underneath. Here is some content underneath. Here is some content underneath.
+        Here is some content underneath. Here is some content underneath. <br />
+        Here is some content underneath. Here is some content underneath. <br />
+      </p>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 {
   "name": "react-search-panel",
   "version": "1.0.0",
-  "description": "An expandable search panel",
+  "description": "An expandable search panel React component.",
   "author": "jeremyfdavidson",
   "license": "MIT",
   "repository": "jeremyfdavidson/react-search-panel",
@@ -15,11 +15,11 @@
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
-    "test": "run-s test:unit test:lint test:build",
+    "test": "jest",
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test:watch": "jest --watchAll",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build",
     "storybook": "start-storybook -p 6006",
@@ -33,6 +33,7 @@
     "@storybook/addon-actions": "^6.0.20",
     "@storybook/addon-essentials": "^6.0.20",
     "@storybook/addon-links": "^6.0.20",
+    "@storybook/preset-create-react-app": "^3.1.4",
     "@storybook/react": "^6.0.20",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^10.4.9",
@@ -68,6 +69,5 @@
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {}
+  ]
 }

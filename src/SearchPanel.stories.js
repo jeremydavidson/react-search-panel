@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import SearchPanel from "./SearchPanel";
-import { ExampleComponent } from "./test";
 
 export default {
   title: "SearchPanel",
@@ -127,11 +126,5 @@ export const SmallConstrained = () => {
         value={input}
       />
     </div>
-  );
-};
-
-export const Test = () => {
-  return (
-    <ExampleComponent text="Create React Library Example 😄" />
   );
 };

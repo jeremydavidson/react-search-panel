@@ -17,6 +17,7 @@
   border: 1px solid #ccc;
   /* width: calc(100% - 2px); */
 }
+
 .styles_searchContainer__2gCMe.styles_small__3T3I_ {
   border-radius: 16px;
   height: 30px;
@@ -95,14 +96,10 @@
   padding: 0;
 }
 
-.styles_resultContainerCollapsed__2QdM0 {
-  display: none;
-}
-
 .styles_resultContainer__3FRt- {
   text-align: left;
   margin-top: -2px;
-  z-index: 989;
+  z-index: 900;
   cursor: default;
   -webkit-user-select: none;
 }
@@ -163,4 +160,4 @@
 }
 
 
-/*# sourceMappingURL=main.dc3affc5.chunk.css.map*/
+/*# sourceMappingURL=main.a0cc9204.chunk.css.map*/

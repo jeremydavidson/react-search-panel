@@ -4,13 +4,13 @@ A react search panel that expands, autocompletes, and support single or multi se
 
 ## Demo
 
-There is a [demonstration of react-search-panel](demo/index.html) as coded in the `example` folder.
+There is a [demonstration of react-search-panel](https://jeremydavidson.github.io/react-search-panel/demo) as coded in the `example` folder.
 
-Many other variants of this component are demonstrated in this [Storybook demonstration](storybook/index.html).
+Many other variants of this component are demonstrated in this [Storybook demonstration](https://jeremydavidson.github.io/react-search-panel/storybook).
 
 ## Documentation
 
-Here is [documentation of the component API](doc/index.html).
+Here is [documentation of the component API](https://jeremydavidson.github.io/react-search-panel/doc).
 
 ## Usage
 
@@ -30,8 +30,8 @@ Here is [documentation of the component API](doc/index.html).
           choices={choices}
           isMultiSelect
           isSelectionOptional
-          onChange={handleSearchChange}
-          onSelectionChange={handleSelectionChange}
+          onChange={event => setInput((event as React.ChangeEvent<HTMLInputElement>).target.value)}
+          onSelectionChange={selected => setSelectedKeys(selected)}
           noChoiceItem={noChoiceItem}
           placeholder="Search"
           shadow

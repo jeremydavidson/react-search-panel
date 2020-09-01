@@ -16,6 +16,8 @@ Here is [documentation of the component API](https://jeremydavidson.github.io/re
 
 ### Typescript example
 
+This is an example in Typescript with all available props:
+
 ```typescript
     import React from "react";
     import SearchPanel from "react-search-panel";
@@ -40,6 +42,31 @@ Here is [documentation of the component API](https://jeremydavidson.github.io/re
         />
       );
     }
+    export default App;
+```
+
+### Javascript
+
+This is an example in Javascript with only the required props.
+
+```javascript
+    import React from "react";
+    import SearchPanel from "react-search-panel";
+    import "react-search-panel/dist/index.css";
+
+    const App = () => {
+      const [input, setInput] = React.useState("");
+
+      return (
+        <SearchPanel
+          choices={choices}
+          onChange={event => setInput(event.target.value)}
+          placeholder="Search"
+          value={input}
+        />
+      );
+    }
+    export default App;
 ```
 
 ## Scripts

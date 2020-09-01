@@ -32,4 +32,4 @@ jobs:
       env:
         TEST_SUCCESS: true
     - run: npm deploy
-      if: ${{ TEST_SUCCESS }}
+      if: ${TEST_SUCCESS}

@@ -14,9 +14,22 @@ export interface SearchPanelChoice {
 /**
  * Definition of props for SearchPanel
  */
-interface Props {
+interface SearchPanelProps {
+
+  /**
+   * An array of choices to be displayed
+   */
   choices: Array<SearchPanelChoice>,
+
+  /**
+   * By default choices are selected as radio buttons,
+   * with isMultiSelect={true} they are displayed as checkboxes.
+   */
   isMultiSelect?: boolean,
+
+  /**
+   * Display a "None" option so you can deselect any previously selected choice(s).
+   */
   isSelectionOptional?: boolean,
   noChoiceItem?: SearchPanelChoice,
   onChange: (event: React.ChangeEvent) => void,
@@ -31,7 +44,7 @@ interface Props {
  * SearchPanel component
  * @param props
  */
-const SearchPanel = (props: Props) => {
+const SearchPanel = (props: SearchPanelProps) => {
   const {
     choices,
     isMultiSelect,
@@ -50,12 +63,6 @@ const SearchPanel = (props: Props) => {
   const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
-    if (choices.length > 0) {
-      setIsExpanded(true);
-    }
-  }, [choices]);
-
   /**
    * Handle event when user presses outside this component.
    */
@@ -73,6 +80,25 @@ const SearchPanel = (props: Props) => {
     if (choices.length) {
       setIsExpanded(true);
     }
+  };
+
+  /**
+   * Handle component blur event to find if the newly focused element
+   * is within the component or not. If not, collapse the search bar.
+   * @param event
+   */
+  // const handleOnBlur = (event: React.FormEvent) => {
+  const handleOnBlur = () => {
+    // const currentTarget = event.currentTarget;
+
+    // // Check the newly focused element in the next tick of the event loop
+    // setTimeout(() => {
+    //   // Check if the new activeElement is a child of the original container
+    //   if (!currentTarget.contains(document.activeElement)) {
+    //     // You can invoke a callback or add custom logic here
+    //     setIsExpanded(false);
+    //   }
+    // }, 0);
   };
 
   /**
@@ -184,6 +210,7 @@ const SearchPanel = (props: Props) => {
         <input
           id={choiceId}
           name={fieldsetId}
+          tabIndex={0}
           type={inputType}
           onChange={(event) => handleCheckChanged(event, choice.key)}
           value={choice.key}
@@ -216,13 +243,14 @@ const SearchPanel = (props: Props) => {
       `}
       ref={clickOutsideRef}
       onFocus={handleOnFocus}
+      onBlur={handleOnBlur}
       onSubmit={handleSubmit}
     >
       <div
         className={`
             ${styles.searchContainer}
             ${isExpanded ? styles.searchContainerExpanded : ""}
-            ${isExpanded ? styles.searchContainerExpandedShadow : ""}
+            ${isExpanded && shadow ? styles.searchContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
             ${shadow ? styles.searchContainerShadow : ""}
           `}
@@ -263,45 +291,43 @@ const SearchPanel = (props: Props) => {
           </div>
         </div>
       </div>
-      <div
-        id={resultContainerId}
-        className={`
-          ${styles.resultContainer}
-          ${isExpanded ? "" : styles.resultContainerCollapsed}
-        `}
-      >
-        <fieldset
-          id={fieldsetId}
-          className={`
+      {isExpanded && (
+        <div
+          id={resultContainerId}
+          className={styles.resultContainer}
+        >
+          <fieldset
+            id={fieldsetId}
+            className={`
             ${styles.resultListContainer}
-            ${isExpanded ? styles.resultListContainerExpanded : ""}
-            ${isExpanded ? styles.resultListContainerExpandedShadow : ""}
+            ${shadow ? styles.resultListContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
           `}
-        >
-          <div className={styles.resultSeperator} />
-          <ul className={styles.resultList} role="listbox">
-            {isSelectionOptional && noChoiceItem && (
-              <li
-                key={noChoiceItem.key}
-                className={styles.resultListItem}
-                role="presentation"
-              >
-                <ChoiceItem choice={noChoiceItem} />
-              </li>
-            )}
-            {choices.map((choice) => (
-              <li
-                key={choice.key}
-                className={styles.resultListItem}
-                role="presentation"
-              >
-                <ChoiceItem choice={choice} />
-              </li>
-            ))}
-          </ul>
-        </fieldset>
-      </div>
+          >
+            <div className={styles.resultSeperator} />
+            <ul className={styles.resultList} role="listbox">
+              {isSelectionOptional && noChoiceItem && (
+                <li
+                  key={noChoiceItem.key}
+                  className={styles.resultListItem}
+                  role="presentation"
+                >
+                  <ChoiceItem choice={noChoiceItem} />
+                </li>
+              )}
+              {choices.map((choice) => (
+                <li
+                  key={choice.key}
+                  className={styles.resultListItem}
+                  role="presentation"
+                >
+                  <ChoiceItem choice={choice} />
+                </li>
+              ))}
+            </ul>
+          </fieldset>
+        </div>
+      )}
     </form>
   );
 };

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SearchPanel, { SearchPanelChoice } from ".";
 
@@ -22,27 +22,21 @@ describe("SearchPanel", () => {
         choices={[]}
         onChange={mockHandleChange}
         onSelectionChange={mockHandleSelectionChange}
-        placeholder="Search mock items"
+        placeholder="Search"
         value="mock default"
       />
     );
   });
 
   it("should have a search box with placeholder text", async() => {
-    const component = await screen.findByPlaceholderText("Search mock items");
+    const component = await screen.findByPlaceholderText("Search");
     expect(component).toBeInTheDocument();
   });
 
   it("should call change handler when it changes", async() => {
-    const component = await screen.findByPlaceholderText("Search mock items");
+    const component = await screen.findByPlaceholderText("Search");
     await fireEvent.change(component, { target: { value: "new value" } });
     expect(mockHandleChange).toHaveBeenCalled();
-    // await screen.findByText("new value");
-  });
-
-  it("should display zero choices at first", async() => {
-    const choices = await screen.queryAllByText("Mock choice 1");
-    expect(choices.length).toBe(0);
   });
 });
 
@@ -56,35 +50,60 @@ describe("SearchPanel with choices", () => {
         noChoiceItem={noChoiceItem}
         onChange={mockHandleChange}
         onSelectionChange={mockHandleSelectionChange}
-        placeholder="Search mock items"
+        placeholder="Search"
         value="mock default"
       />
     );
   });
 
+  it("should have choices hidden by default", async() => {
+    const choices = await screen.queryAllByText("Mock choice 1");
+    expect(choices.length).toBe(0);
+  });
+
   it("should display a choice to select None", async() => {
-    const component = await screen.findByText("Mock None");
-    expect(component).toBeInTheDocument();
+    (await screen.findByPlaceholderText("Search")).focus();
+    screen.findByText("Mock None");
   });
 
   it("should display choices", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
     const component = await screen.findByText("Mock choice 1");
     expect(component).toBeInTheDocument();
   });
 
   it("should select an item when it is clicked", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
     const choice = await screen.findByText("Mock choice 1");
     await fireEvent.click(choice);
     expect(mockHandleSelectionChange).toHaveBeenCalledWith(["choice1"]);
   });
 
   it("should select a second item", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
     const choice1 = await screen.findByText("Mock choice 1");
     await fireEvent.click(choice1);
     const choice2 = await screen.findByText("Mock another choice");
     await fireEvent.click(choice2);
     const secondCall = await mockHandleSelectionChange.mock.calls[1];
     expect(secondCall[0]).toEqual(["choice2"]);
+  });
+
+  it("should hide choices when escape key is pressed", async() => {
+    const search = await screen.findByPlaceholderText("Search");
+
+    // Verify choices are hidden by default
+    const choicees = screen.queryAllByText("Mock choice 1");
+    expect(choicees.length).toBe(0);
+
+    // Verify choices are displayed when focus is received
+    search.focus();
+    screen.findByText("Mock choice 1");
+
+    // Verify choices are hidden again when focus leaves
+    fireEvent.keyDown(search, { key: "Escape", code: "Escape" });
+    const choicesAfter = screen.queryAllByText("Mock choice 1");
+    expect(choicesAfter.length).toBe(0);
   });
 });
 
@@ -99,13 +118,14 @@ describe("SearchPanel with multiple choice", () => {
         noChoiceItem={noChoiceItem}
         onChange={mockHandleChange}
         onSelectionChange={mockHandleSelectionChange}
-        placeholder="Search mock items"
+        placeholder="Search"
         value="mock default"
       />
     );
   });
 
   it("should select both items", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
     const choice1 = await screen.findByText("Mock choice 1");
     await fireEvent.click(choice1);
     const choice2 = await screen.findByText("Mock another choice");
@@ -115,6 +135,7 @@ describe("SearchPanel with multiple choice", () => {
   });
 
   it("should de-select all items", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
     // First select two checkboxes
     const choice1 = await screen.findByText("Mock choice 1");
     await fireEvent.click(choice1);

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import SearchPanel, { SearchPanelChoice } from ".";
 

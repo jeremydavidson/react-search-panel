@@ -37,7 +37,7 @@ interface Show {
  * Definition of a Result from tvmaze API
  * @interface Result
  */
- interface Result {
+export interface Result {
   score: number;
   show: Show;
 }
@@ -49,28 +49,6 @@ interface Show {
 const App = () => {
   const [input, setInput] = React.useState("");
   const [choices, setChoices] = React.useState<Array<SearchPanelChoice>>([]);
-
-  /**
-   * Search the API
-   */
-  const search = async () => {
-    console.log("Search: " + input);
-    const resultChoices: Array<SearchPanelChoice> = [];
-
-    // Only perform a search if end user has typed a minimum number of characters
-    if (input.length >= MIN_INPUT) {
-      const url = `${baseUrl}${input}`;
-      const response = await axios(url);
-      const results = await response.data;
-
-      // Transform results to choices.
-      results.forEach((result: Result) => {
-        const choice = { key: result.show.id, description: result.show.name };
-        resultChoices.push(choice);
-      });
-    }
-    setChoices(resultChoices);
-  };
 
   /**
    * Handle change in search input.
@@ -85,6 +63,24 @@ const App = () => {
    * Perform a search when input changes.
    */
   useEffect(() => {
+    const search = async () => {
+      console.log("Search: " + input);
+      const resultChoices: Array<SearchPanelChoice> = [];
+
+      // Only perform a search if end user has typed a minimum number of characters
+      if (input.length >= MIN_INPUT) {
+        const url = `${baseUrl}${input}`;
+        const response = await axios(url);
+        const results = await response.data;
+
+        // Transform results to choices.
+        results.forEach((result: Result) => {
+          const choice = { key: result.show.id, description: result.show.name };
+          resultChoices.push(choice);
+        });
+      }
+      setChoices(resultChoices);
+    };
     search();
   }, [input]);
 

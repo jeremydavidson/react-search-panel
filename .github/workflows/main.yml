@@ -29,7 +29,5 @@ jobs:
     - run: npm install
     - run: npm run build --if-present
     - run: npm test
-      env:
-        TEST_SUCCESS: true
     - run: npm deploy
-      if: ${TEST_SUCCESS}
+      if: ${{ success() }}

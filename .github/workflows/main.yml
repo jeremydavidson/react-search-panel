@@ -30,5 +30,6 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
       env:
-        CI: true
+        TEST_SUCCESS: true
     - run: npm deploy
+      if: ${{ TEST_SUCCESS }}

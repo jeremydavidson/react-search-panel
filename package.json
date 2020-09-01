@@ -21,7 +21,7 @@
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "jest --watchAll",
-    "predeploy": "rm -r docs && mkdir docs && cp typedoc.md docs && cp README.md docs && npm run doc && npm run build-storybook && cd example && npm run build",
+    "predeploy": "mkdir docs && cp typedoc.md docs && cp README.md docs && npm run doc && npm run build-storybook && cd example && npm run build",
     "deploy": "gh-pages -d docs -t true",
     "build-storybook": "build-storybook -o docs/storybook",
     "storybook": "start-storybook -p 6006"

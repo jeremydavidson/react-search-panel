@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import styles from "./styles.module.css";
 import useOnclickOutside from "react-cool-onclickoutside";
 import useKeypress from "react-use-keypress";
@@ -33,7 +33,7 @@ interface SearchPanelProps {
   isSelectionOptional?: boolean,
   noChoiceItem?: SearchPanelChoice,
   onChange: (event: React.ChangeEvent) => void,
-  onSelectionChange: (selectedKeys: Array<string>) => void,
+  onSelectionChange?: (selectedKeys: Array<string>) => void,
   shadow?: boolean,
   small?: boolean,
   placeholder: string,
@@ -169,11 +169,13 @@ const SearchPanel = (props: SearchPanelProps) => {
     setSelectedKeys(updateKeys);
 
     // Notify the consumer of the currently selected keys
-    if (isNoneSelected) {
-      onSelectionChange([]);
-    }
-    else {
-      onSelectionChange(updateKeys);
+    if (onSelectionChange) {
+      if (isNoneSelected) {
+        onSelectionChange([]);
+      }
+      else {
+        onSelectionChange(updateKeys);
+      }
     }
   };
 
@@ -224,13 +226,11 @@ const SearchPanel = (props: SearchPanelProps) => {
   };
 
   /**
-   * Handle event when form it submitted.
-   * @param event
+   * When choices change, clear out previously selected keys
    */
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    handleOnFocus();
-  };
+  useEffect(() => {
+    setSelectedKeys([]);
+  }, [choices]);
 
   const clickOutsideRef = useOnclickOutside(handlePressOutside);
   useKeypress("Escape", handlePressOutside);
@@ -244,7 +244,6 @@ const SearchPanel = (props: SearchPanelProps) => {
       ref={clickOutsideRef}
       onFocus={handleOnFocus}
       onBlur={handleOnBlur}
-      onSubmit={handleSubmit}
     >
       <div
         className={`

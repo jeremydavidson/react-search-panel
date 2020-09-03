@@ -46,9 +46,9 @@ This is an example in Typescript with all available props:
 
 ### Javascript
 
-```jsx
 This is an example in Javascript with only the required props.
 
+```jsx
     import React from "react";
     import SearchPanel from "react-search-panel";
     import "react-search-panel/dist/index.css";

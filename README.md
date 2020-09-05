@@ -12,6 +12,19 @@ Many other variants of this component are demonstrated in this [Storybook demons
 
 Here is [documentation of the component API](https://jeremydavidson.github.io/react-search-panel/doc).
 
+## Getting started
+
+### For development
+
+1. `npm install --save-dev react-search-panel`
+
+### Run example locally
+
+1. `git clone https://github.com/jeremydavidson/react-search-panel`
+1. `cd example`
+1. `npm install`
+1. `npm start`
+
 ## Usage
 
 ### Typescript example

@@ -1,16 +1,54 @@
 {
   "name": "react-search-panel",
   "version": "1.0.0",
-  "description": "An expandable search panel React component.",
+  "description": "An expandable search panel React component where results can be displayed as links, checkboxes, or radio buttons.",
   "author": "jeremyfdavidson",
   "license": "MIT",
-  "repository": "jeremyfdavidson/react-search-panel",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "source": "src/index.tsx",
   "engines": {
     "node": ">=10"
   },
+  "repository": {
+    "type": "git",
+    "url":
+      "git+https://github.com/jeremyfdavidson/react-search-panel.git"
+  },
+  "bugs": {
+    "url":
+      "https://github.com/jeremyfdavidson/react-search-panel/issues"
+  },
+  "tags": [
+    "react-search-panel",
+    "react",
+    "react-component",
+    "material-design",
+    "google",
+    "search",
+    "search-bar",
+    "search-panel",
+    "expandable",
+    "multiple choice",
+    "radio-button",
+    "checkbox",
+    "links"
+  ],
+  "keywords": [
+    "react-search-panel",
+    "react",
+    "react-component",
+    "material-design",
+    "google",
+    "search",
+    "search-bar",
+    "search-panel",
+    "expandable",
+    "multiple choice",
+    "radio-button",
+    "checkbox",
+    "links"
+  ],
   "scripts": {
     "build": "npx rollup -c",
     "doc": "typedoc --readme typedoc.md --out docs/doc",

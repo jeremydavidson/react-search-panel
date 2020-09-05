@@ -1,11 +1,11 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import App, { Result } from "./App";
+import App, { ShowContainer } from "./App";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
-const mockResponse: Array<Result> = [{ score: 4, show: { id: "mock1", name: "Mock show title" } }];
+const mockResponse: Array<ShowContainer> = [{ score: 4, show: { id: "mock1", name: "Mock show title" } }];
 
 const server = setupServer(
   rest.get("http://api.tvmaze.com/search/shows?q=12345", (req, res, ctx) => {

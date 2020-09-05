@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SearchPanel from "./SearchPanel";
+import SearchPanel, { SearchPanelVariant } from "./SearchPanel";
 
 export default {
   title: "SearchPanel",
@@ -53,13 +53,26 @@ export const Shadow = () => {
   );
 };
 
-export const WithNoneOption = () => {
+export const SingleSelect = () => {
   const [input, setInput] = React.useState("");
   return (
     <SearchPanel
       choices={choices}
-      isSelectionOptional
-      isMultiSelect={false}
+      variant={SearchPanelVariant.radio}
+      onChange={event => setInput(event.target.value)}
+      placeholder="Search"
+      shadow
+      value={input}
+    />
+  );
+};
+
+export const SingleNoneOption = () => {
+  const [input, setInput] = React.useState("");
+  return (
+    <SearchPanel
+      choices={choices}
+      variant={SearchPanelVariant.radio}
       noChoiceItem={noChoiceItem}
       onChange={event => setInput(event.target.value)}
       placeholder="Search"
@@ -74,7 +87,7 @@ export const MultiSelect = () => {
   return (
     <SearchPanel
       choices={choices}
-      isSelectionOptional
+      variant={SearchPanelVariant.checkbox}
       onChange={event => setInput(event.target.value)}
       placeholder="Search"
       shadow
@@ -88,8 +101,7 @@ export const MultiSelectWithNone = () => {
   return (
     <SearchPanel
       choices={choices}
-      isMultiSelect
-      isSelectionOptional
+      variant={SearchPanelVariant.checkbox}
       onChange={event => setInput(event.target.value)}
       noChoiceItem={noChoiceItem}
       placeholder="Search"
@@ -104,8 +116,7 @@ export const SmallWithMultiSelect = () => {
   return (
     <SearchPanel
       choices={choices}
-      isMultiSelect
-      isSelectionOptional
+      variant={SearchPanelVariant.checkbox}
       onChange={event => setInput(event.target.value)}
       noChoiceItem={noChoiceItem}
       placeholder="Search"
@@ -122,10 +133,41 @@ export const SmallConstrained = () => {
     <div style={styles.constrained}>
       <SearchPanel
         choices={choices}
-        isMultiSelect
-        isSelectionOptional
+        variant={SearchPanelVariant.checkbox}
         onChange={event => setInput(event.target.value)}
         noChoiceItem={noChoiceItem}
+        placeholder="Search"
+        small
+        value={input}
+      />
+    </div>
+  );
+};
+
+export const LinkVariant = () => {
+  const [input, setInput] = useState("");
+  return (
+    <div style={styles.constrained}>
+      <SearchPanel
+        choices={choices}
+        variant={SearchPanelVariant.link}
+        onChange={event => setInput(event.target.value)}
+        placeholder="Search"
+        shadow
+        value={input}
+      />
+    </div>
+  );
+};
+
+export const LinkVariantSmall = () => {
+  const [input, setInput] = useState("");
+  return (
+    <div style={styles.constrained}>
+      <SearchPanel
+        choices={choices}
+        variant={SearchPanelVariant.link}
+        onChange={event => setInput(event.target.value)}
         placeholder="Search"
         small
         value={input}

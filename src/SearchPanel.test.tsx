@@ -2,7 +2,7 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import SearchPanel, { SearchPanelChoice } from ".";
+import SearchPanel, { SearchPanelChoice, SearchPanelVariant } from ".";
 
 const mockHandleChange = jest.fn();
 const mockHandleSelectionChange = jest.fn();
@@ -46,7 +46,7 @@ describe("SearchPanel with choices", () => {
     render(
       <SearchPanel
         choices={mockChoices}
-        isSelectionOptional
+        variant={SearchPanelVariant.radio}
         noChoiceItem={noChoiceItem}
         onChange={mockHandleChange}
         onSelectionChange={mockHandleSelectionChange}
@@ -85,8 +85,8 @@ describe("SearchPanel with choices", () => {
     await fireEvent.click(choice1);
     const choice2 = await screen.findByText("Mock another choice");
     await fireEvent.click(choice2);
-    const secondCall = await mockHandleSelectionChange.mock.calls[1];
-    expect(secondCall[0]).toEqual(["choice2"]);
+    const changeCall = await mockHandleSelectionChange.mock.calls[2];
+    expect(changeCall[0]).toEqual(["choice2"]);
   });
 
   it("should hide choices when escape key is pressed", async() => {
@@ -113,8 +113,7 @@ describe("SearchPanel with multiple choice", () => {
     render(
       <SearchPanel
         choices={mockChoices}
-        isMultiSelect
-        isSelectionOptional
+        variant={SearchPanelVariant.checkbox}
         noChoiceItem={noChoiceItem}
         onChange={mockHandleChange}
         onSelectionChange={mockHandleSelectionChange}
@@ -130,8 +129,8 @@ describe("SearchPanel with multiple choice", () => {
     await fireEvent.click(choice1);
     const choice2 = await screen.findByText("Mock another choice");
     await fireEvent.click(choice2);
-    const secondCall = await mockHandleSelectionChange.mock.calls[1];
-    expect(secondCall[0]).toEqual(["choice1", "choice2"]);
+    const changeCall = await mockHandleSelectionChange.mock.calls[2];
+    expect(changeCall[0]).toEqual(["choice1", "choice2"]);
   });
 
   it("should de-select all items", async() => {
@@ -141,15 +140,38 @@ describe("SearchPanel with multiple choice", () => {
     await fireEvent.click(choice1);
     const choice2 = await screen.findByText("Mock another choice");
     await fireEvent.click(choice2);
-    const secondCall = await mockHandleSelectionChange.mock.calls[1];
-    expect(secondCall[0]).toEqual(["choice1", "choice2"]);
+    const changeCall = await mockHandleSelectionChange.mock.calls[2];
+    expect(changeCall[0]).toEqual(["choice1", "choice2"]);
 
     // Then select the "None" checkbox
     const noneChoice = await screen.findByText("Mock None");
     await fireEvent.click(noneChoice);
 
     // Verify no choices are selected
-    const thirdCall = await mockHandleSelectionChange.mock.calls[2];
-    expect(thirdCall[0]).toEqual([]);
+    const deselectCall = await mockHandleSelectionChange.mock.calls[3];
+    expect(deselectCall[0]).toEqual([]);
+  });
+});
+
+describe("SearchPanel with link variant", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    render(
+      <SearchPanel
+        choices={mockChoices}
+        variant={SearchPanelVariant.link}
+        onChange={mockHandleChange}
+        onSelectionChange={mockHandleSelectionChange}
+        placeholder="Search"
+        value="mock default"
+      />
+    );
+  });
+
+  it("should select a link when it is clicked", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
+    const choice = await screen.findByText("Mock choice 1");
+    await fireEvent.click(choice);
+    expect(mockHandleSelectionChange).toHaveBeenCalledWith(["choice1"]);
   });
 });

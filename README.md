@@ -18,7 +18,7 @@ Here is [documentation of the component API](https://jeremydavidson.github.io/re
 
 This is an example in Typescript with all available props:
 
-```typescript
+```tsx
     import React from "react";
     import SearchPanel from "react-search-panel";
     import "react-search-panel/dist/index.css";
@@ -30,8 +30,6 @@ This is an example in Typescript with all available props:
       return (
         <SearchPanel
           choices={choices}
-          isMultiSelect
-          isSelectionOptional
           onChange={event => setInput((event as React.ChangeEvent<HTMLInputElement>).target.value)}
           onSelectionChange={selected => setSelectedKeys(selected)}
           noChoiceItem={noChoiceItem}
@@ -39,6 +37,7 @@ This is an example in Typescript with all available props:
           shadow
           small
           value={input}
+          variant={SearchPanelVariant.checkbox}
         />
       );
     }
@@ -49,7 +48,7 @@ This is an example in Typescript with all available props:
 
 This is an example in Javascript with only the required props.
 
-```javascript
+```jsx
     import React from "react";
     import SearchPanel from "react-search-panel";
     import "react-search-panel/dist/index.css";
@@ -68,9 +67,3 @@ This is an example in Javascript with only the required props.
     }
     export default App;
 ```
-
-## Scripts
-
-- `npm run doc`: `"typedoc --out docs --theme markdown src"`
-- `npm run doc`: `"typedoc --options ./typedocconfig.ts"`
-- `npm run predeploy`: `"predeploy": "cd example && npm install && npm run build",`

@@ -158,3 +158,13 @@
 .resultItemLabel {
   padding-left: 8px;
 }
+
+.linkChoice {
+  text-decoration: none;
+  color: #444;
+  padding-left: 28px;
+}
+
+.linkChoice:hover, .linkChoice:focus {
+  text-decoration: underline;
+}

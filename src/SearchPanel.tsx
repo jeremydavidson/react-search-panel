@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import styles from "./styles.module.css";
 import useOnclickOutside from "react-cool-onclickoutside";
 import useKeypress from "react-use-keypress";
@@ -7,37 +7,74 @@ import useKeypress from "react-use-keypress";
  * Definition of a SearchPanelChoice
  */
 export interface SearchPanelChoice {
+  /**
+   * Key for a choice can be any unique string.
+   * For link variant, recommend using a url.
+   */
   key: string;
+
+  /**
+   * The description that will be displayed in search results.
+   */
   description: string;
 }
 
+export enum SearchPanelVariant {
+  checkbox,
+  link,
+  radio,
+}
+
 /**
- * Definition of props for SearchPanel
+ * Definition of props for SearchPanel.
  */
 interface SearchPanelProps {
 
   /**
-   * An array of choices to be displayed
+   * An array of choices to be displayed.
    */
   choices: Array<SearchPanelChoice>,
 
   /**
-   * By default choices are selected as radio buttons,
-   * with isMultiSelect={true} they are displayed as checkboxes.
+   * Provide a "None" choice item so user can "unselect" a select choice
+   * when variant={SearchPanelVariant.checkbox} or variant={SearchPanelVariant.radio}
    */
-  isMultiSelect?: boolean,
+  noChoiceItem?: SearchPanelChoice,
 
   /**
-   * Display a "None" option so you can deselect any previously selected choice(s).
+   * Function that will handle event when search input changes.
    */
-  isSelectionOptional?: boolean,
-  noChoiceItem?: SearchPanelChoice,
   onChange: (event: React.ChangeEvent) => void,
-  onSelectionChange: (selectedKeys: Array<string>) => void,
+
+  /**
+   * Function that will handle event when selected items change.
+   */
+  onSelectionChange?: (selectedKeys: Array<string>) => void,
+
+  /**
+   * Display a shadow on hover and when expanded.
+   */
   shadow?: boolean,
+
+  /**
+   * A smaller variant.
+   */
   small?: boolean,
+
+  /**
+   * Placeholder label in the search input box.
+   */
   placeholder: string,
+
+  /**
+   * Value of search input.
+   */
   value: string,
+
+  /**
+   * Variants available: checkbox, radio, link (can be used as links by consumer)
+   */
+  variant?: SearchPanelVariant,
 }
 
 /**
@@ -47,8 +84,6 @@ interface SearchPanelProps {
 const SearchPanel = (props: SearchPanelProps) => {
   const {
     choices,
-    isMultiSelect,
-    isSelectionOptional,
     noChoiceItem,
     onChange,
     onSelectionChange,
@@ -56,12 +91,23 @@ const SearchPanel = (props: SearchPanelProps) => {
     shadow,
     small,
     value,
+    variant
   } = props;
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const [isFocused, setIsFocused] = React.useState(false);
   const [selectedKeys, setSelectedKeys] = React.useState<Array<string>>([]);
   const fieldsetId: string = "ChoiceGroup";
   const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
+
+  let isMultiSelect = false;
+  let isText = true;
+  if (SearchPanelVariant.checkbox === variant) {
+    isMultiSelect = true;
+  }
+  if (SearchPanelVariant.link !== variant) {
+    isText = false;
+  }
 
   /**
    * Handle event when user presses outside this component.
@@ -71,12 +117,14 @@ const SearchPanel = (props: SearchPanelProps) => {
       searchField.current.blur();
     }
     setIsExpanded(false);
+    setIsFocused(false);
   };
 
   /**
    * Handle event when component receives focus.
    */
   const handleOnFocus = () => {
+    setIsFocused(true);
     if (choices.length) {
       setIsExpanded(true);
     }
@@ -118,7 +166,7 @@ const SearchPanel = (props: SearchPanelProps) => {
    * @param key
    * @param updateKeys
    */
-  const setSelectedKey = (key: string, updateKeys: Array<string>) => {
+  const addSelectedKey = (key: string, updateKeys: Array<string>) => {
     if (isMultiSelect) {
       updateKeys.push(key);
     }
@@ -141,39 +189,37 @@ const SearchPanel = (props: SearchPanelProps) => {
 
     // Set selected key if checked, remove it otherwise.
     if (target.checked) {
-      setSelectedKey(selectedKey, updateKeys);
+      addSelectedKey(selectedKey, updateKeys);
     }
     else {
       removeSelectedKey(selectedKey, updateKeys);
     }
 
-    // Handle the "None" option
-    if (isSelectionOptional) {
-      // If the "None" option was selected, make it the only selected item.
-      if (noChoiceItem && selectedKey === noChoiceItem.key) {
-        if (target.checked) {
-          updateKeys = [selectedKey];
-          // Special case for "None" option, consumer should get an empty array
-          // while the "None" option is checked on screen.
-          isNoneSelected = true;
-        }
+    // If the "None" option was selected, make it the only selected item.
+    if (noChoiceItem) {
+      if (selectedKey === noChoiceItem.key && target.checked) {
+        updateKeys = [selectedKey];
+        // Special case for "None" option, consumer should get an empty array
+        // while the "None" option is checked on screen.
+        isNoneSelected = true;
       }
       // If any other item was selected, uncheck the "None" item
       else {
-        if (noChoiceItem) {
-          removeSelectedKey(noChoiceItem.key, updateKeys);
-        }
+        removeSelectedKey(noChoiceItem.key, updateKeys);
       }
     }
+
     // Set state
     setSelectedKeys(updateKeys);
 
     // Notify the consumer of the currently selected keys
-    if (isNoneSelected) {
-      onSelectionChange([]);
-    }
-    else {
-      onSelectionChange(updateKeys);
+    if (onSelectionChange) {
+      if (isNoneSelected) {
+        onSelectionChange([]);
+      }
+      else {
+        onSelectionChange(updateKeys);
+      }
     }
   };
 
@@ -183,10 +229,51 @@ const SearchPanel = (props: SearchPanelProps) => {
    */
   const handleSearchChange = async (event: React.ChangeEvent) => {
     await onChange(event);
-    if (choices.length) {
-      setIsExpanded(true);
+  };
+
+  /**
+   * Handle link variant click
+   * @param event
+   * @param choice
+   */
+  const handleLinkPress = (event: React.MouseEvent<HTMLAnchorElement>, choice: SearchPanelChoice) => {
+    event.preventDefault();
+    const selectedKeys = [choice.key];
+    setSelected(selectedKeys);
+  };
+
+  /**
+   * Set selected keys and notify consumer of the change.
+   */
+  const setSelected = (selectedKeys: Array<string>) => {
+    setSelectedKeys(selectedKeys);
+    if (onSelectionChange) {
+      onSelectionChange(selectedKeys);
     }
   };
+
+  /**
+   * Reset expanded state when choices change
+   */
+  useEffect(() => {
+    if (isFocused) {
+      if (choices.length) {
+        setIsExpanded(true);
+      }
+      else {
+        setIsExpanded(false);
+      }
+    }
+  }, [choices]);
+
+  /**
+   * Reset selected keys when variant changes,
+   * because radio and link variant support single selection,
+   * while checkbox variant supports multiple.
+   */
+  useEffect(() => {
+    setSelected([]);
+  }, [variant]);
 
   /**
    * Definition of ChoiceItem properties
@@ -207,33 +294,39 @@ const SearchPanel = (props: SearchPanelProps) => {
     }
     return (
       <div className={`${styles.resultItem} ${small ? styles.small : ""}`}>
-        <input
-          id={choiceId}
-          name={fieldsetId}
-          tabIndex={0}
-          type={inputType}
-          onChange={(event) => handleCheckChanged(event, choice.key)}
-          value={choice.key}
-          checked={selectedKeys.indexOf(choice.key) > -1}
-        />
-        <label htmlFor={choiceId} className={styles.resultItemLabel}>
-          {choice.description}
-        </label>
+        {isText && (
+          <a
+            href=""
+            className={styles.linkChoice}
+            onClick={(event) => handleLinkPress(event, choice)}
+          >
+            {choice.description}
+          </a>
+        )}
+        {!isText && (
+          <span>
+            <input
+              id={choiceId}
+              key={choiceId}
+              name={fieldsetId}
+              type={inputType}
+              onChange={(event) => handleCheckChanged(event, choice.key)}
+              value={choice.key}
+              checked={selectedKeys.indexOf(choice.key) > -1}
+              tabIndex={0}
+            />
+            <label htmlFor={choiceId} className={styles.resultItemLabel}>
+              {choice.description}
+            </label>
+          </span>
+        )}
       </div>
     );
   };
 
-  /**
-   * Handle event when form it submitted.
-   * @param event
-   */
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    handleOnFocus();
-  };
-
   const clickOutsideRef = useOnclickOutside(handlePressOutside);
   useKeypress("Escape", handlePressOutside);
+  useKeypress("Enter", handlePressOutside);
 
   return (
     <form
@@ -244,7 +337,6 @@ const SearchPanel = (props: SearchPanelProps) => {
       ref={clickOutsideRef}
       onFocus={handleOnFocus}
       onBlur={handleOnBlur}
-      onSubmit={handleSubmit}
     >
       <div
         className={`
@@ -306,7 +398,7 @@ const SearchPanel = (props: SearchPanelProps) => {
           >
             <div className={styles.resultSeperator} />
             <ul className={styles.resultList} role="listbox">
-              {isSelectionOptional && noChoiceItem && (
+              {noChoiceItem && (
                 <li
                   key={noChoiceItem.key}
                   className={styles.resultListItem}

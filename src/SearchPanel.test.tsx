@@ -133,6 +133,16 @@ describe("SearchPanel with multiple choice", () => {
     expect(changeCall[0]).toEqual(["choice1", "choice2"]);
   });
 
+  it("should select then de-select an item", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
+    const choice1 = await screen.findByText("Mock choice 1");
+    await fireEvent.click(choice1);
+    expect(mockHandleSelectionChange).toHaveBeenCalledWith(["choice1"]);
+    const click2 = await screen.findByText("Mock choice 1");
+    await fireEvent.click(click2);
+    expect(mockHandleSelectionChange).toHaveBeenCalledWith([]);
+  });
+
   it("should de-select all items", async() => {
     (await screen.findByPlaceholderText("Search")).focus();
     // First select two checkboxes

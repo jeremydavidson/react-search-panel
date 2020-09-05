@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SearchPanel, { SearchPanelVariant } from "./SearchPanel";
+import { SearchPanel, SearchPanelVariant } from "./SearchPanel";
 
 export default {
   title: "SearchPanel",

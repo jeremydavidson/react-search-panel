@@ -20,8 +20,19 @@ export interface SearchPanelChoice {
 }
 
 export enum SearchPanelVariant {
+  /**
+   * A multi-select variant where result items have checkboxes.
+   */
   checkbox,
+
+  /**
+   * A variant where result items are anchor links.
+   */
   link,
+
+  /**
+   * A single-select variant where result items have radio buttons.
+   */
   radio,
 }
 
@@ -81,7 +92,7 @@ interface SearchPanelProps {
  * SearchPanel component
  * @param props
  */
-const SearchPanel = (props: SearchPanelProps) => {
+export const SearchPanel = (props: SearchPanelProps) => {
   const {
     choices,
     noChoiceItem,
@@ -423,5 +434,3 @@ const SearchPanel = (props: SearchPanelProps) => {
     </form>
   );
 };
-
-export default SearchPanel;

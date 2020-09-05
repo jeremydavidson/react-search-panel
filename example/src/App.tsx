@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import SearchPanel, { SearchPanelChoice, SearchPanelVariant } from "react-search-panel";
-import "react-search-panel/dist/index.css";
+import { SearchPanel, SearchPanelChoice, SearchPanelVariant } from "react-search-panel";
 
 /**
  * Page styles

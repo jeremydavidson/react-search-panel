@@ -159,5 +159,15 @@
   padding-left: 8px;
 }
 
+.styles_linkChoice__16itq {
+  text-decoration: none;
+  color: #444;
+  padding-left: 28px;
+}
 
-/*# sourceMappingURL=main.a0cc9204.chunk.css.map*/
+.styles_linkChoice__16itq:hover, .styles_linkChoice__16itq:focus {
+  text-decoration: underline;
+}
+
+
+/*# sourceMappingURL=main.15cf8fbf.chunk.css.map*/

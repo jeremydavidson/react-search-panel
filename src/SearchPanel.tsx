@@ -47,6 +47,16 @@ interface SearchPanelProps {
   choices: Array<SearchPanelChoice>,
 
   /**
+   * Optional class name to be applied to the top level of the component.
+   */
+  className?: string,
+
+  /**
+   * Optional maximum height of result list in pixels: <SearchPanel maximumHeight="250px" />
+   */
+  maximumHeight?: string,
+
+  /**
    * Provide a "None" choice item so user can "unselect" a select choice
    * when variant={SearchPanelVariant.checkbox} or variant={SearchPanelVariant.radio}
    */
@@ -95,6 +105,8 @@ interface SearchPanelProps {
 export const SearchPanel = (props: SearchPanelProps) => {
   const {
     choices,
+    className,
+    maximumHeight,
     noChoiceItem,
     onChange,
     onSelectionChange,
@@ -339,9 +351,19 @@ export const SearchPanel = (props: SearchPanelProps) => {
   useKeypress("Escape", handlePressOutside);
   useKeypress("Enter", handlePressOutside);
 
+  let resultListHeight = "333px";
+  if (maximumHeight) {
+    resultListHeight = maximumHeight;
+  }
+
+  const resultListHeightStyle = {
+    maxHeight: resultListHeight,
+  };
+
   return (
     <form
       className={`
+        ${className}
         ${styles.topContainer}
         ${small ? styles.small : ""}
       `}
@@ -399,6 +421,9 @@ export const SearchPanel = (props: SearchPanelProps) => {
           id={resultContainerId}
           className={styles.resultContainer}
         >
+          <div className={styles.resultSeperatorContainer}>
+            <div className={styles.resultSeperator} />
+          </div>
           <fieldset
             id={fieldsetId}
             className={`
@@ -406,8 +431,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
             ${shadow ? styles.resultListContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
           `}
+            style={resultListHeightStyle}
           >
-            <div className={styles.resultSeperator} />
             <ul className={styles.resultList} role="listbox">
               {noChoiceItem && (
                 <li

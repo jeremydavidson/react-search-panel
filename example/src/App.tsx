@@ -11,6 +11,10 @@ const styles = {
     maxWidth: "650px",
     padding: "40px",
   },
+  constrained: {
+    // margin: "auto",
+    maxWidth: "400px",
+  },
   formItem: {
     marginLeft: "15px",
   },
@@ -68,10 +72,6 @@ const App = () => {
     const target = event.target as HTMLInputElement;
     setInput(target.value);
   };
-
-  // const handleSelectionChange = (selectedKeys: Array<string>) {
-
-  // }
 
   /**
    * Perform a search when input changes.
@@ -134,9 +134,10 @@ const App = () => {
         <VariantChoice label="Link" variantChoice={SearchPanelVariant.link} />
         <VariantChoice label="Radio" variantChoice={SearchPanelVariant.radio} />
       </p>
-      <div>
+      <div style={styles.constrained}>
         <SearchPanel
           choices={choices}
+          maximumHeight="250px"
           onChange={handleSearchChange}
           onSelectionChange={selected => setSelectedChoices(selected)}
           placeholder="Search TV shows"

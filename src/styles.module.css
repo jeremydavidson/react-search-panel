@@ -127,7 +127,7 @@
 
 .resultList {
   flex: auto;
-  padding-left: 7px;
+  padding-left: 10px;
   margin-top: 4px;
 }
 
@@ -155,7 +155,7 @@
 }
 
 .resultItem {
-  padding: 6px;
+  margin: 6px;
 }
 
 .resultItem.small {
@@ -163,19 +163,20 @@
 }
 
 .resultItemControl {
-  margin-right: 10px;
+  margin-right: 14px;
 }
 
 .resultItemLabel {
   display: inline-block;
   margin-left: 25px;
-  text-indent: -28px;
+  text-indent: -31px;
 }
 
 .linkChoice {
   text-decoration: none;
   color: #444;
   margin-left: 23px;
+  text-indent: -28px;
   padding: 4px;
 }
 

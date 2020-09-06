@@ -41,8 +41,10 @@ const App = () => {
 
   return (
     <SearchPanel
+      chips
       choices={choices}
-      maximumHeight="250px"
+      float
+      maximumHeight={250}
       onChange={event => setInput((event as React.ChangeEvent<HTMLInputElement>).target.value)}
       onSelectionChange={selected => setSelectedKeys(selected)}
       noChoiceItem={noChoiceItem}
@@ -51,6 +53,7 @@ const App = () => {
       small
       value={input}
       variant={SearchPanelVariant.checkbox}
+      width={300}
     />
   );
 }

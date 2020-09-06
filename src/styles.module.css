@@ -33,10 +33,6 @@
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 }
 
-.searchIconContainer {
-  padding-right: 8px;
-}
-
 .flexContainer {
   flex: 1;
   display: flex;
@@ -47,8 +43,17 @@
 .searchIconContainer {
   display: flex;
   align-items: center;
-  padding-right: 7px;
+  padding-right: 8px;
   margin-top: -2px;
+}
+
+.spinnerContainer {
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  padding-right: 4px;
+  margin-top: 8px;
+  align-self: end;
 }
 
 .searchIcon {

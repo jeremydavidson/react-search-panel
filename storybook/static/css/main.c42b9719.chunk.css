@@ -129,7 +129,6 @@
   flex: auto;
   padding-left: 7px;
   margin-top: 4px;
-  list-style-position: outside;
 }
 
 .styles_resultSeperatorContainer__1s8LX {
@@ -163,8 +162,14 @@
   margin: 5px;
 }
 
+.styles_resultItemControl__20dOc {
+  margin-right: 10px;
+}
+
 .styles_resultItemLabel__27G9m {
-  padding-left: 8px;
+  display: inline-block;
+  margin-left: 25px;
+  text-indent: -28px;
 }
 
 .styles_linkChoice__16itq {
@@ -217,4 +222,4 @@
 }
 
 
-/*# sourceMappingURL=main.cba721a5.chunk.css.map*/
+/*# sourceMappingURL=main.c42b9719.chunk.css.map*/

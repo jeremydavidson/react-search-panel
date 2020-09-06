@@ -150,6 +150,7 @@ const App = () => {
       </p>
       <div style={styles.constrained}>
         <SearchPanel
+          chips={variant === SearchPanelVariant.checkbox}
           choices={choices}
           maximumHeight="200px"
           onChange={handleSearchChange}

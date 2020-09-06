@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
 import useOnclickOutside from "react-cool-onclickoutside";
 import useKeypress from "react-use-keypress";
+import Chip from "./Chip";
 
 /**
  * Definition of a SearchPanelChoice
@@ -42,6 +45,11 @@ export enum SearchPanelVariant {
 interface SearchPanelProps {
 
   /**
+   * Display Chips to represent selected choices.
+   */
+  chips?: boolean,
+
+  /**
    * An array of choices to be displayed.
    */
   choices: Array<SearchPanelChoice>,
@@ -70,7 +78,7 @@ interface SearchPanelProps {
   /**
    * Function that will handle event when selected items change.
    */
-  onSelectionChange?: (selectedKeys: Array<string>) => void,
+  onSelectionChange?: (selectedChoices: Array<string>) => void,
 
   /**
    * Display a shadow on hover and when expanded.
@@ -104,6 +112,7 @@ interface SearchPanelProps {
  */
 export const SearchPanel = (props: SearchPanelProps) => {
   const {
+    chips,
     choices,
     className,
     maximumHeight,
@@ -118,7 +127,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
   } = props;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
-  const [selectedKeys, setSelectedKeys] = React.useState<Array<string>>([]);
+  const [selectedChoices, setSelectedChoices] = React.useState<Array<string>>([]);
   const fieldsetId: string = "ChoiceGroup";
   const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
@@ -205,7 +214,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
    */
   const handleCheckChanged = (event: React.ChangeEvent, selectedKey: string) => {
     const target = event.target as HTMLInputElement;
-    let updateKeys = [...selectedKeys];
+    let updateKeys = [...selectedChoices];
     let isNoneSelected = false;
 
     // Set selected key if checked, remove it otherwise.
@@ -231,7 +240,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     }
 
     // Set state
-    setSelectedKeys(updateKeys);
+    setSelectedChoices(updateKeys);
 
     // Notify the consumer of the currently selected keys
     if (onSelectionChange) {
@@ -241,6 +250,19 @@ export const SearchPanel = (props: SearchPanelProps) => {
       else {
         onSelectionChange(updateKeys);
       }
+    }
+  };
+
+  /**
+   * Handle removing a selected key
+   * @param key
+   */
+  const handleRemoveSelectedChoice = (key: string) => {
+    const updateKeys = [...selectedChoices];
+    removeSelectedKey(key, updateKeys);
+    setSelectedChoices(updateKeys);
+    if (onSelectionChange) {
+      onSelectionChange(updateKeys);
     }
   };
 
@@ -267,7 +289,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
    * Set selected keys and notify consumer of the change.
    */
   const setSelected = (selectedKeys: Array<string>) => {
-    setSelectedKeys(selectedKeys);
+    setSelectedChoices(selectedKeys);
     if (onSelectionChange) {
       onSelectionChange(selectedKeys);
     }
@@ -333,7 +355,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
               type={inputType}
               onChange={(event) => handleCheckChanged(event, choice.key)}
               value={choice.key}
-              checked={selectedKeys.indexOf(choice.key) > -1}
+              checked={selectedChoices.indexOf(choice.key) > -1}
               tabIndex={0}
             />
             <label htmlFor={choiceId} className={styles.resultItemLabel}>
@@ -381,13 +403,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
         <div className={styles.flexContainer}>
           <div className={styles.searchIconContainer}>
             <span className={styles.searchIcon}>
-              <svg
-                focusable="false"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-              </svg>
+              <FontAwesomeIcon icon={faSearch} />
             </span>
           </div>
           <div className={styles.inputContainer}>
@@ -458,6 +474,20 @@ export const SearchPanel = (props: SearchPanelProps) => {
           </fieldset>
         </div>
       )}
+
+      {chips && (
+        <div className={styles.chipContainer}>
+          {selectedChoices.map(key => (
+            <Chip
+              deleteLabel={`Delete ${key}`}
+              onDelete={() => handleRemoveSelectedChoice(key)}
+              key={key}
+              value={choices[choices.indexOf(choices.filter(item => item.key === key)[0])].description}
+            />
+          ))}
+        </div>
+      )}
+
     </form>
   );
 };

@@ -1,0 +1,247 @@
+.styles_topContainer__ze2Q1 {
+  font: 16px arial, sans-serif;
+  color: #444;
+  fill: #999;
+}
+.styles_topContainer__ze2Q1.styles_small__3T3I_ {
+  font: 14px arial, sans-serif;
+}
+
+.styles_searchContainer__2gCMe {
+  background: #fff;
+  display: flex;
+  height: 39px;
+  border-radius: 24px;
+  z-index: 3;
+  height: 44px;
+  border: 1px solid #ccc;
+  /* width: calc(100% - 2px); */
+}
+
+.styles_searchContainer__2gCMe.styles_small__3T3I_ {
+  border-radius: 16px;
+  height: 30px;
+}
+
+.styles_searchContainerExpanded__KAeXX {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.styles_searchContainerExpandedShadow__ydmWp, .styles_searchContainerShadow__1u6jU:hover {
+  border-color: transparent;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+}
+
+.styles_flexContainer__mDacM {
+  flex: 1 1;
+  display: flex;
+  padding: 5px 4px 0 16px;
+  padding-left: 14px;
+}
+
+.styles_searchIconContainer__3ceYI {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+  margin-top: -2px;
+}
+
+.styles_spinnerContainer__3ZgxX {
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  margin-top: 8px;
+  align-self: end;
+}
+
+.styles_searchIcon__3ag_5 {
+  color: #9aa0a6;
+  height: 20px;
+  width: 20px;
+}
+
+.styles_clearContainer__1IaVQ {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+  margin-top: 8px;
+  align-self: end;
+}
+
+.styles_clearButton__Yrq7D {
+  color: #9aa0a6;
+  height: 20px;
+  width: 20px;
+  border: 0;
+  background: transparent;
+}
+
+
+.styles_inputField__2Y15e {
+  color: #444;
+  font: 16px arial, sans-serif;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+  outline: none;
+  display: flex;
+  flex: 100% 1;
+  -webkit-tap-highlight-color: transparent;
+  margin-top: -36px;
+  height: 34px;
+}
+
+.styles_inputField__2Y15e.styles_small__3T3I_ {
+  font: 14px arial, sans-serif;
+  margin-top: -41px;
+}
+
+.styles_inputContainer__35QAI {
+  display: flex;
+  flex: 1 1;
+  flex-wrap: wrap;
+}
+
+.styles_inputFieldContainer__C374V {
+  color: transparent;
+  flex: 100% 1;
+  white-space: pre;
+  height: 34px;
+}
+
+.styles_inputFieldContainer__C374V span {
+  padding: 0;
+}
+
+.styles_resultContainer__3FRt- {
+  text-align: left;
+  margin-top: -2px;
+  z-index: 900;
+  cursor: default;
+}
+
+.styles_resultListContainer__3hDPt {
+  background: #fff;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 0 0 24px 24px;
+  overflow: scroll;
+  border-top: 0;
+}
+
+.styles_resultListContainer__3hDPt.styles_small__3T3I_ {
+  border-radius: 0 0 16px 16px;
+}
+
+.styles_resultListContainerExpandedShadow__3JIJA {
+  border-color: transparent;
+  box-shadow: 0 5px 6px 0 rgba(32, 33, 36, 0.28);
+}
+
+.styles_resultList__nsgTr {
+  flex: auto;
+  padding-left: 10px;
+  margin-top: 4px;
+}
+
+.styles_resultSeperatorContainer__1s8LX {
+  border: 0;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.styles_resultSeperatorContainerShadow__3fCpH {
+  border: 0;
+}
+
+.styles_resultSeperator__3lo9M {
+  border-top: 1px solid #e8eaed;
+  margin: 0 14px;
+}
+
+.styles_resultListItem__R38tf {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  max-height: none;
+  padding: 0;
+}
+
+.styles_resultItem__1Ettu {
+  margin: 6px;
+}
+
+.styles_resultItem__1Ettu.styles_small__3T3I_ {
+  margin: 5px;
+}
+
+.styles_resultItemControl__20dOc {
+  margin-right: 14px;
+}
+
+.styles_resultItemLabel__27G9m {
+  display: inline-block;
+  margin-left: 25px;
+  text-indent: -31px;
+}
+
+.styles_linkChoice__16itq {
+  text-decoration: none;
+  color: #444;
+  margin-left: 23px;
+  text-indent: -28px;
+  padding: 4px;
+}
+
+.styles_linkChoice__16itq:hover, .styles_linkChoice__16itq:focus {
+  text-decoration: underline;
+}
+
+.styles_chipContainer__1WGab {
+  margin-top: 8px;
+}
+
+.Chip_chip__3Mvv4 {
+  color: #555555;
+  font-weight: bold;
+  font-size: 13.3px;
+  display: inline-block;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 25px;
+  background-color: #eee;
+  margin-right: 16px;
+  margin-top: 16px;
+  white-space: nowrap;
+}
+
+.Chip_chipLabel__umP2T {
+  margin-right: 5px;
+}
+
+.Chip_chipClose__2xwZR {
+  color: #555555;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.Chip_chipDeleteContainer__1txME {
+  padding: 2px;
+  border: 0;
+}
+
+.Chip_chipClose__2xwZR:hover, .Chip_chipDeleteContainer__1txME:focus .Chip_chipClose__2xwZR {
+  color: #51a3fc;
+}
+
+
+/*# sourceMappingURL=main.b3a6e43e.chunk.css.map*/

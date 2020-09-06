@@ -99,6 +99,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_searchpanel_.searchpanelprops.html#maximumheight" class="tsd-kind-icon">maximum<wbr>Height</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_searchpanel_.searchpanelprops.html#nochoiceitem" class="tsd-kind-icon">no<wbr>Choice<wbr>Item</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_searchpanel_.searchpanelprops.html#onchange" class="tsd-kind-icon">on<wbr>Change</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_searchpanel_.searchpanelprops.html#onclear" class="tsd-kind-icon">on<wbr>Clear</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_searchpanel_.searchpanelprops.html#onselectionchange" class="tsd-kind-icon">on<wbr>Selection<wbr>Change</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_searchpanel_.searchpanelprops.html#placeholder" class="tsd-kind-icon">placeholder</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_searchpanel_.searchpanelprops.html#shadow" class="tsd-kind-icon">shadow</a></li>
@@ -256,12 +257,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="onclear" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Clear</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Clear<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MouseEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L91">SearchPanel.tsx:91</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Function that will handle event when user presses clear button.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
 					<a name="onselectionchange" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Selection<wbr>Change</h3>
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Selection<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>selectedChoices<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L91">SearchPanel.tsx:91</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L96">SearchPanel.tsx:96</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -276,7 +292,7 @@
 					<div class="tsd-signature tsd-kind-icon">placeholder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L106">SearchPanel.tsx:106</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L111">SearchPanel.tsx:111</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -291,7 +307,7 @@
 					<div class="tsd-signature tsd-kind-icon">shadow<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L96">SearchPanel.tsx:96</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L101">SearchPanel.tsx:101</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -306,7 +322,7 @@
 					<div class="tsd-signature tsd-kind-icon">small<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L101">SearchPanel.tsx:101</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L106">SearchPanel.tsx:106</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -321,7 +337,7 @@
 					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L111">SearchPanel.tsx:111</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L116">SearchPanel.tsx:116</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -336,7 +352,7 @@
 					<div class="tsd-signature tsd-kind-icon">variant<span class="tsd-signature-symbol">:</span> <a href="../enums/_searchpanel_.searchpanelvariant.html" class="tsd-signature-type">SearchPanelVariant</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L116">SearchPanel.tsx:116</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L121">SearchPanel.tsx:121</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -351,7 +367,7 @@
 					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L121">SearchPanel.tsx:121</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/07ad34d/src/SearchPanel.tsx#L126">SearchPanel.tsx:126</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -433,6 +449,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
 								<a href="_searchpanel_.searchpanelprops.html#onchange" class="tsd-kind-icon">on<wbr>Change</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_searchpanel_.searchpanelprops.html#onclear" class="tsd-kind-icon">on<wbr>Clear</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
 								<a href="_searchpanel_.searchpanelprops.html#onselectionchange" class="tsd-kind-icon">on<wbr>Selection<wbr>Change</a>

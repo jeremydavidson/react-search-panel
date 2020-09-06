@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
 import useOnclickOutside from "react-cool-onclickoutside";
 import useKeypress from "react-use-keypress";
@@ -65,6 +65,11 @@ interface SearchPanelProps {
   float?: boolean,
 
   /**
+   * Indicate when consumer is loading to display a spinner.
+   */
+  isLoading?: boolean,
+
+  /**
    * Optional maximum height of result list in pixels: <SearchPanel maximumHeight={250} />
    */
   maximumHeight?: number,
@@ -126,6 +131,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     choices,
     className,
     float,
+    isLoading,
     maximumHeight,
     noChoiceItem,
     onChange,
@@ -434,6 +440,13 @@ export const SearchPanel = (props: SearchPanelProps) => {
               value={value}
             />
           </div>
+          {isLoading && (
+            <div className={styles.spinnerContainer}>
+              <span className={styles.searchIcon}>
+                <FontAwesomeIcon icon={faSpinner} spin />
+              </span>
+            </div>
+          )}
         </div>
       </div>
       {isExpanded && (choices.length > 0) && (

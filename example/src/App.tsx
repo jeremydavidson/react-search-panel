@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SearchPanel, SearchPanelChoice, SearchPanelVariant } from "react-search-panel";
 
@@ -59,10 +59,11 @@ export interface ShowContainer {
  * @returns
  */
 const App = () => {
-  const [input, setInput] = React.useState("");
-  const [variant, setVariant] = React.useState<SearchPanelVariant>(SearchPanelVariant.link);
-  const [choices, setChoices] = React.useState<Array<SearchPanelChoice>>([]);
-  const [selectedChoices, setSelectedChoices] = React.useState<Array<string>>([]);
+  const [input, setInput] = useState("");
+  const [variant, setVariant] = useState<SearchPanelVariant>(SearchPanelVariant.link);
+  const [choices, setChoices] = useState<Array<SearchPanelChoice>>([]);
+  const [selectedChoices, setSelectedChoices] = useState<Array<string>>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * Handle change in search input.
@@ -91,6 +92,7 @@ const App = () => {
    */
   useEffect(() => {
     const search = async () => {
+      setIsLoading(true);
       const resultChoices: Array<SearchPanelChoice> = [];
 
       // Only perform a search if end user has typed a minimum number of characters
@@ -106,6 +108,7 @@ const App = () => {
         });
       }
       setChoices(resultChoices);
+      setIsLoading(false);
     };
     search();
   }, [input]);
@@ -152,11 +155,11 @@ const App = () => {
         <SearchPanel
           chips={variant === SearchPanelVariant.checkbox}
           choices={choices}
+          isLoading={isLoading}
           maximumHeight={200}
           onChange={handleSearchChange}
           onSelectionChange={handleSelectionChange}
           placeholder="Search TV shows"
-          shadow
           value={input}
           variant={variant}
           width={300}

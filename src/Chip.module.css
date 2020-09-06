@@ -1,0 +1,32 @@
+.chip {
+  color: #555555;
+  font-weight: bold;
+  font-size: 13.3px;
+  display: inline-block;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 25px;
+  background-color: #eee;
+  margin-right: 16px;
+  margin-top: 16px;
+}
+
+.chipLabel {
+  margin-right: 5px;
+}
+
+.chipClose {
+  color: #555555;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.chipDeleteContainer {
+  padding: 2px;
+  border: 0;
+}
+
+.chipClose:hover, .chipDeleteContainer:focus .chipClose {
+  color: #51a3fc;
+}

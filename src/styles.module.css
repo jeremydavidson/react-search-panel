@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   padding-right: 7px;
-  margin-top: -7px;
+  margin-top: -2px;
 }
 
 .searchIcon {
@@ -69,9 +69,8 @@
   display: flex;
   flex: 100%;
   -webkit-tap-highlight-color: transparent;
-  margin-top: -37px;
+  margin-top: -36px;
   height: 34px;
-  line-height: 34px;
 }
 
 .inputField.small {

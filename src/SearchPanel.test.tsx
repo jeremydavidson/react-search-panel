@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -183,5 +182,45 @@ describe("SearchPanel with link variant", () => {
     const choice = await screen.findByText("Mock choice 1");
     await fireEvent.click(choice);
     expect(mockHandleSelectionChange).toHaveBeenCalledWith(["choice1"]);
+  });
+});
+
+describe("SearchPanel with chips", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    render(
+      <SearchPanel
+        chips
+        choices={mockChoices}
+        variant={SearchPanelVariant.checkbox}
+        noChoiceItem={noChoiceItem}
+        onChange={mockHandleChange}
+        onSelectionChange={mockHandleSelectionChange}
+        placeholder="Search"
+        value="mock default"
+      />
+    );
+  });
+
+  it("should display a chip for selected item", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
+    const choice1 = await screen.findByText("Mock choice 1");
+    await fireEvent.click(choice1);
+
+    // Now there are 2 choice1 items displayed: one search result, one chip.
+    const choices = await screen.findAllByText("Mock choice 1");
+    expect(choices.length).toBe(2);
+  });
+
+  it("should keep chip displayed after results collapsed", async() => {
+    (await screen.findByPlaceholderText("Search")).focus();
+    const choice1 = await screen.findByText("Mock choice 1");
+    await fireEvent.click(choice1);
+    const search = await screen.findByPlaceholderText("Search");
+    fireEvent.keyDown(search, { key: "Escape", code: "Escape" });
+
+    // Now there is only one choice1 displayed, the chip.
+    const choices = await screen.findAllByText("Mock choice 1");
+    expect(choices.length).toBe(1);
   });
 });

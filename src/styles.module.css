@@ -98,10 +98,9 @@
 
 .resultContainer {
   text-align: left;
-  margin-top: -2px;
+  margin-top: -1px;
   z-index: 900;
   cursor: default;
-  -webkit-user-select: none;
 }
 
 .resultListContainer {
@@ -114,7 +113,7 @@
   padding: 0;
   border: 1px solid #ccc;
   border-radius: 0 0 24px 24px;
-  overflow: hidden;
+  overflow: scroll;
   border-top: 0;
 }
 
@@ -133,10 +132,15 @@
   margin-top: 4px;
 }
 
+.resultSeperatorContainer {
+  border: 0;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
 .resultSeperator {
   border-top: 1px solid #e8eaed;
   margin: 0 14px;
-  padding-bottom: 4px;
 }
 
 .resultListItem {

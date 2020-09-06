@@ -1,8 +1,8 @@
 {
   "name": "react-search-panel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An expandable search panel React component where results can be displayed as links, checkboxes, or radio buttons.",
-  "author": "jeremyfdavidson",
+  "author": "Jeremy Davidson",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -13,11 +13,11 @@
   "repository": {
     "type": "git",
     "url":
-      "git+https://github.com/jeremyfdavidson/react-search-panel.git"
+      "git+https://github.com/jeremydavidson/react-search-panel.git"
   },
   "bugs": {
     "url":
-      "https://github.com/jeremyfdavidson/react-search-panel/issues"
+      "https://github.com/jeremydavidson/react-search-panel/issues"
   },
   "tags": [
     "react-search-panel",

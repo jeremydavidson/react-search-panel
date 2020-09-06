@@ -347,7 +347,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
           </a>
         )}
         {!isText && (
-          <span>
+          <label className={styles.resultItemLabel}>
             <input
               id={choiceId}
               key={choiceId}
@@ -357,11 +357,10 @@ export const SearchPanel = (props: SearchPanelProps) => {
               value={choice.key}
               checked={selectedChoices.indexOf(choice.key) > -1}
               tabIndex={0}
+              className={styles.resultItemControl}
             />
-            <label htmlFor={choiceId} className={styles.resultItemLabel}>
-              {choice.description}
-            </label>
-          </span>
+            {choice.description}
+          </label>
         )}
       </div>
     );

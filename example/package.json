@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
-    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build  && mv build ../docs/demo",
+    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build  && rm -r ../docs/demo && mv build ../docs/demo",
     "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },

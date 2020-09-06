@@ -162,8 +162,14 @@
   margin: 5px;
 }
 
+.resultItemControl {
+  margin-right: 10px;
+}
+
 .resultItemLabel {
-  padding-left: 8px;
+  display: inline-block;
+  margin-left: 25px;
+  text-indent: -28px;
 }
 
 .linkChoice {

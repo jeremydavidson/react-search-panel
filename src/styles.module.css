@@ -98,7 +98,7 @@
 
 .resultContainer {
   text-align: left;
-  margin-top: -1px;
+  margin-top: -2px;
   z-index: 900;
   cursor: default;
 }
@@ -138,6 +138,10 @@
   border-right: 1px solid #ccc;
 }
 
+.resultSeperatorContainerShadow {
+  border: 0;
+}
+
 .resultSeperator {
   border-top: 1px solid #e8eaed;
   margin: 0 14px;
@@ -152,7 +156,7 @@
 }
 
 .resultItem {
-  margin: 8px;
+  padding: 6px;
 }
 
 .resultItem.small {
@@ -166,9 +170,14 @@
 .linkChoice {
   text-decoration: none;
   color: #444;
-  padding-left: 28px;
+  margin-left: 23px;
+  padding: 4px;
 }
 
 .linkChoice:hover, .linkChoice:focus {
   text-decoration: underline;
+}
+
+.chipContainer {
+  margin-top: 8px;
 }

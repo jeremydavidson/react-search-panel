@@ -148,9 +148,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
    */
   const handleOnFocus = () => {
     setIsFocused(true);
-    if (choices.length) {
-      setIsExpanded(true);
-    }
+    setIsExpanded(true);
   };
 
   /**
@@ -374,7 +372,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
       <div
         className={`
             ${styles.searchContainer}
-            ${isExpanded ? styles.searchContainerExpanded : ""}
+            ${isExpanded && (choices.length > 0) ? styles.searchContainerExpanded : ""}
             ${isExpanded && shadow ? styles.searchContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
             ${shadow ? styles.searchContainerShadow : ""}
@@ -416,12 +414,16 @@ export const SearchPanel = (props: SearchPanelProps) => {
           </div>
         </div>
       </div>
-      {isExpanded && (
+      {isExpanded && (choices.length > 0) && (
         <div
           id={resultContainerId}
           className={styles.resultContainer}
         >
-          <div className={styles.resultSeperatorContainer}>
+          <div className={`
+            ${styles.resultSeperatorContainer}
+            ${shadow ? styles.resultSeperatorContainerShadow : ""}
+          `}
+          >
             <div className={styles.resultSeperator} />
           </div>
           <fieldset

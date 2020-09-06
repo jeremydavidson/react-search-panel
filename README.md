@@ -34,7 +34,6 @@ This is an example in Typescript with all available props:
 ```tsx
 import React from "react";
 import { SearchPanel } from "react-search-panel";
-import "react-search-panel/dist/index.css";
 
 const App = () => {
   const [input, setInput] = React.useState("");
@@ -65,7 +64,6 @@ This is an example in Javascript with only the required props.
 ```jsx
 import React from "react";
 import { SearchPanel } from "react-search-panel";
-import "react-search-panel/dist/index.css";
 
 const App = () => {
   const [input, setInput] = React.useState("");

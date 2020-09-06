@@ -13,7 +13,7 @@ const styles = {
   },
   constrained: {
     // margin: "auto",
-    maxWidth: "400px",
+    // maxWidth: "400px",
   },
   formItem: {
     marginLeft: "15px",
@@ -74,6 +74,19 @@ const App = () => {
   };
 
   /**
+   * Handle when selections are made.
+   * When picking a link variant, clear search box
+   * because we would presumably navigate somewhere.
+   * @param selectedKeys
+   */
+  const handleSelectionChange = (selectedKeys: Array<string>) => {
+    setSelectedChoices(selectedKeys);
+    if (variant === SearchPanelVariant.link) {
+      setInput("");
+    }
+  };
+
+  /**
    * Perform a search when input changes.
    */
   useEffect(() => {
@@ -127,6 +140,7 @@ const App = () => {
       <p>
         This demonstration searches for TV shows when you type at least {MIN_INPUT} characters.
         It uses the public <a href="http://www.tvmaze.com/api#show-search">TVMAZE API</a>.
+        When picking a link variant, clear search box to show how that can be done.
       </p>
       <p>
         Configure variant:
@@ -137,11 +151,11 @@ const App = () => {
       <div style={styles.constrained}>
         <SearchPanel
           choices={choices}
-          maximumHeight="250px"
+          maximumHeight="200px"
           onChange={handleSearchChange}
-          onSelectionChange={selected => setSelectedChoices(selected)}
+          onSelectionChange={handleSelectionChange}
           placeholder="Search TV shows"
-          small
+          shadow
           value={input}
           variant={variant}
         />

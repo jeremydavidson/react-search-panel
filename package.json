@@ -12,12 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url":
-      "git+https://github.com/jeremydavidson/react-search-panel.git"
+    "url": "git+https://github.com/jeremydavidson/react-search-panel.git"
   },
   "bugs": {
-    "url":
-      "https://github.com/jeremydavidson/react-search-panel/issues"
+    "url": "https://github.com/jeremydavidson/react-search-panel/issues"
   },
   "tags": [
     "react-search-panel",
@@ -69,6 +67,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "@material-ui/core": "^4.11.0",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",

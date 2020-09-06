@@ -4,6 +4,8 @@ A react search panel that expands, autocompletes, and support single or multi se
 
 ## Demo
 
+![React Search Panel](https://jeremydavidson.github.io/react-search-panel/react-search-panel-demo.gif)
+
 There is a [demonstration of react-search-panel](https://jeremydavidson.github.io/react-search-panel/demo) as coded in the `example` folder.
 
 Many other variants of this component are demonstrated in this [Storybook demonstration](https://jeremydavidson.github.io/react-search-panel/storybook).
@@ -12,6 +14,19 @@ Many other variants of this component are demonstrated in this [Storybook demons
 
 Here is [documentation of the component API](https://jeremydavidson.github.io/react-search-panel/doc).
 
+## Getting started
+
+### For development
+
+1. `npm install --save-dev react-search-panel`
+
+### Run example locally
+
+1. `git clone https://github.com/jeremydavidson/react-search-panel`
+1. `cd example`
+1. `npm install`
+1. `npm start`
+
 ## Usage
 
 ### Typescript example
@@ -19,29 +34,33 @@ Here is [documentation of the component API](https://jeremydavidson.github.io/re
 This is an example in Typescript with all available props:
 
 ```tsx
-    import React from "react";
-    import SearchPanel from "react-search-panel";
-    import "react-search-panel/dist/index.css";
+import React from "react";
+import { SearchPanel } from "react-search-panel";
 
-    const App = () => {
-      const [input, setInput] = React.useState("");
-      const [, setSelectedKeys] = React.useState<Array<string>>([]);
+const App = () => {
+  const [input, setInput] = React.useState("");
+  const [, setSelectedKeys] = React.useState<Array<string>>([]);
 
-      return (
-        <SearchPanel
-          choices={choices}
-          onChange={event => setInput((event as React.ChangeEvent<HTMLInputElement>).target.value)}
-          onSelectionChange={selected => setSelectedKeys(selected)}
-          noChoiceItem={noChoiceItem}
-          placeholder="Search"
-          shadow
-          small
-          value={input}
-          variant={SearchPanelVariant.checkbox}
-        />
-      );
-    }
-    export default App;
+  return (
+    <SearchPanel
+      chips
+      choices={choices}
+      float
+      maximumHeight={250}
+      onChange={event => setInput((event as React.ChangeEvent<HTMLInputElement>).target.value)}
+      onClear={() => setInput("")}
+      onSelectionChange={selected => setSelectedKeys(selected)}
+      noChoiceItem={noChoiceItem}
+      placeholder="Search"
+      shadow
+      small
+      value={input}
+      variant={SearchPanelVariant.checkbox}
+      width={300}
+    />
+  );
+}
+export default App;
 ```
 
 ### Javascript
@@ -49,21 +68,20 @@ This is an example in Typescript with all available props:
 This is an example in Javascript with only the required props.
 
 ```jsx
-    import React from "react";
-    import SearchPanel from "react-search-panel";
-    import "react-search-panel/dist/index.css";
+import React from "react";
+import { SearchPanel } from "react-search-panel";
 
-    const App = () => {
-      const [input, setInput] = React.useState("");
+const App = () => {
+  const [input, setInput] = React.useState("");
 
-      return (
-        <SearchPanel
-          choices={choices}
-          onChange={event => setInput(event.target.value)}
-          placeholder="Search"
-          value={input}
-        />
-      );
-    }
-    export default App;
+  return (
+    <SearchPanel
+      choices={choices}
+      onChange={event => setInput(event.target.value)}
+      placeholder="Search"
+      value={input}
+    />
+  );
+}
+export default App;
 ```

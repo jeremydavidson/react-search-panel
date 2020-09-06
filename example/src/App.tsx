@@ -161,10 +161,8 @@ const App = () => {
           onClear={() => setInput("")}
           onSelectionChange={handleSelectionChange}
           placeholder="Search TV shows"
-          shadow
           value={input}
           variant={variant}
-          width={400}
         />
       </div>
       {/* <p style={styles.selected}>

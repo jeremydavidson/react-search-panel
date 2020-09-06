@@ -57,7 +57,7 @@
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "jest --watchAll",
-    "predeploy": "npm run doc && npm run build-storybook && cd example && npm run build",
+    "predeploy": "cp README.md docs && cp typedoc.md docs && cp _config.yml docs && cp assets/react-search-panel-demo.gif docs && npm run doc && npm run build-storybook && cd example && npm run build",
     "deploy": "gh-pages -d docs -t true",
     "build-storybook": "build-storybook -o docs/storybook",
     "storybook": "start-storybook -p 6006"

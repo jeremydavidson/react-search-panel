@@ -60,9 +60,14 @@ interface SearchPanelProps {
   className?: string,
 
   /**
-   * Optional maximum height of result list in pixels: <SearchPanel maximumHeight="250px" />
+   * Result list will float above content. Setting width is required.
    */
-  maximumHeight?: string,
+  float?: boolean,
+
+  /**
+   * Optional maximum height of result list in pixels: <SearchPanel maximumHeight={250} />
+   */
+  maximumHeight?: number,
 
   /**
    * Provide a "None" choice item so user can "unselect" a select choice
@@ -104,6 +109,11 @@ interface SearchPanelProps {
    * Variants available: checkbox, radio, link (can be used as links by consumer)
    */
   variant?: SearchPanelVariant,
+
+  /**
+   * Width in pixels.
+   */
+  width?: number,
 }
 
 /**
@@ -115,6 +125,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     chips,
     choices,
     className,
+    float,
     maximumHeight,
     noChoiceItem,
     onChange,
@@ -123,7 +134,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
     shadow,
     small,
     value,
-    variant
+    variant,
+    width
   } = props;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
@@ -132,6 +144,9 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
 
+  if (float && !width) {
+    console.log("Property 'float' only works when 'width' is also set.");
+  }
   let isMultiSelect = false;
   let isText = true;
   if (SearchPanelVariant.checkbox === variant) {
@@ -370,15 +385,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
   useKeypress("Escape", handlePressOutside);
   useKeypress("Enter", handlePressOutside);
 
-  let resultListHeight = "333px";
-  if (maximumHeight) {
-    resultListHeight = maximumHeight;
-  }
-
-  const resultListHeightStyle = {
-    maxHeight: resultListHeight,
-  };
-
   return (
     <form
       className={`
@@ -398,6 +404,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
             ${small ? styles.small : ""}
             ${shadow ? styles.searchContainerShadow : ""}
           `}
+        style={{ width: width ? `${width - 2}px` : "" }}
       >
         <div className={styles.flexContainer}>
           <div className={styles.searchIconContainer}>
@@ -433,6 +440,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
         <div
           id={resultContainerId}
           className={styles.resultContainer}
+          style={{ width: `${width}px` || "", position: (width && float) ? "absolute" : "inherit" }}
         >
           <div className={`
             ${styles.resultSeperatorContainer}
@@ -448,7 +456,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
             ${shadow ? styles.resultListContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
           `}
-            style={resultListHeightStyle}
+            style={{ maxHeight: maximumHeight ? `${maximumHeight}px` : "" }}
           >
             <ul className={styles.resultList} role="listbox">
               {noChoiceItem && (

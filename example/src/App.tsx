@@ -152,13 +152,14 @@ const App = () => {
         <SearchPanel
           chips={variant === SearchPanelVariant.checkbox}
           choices={choices}
-          maximumHeight="200px"
+          maximumHeight={200}
           onChange={handleSearchChange}
           onSelectionChange={handleSelectionChange}
           placeholder="Search TV shows"
           shadow
           value={input}
           variant={variant}
+          width={300}
         />
       </div>
       <p style={styles.selected}>

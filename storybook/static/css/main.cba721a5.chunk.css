@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   padding-right: 7px;
-  margin-top: -7px;
+  margin-top: -2px;
 }
 
 .styles_searchIcon__3ag_5 {
@@ -69,9 +69,8 @@
   display: flex;
   flex: 100% 1;
   -webkit-tap-highlight-color: transparent;
-  margin-top: -37px;
+  margin-top: -36px;
   height: 34px;
-  line-height: 34px;
 }
 
 .styles_inputField__2Y15e.styles_small__3T3I_ {
@@ -130,6 +129,7 @@
   flex: auto;
   padding-left: 7px;
   margin-top: 4px;
+  list-style-position: outside;
 }
 
 .styles_resultSeperatorContainer__1s8LX {
@@ -182,5 +182,39 @@
   margin-top: 8px;
 }
 
+.Chip_chip__3Mvv4 {
+  color: #555555;
+  font-weight: bold;
+  font-size: 13.3px;
+  display: inline-block;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 25px;
+  background-color: #eee;
+  margin-right: 16px;
+  margin-top: 16px;
+  white-space: nowrap;
+}
 
-/*# sourceMappingURL=main.82aa0e45.chunk.css.map*/
+.Chip_chipLabel__umP2T {
+  margin-right: 5px;
+}
+
+.Chip_chipClose__2xwZR {
+  color: #555555;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.Chip_chipDeleteContainer__1txME {
+  padding: 2px;
+  border: 0;
+}
+
+.Chip_chipClose__2xwZR:hover, .Chip_chipDeleteContainer__1txME:focus .Chip_chipClose__2xwZR {
+  color: #51a3fc;
+}
+
+
+/*# sourceMappingURL=main.cba721a5.chunk.css.map*/

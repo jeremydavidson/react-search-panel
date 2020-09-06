@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import styles from "./styles.module.css";
 import useOnclickOutside from "react-cool-onclickoutside";
 import useKeypress from "react-use-keypress";
@@ -86,6 +86,11 @@ interface SearchPanelProps {
   onChange: (event: React.ChangeEvent) => void,
 
   /**
+   * Function that will handle event when user presses clear button.
+   */
+  onClear?: (event: React.MouseEvent) => void,
+
+  /**
    * Function that will handle event when selected items change.
    */
   onSelectionChange?: (selectedChoices: Array<string>) => void,
@@ -135,6 +140,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     maximumHeight,
     noChoiceItem,
     onChange,
+    onClear,
     onSelectionChange,
     placeholder,
     shadow,
@@ -392,108 +398,118 @@ export const SearchPanel = (props: SearchPanelProps) => {
   useKeypress("Enter", handlePressOutside);
 
   return (
-    <form
-      className={`
-        ${className}
-        ${styles.topContainer}
-        ${small ? styles.small : ""}
-      `}
-      ref={clickOutsideRef}
-      onFocus={handleOnFocus}
-      onBlur={handleOnBlur}
-    >
-      <div
+    <div>
+      <form
         className={`
+          ${className}
+          ${styles.topContainer}
+          ${small ? styles.small : ""}
+        `}
+        ref={clickOutsideRef}
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
+      >
+        <div
+          className={`
             ${styles.searchContainer}
             ${isExpanded && (choices.length > 0) ? styles.searchContainerExpanded : ""}
             ${isExpanded && shadow ? styles.searchContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
             ${shadow ? styles.searchContainerShadow : ""}
           `}
-        style={{ width: width ? `${width - 2}px` : "" }}
-      >
-        <div className={styles.flexContainer}>
-          <div className={styles.searchIconContainer}>
-            <span className={styles.searchIcon}>
-              <FontAwesomeIcon icon={faSearch} />
-            </span>
-          </div>
-          <div className={styles.inputContainer}>
-            <div className={styles.inputFieldContainer} />
-            <input
-              ref={searchField}
-              className={`${styles.inputField} ${small ? styles.small : ""}`}
-              type="text"
-              aria-autocomplete="both"
-              aria-haspopup="false"
-              autoCapitalize="off"
-              autoComplete="off"
-              autoCorrect="off"
-              role="combobox"
-              spellCheck="false"
-              title={placeholder}
-              aria-label={placeholder}
-              aria-controls={resultContainerId}
-              aria-expanded={isExpanded}
-              placeholder={placeholder}
-              onChange={handleSearchChange}
-              value={value}
-            />
-          </div>
-          {isLoading && (
-            <div className={styles.spinnerContainer}>
+          style={{ width: width ? `${width - 2}px` : "" }}
+        >
+          <div className={styles.flexContainer}>
+            <div className={styles.searchIconContainer}>
               <span className={styles.searchIcon}>
-                <FontAwesomeIcon icon={faSpinner} spin />
+                <FontAwesomeIcon icon={faSearch} />
               </span>
             </div>
-          )}
-        </div>
-      </div>
-      {isExpanded && (choices.length > 0) && (
-        <div
-          id={resultContainerId}
-          className={styles.resultContainer}
-          style={{ width: `${width}px` || "", position: (width && float) ? "absolute" : "inherit" }}
-        >
-          <div className={`
-            ${styles.resultSeperatorContainer}
-            ${shadow ? styles.resultSeperatorContainerShadow : ""}
-          `}
-          >
-            <div className={styles.resultSeperator} />
+            <div className={styles.inputContainer}>
+              <div className={styles.inputFieldContainer} />
+              <input
+                ref={searchField}
+                className={`${styles.inputField} ${small ? styles.small : ""}`}
+                type="text"
+                aria-autocomplete="both"
+                aria-haspopup="false"
+                autoCapitalize="off"
+                autoComplete="off"
+                autoCorrect="off"
+                role="combobox"
+                spellCheck="false"
+                title={placeholder}
+                aria-label={placeholder}
+                aria-controls={resultContainerId}
+                aria-expanded={isExpanded}
+                placeholder={placeholder}
+                onChange={handleSearchChange}
+                value={value}
+              />
+            </div>
+            {isLoading && (
+              <div className={styles.spinnerContainer}>
+                <span className={styles.searchIcon}>
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                </span>
+              </div>
+            )}
+            {onClear && value && (
+              <div className={styles.clearContainer}>
+                <button className={styles.clearButton} onClick={onClear}>
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              </div>
+            )}
           </div>
-          <fieldset
-            id={fieldsetId}
-            className={`
-            ${styles.resultListContainer}
-            ${shadow ? styles.resultListContainerExpandedShadow : ""}
-            ${small ? styles.small : ""}
-          `}
-            style={{ maxHeight: maximumHeight ? `${maximumHeight}px` : "" }}
-          >
-            <ul className={styles.resultList} role="listbox">
-              {noChoiceItem && (
-                <li
-                  key={noChoiceItem.key}
-                  className={styles.resultListItem}
-                  role="presentation"
-                >
-                  <ChoiceItem choice={noChoiceItem} />
-                </li>
-              )}
-              {choices.map((choice) => (
-                <li
-                  key={choice.key}
-                  className={styles.resultListItem}
-                  role="presentation"
-                >
-                  <ChoiceItem choice={choice} />
-                </li>
-              ))}
-            </ul>
-          </fieldset>
         </div>
-      )}
+        {isExpanded && (choices.length > 0) && (
+          <div
+            id={resultContainerId}
+            className={styles.resultContainer}
+            style={{ width: `${width}px` || "", position: (width && float) ? "absolute" : "inherit" }}
+          >
+            <div className={`
+                ${styles.resultSeperatorContainer}
+                ${shadow ? styles.resultSeperatorContainerShadow : ""}
+              `}
+            >
+              <div className={styles.resultSeperator} />
+            </div>
+            <fieldset
+              id={fieldsetId}
+              className={`
+                ${styles.resultListContainer}
+                ${shadow ? styles.resultListContainerExpandedShadow : ""}
+                ${small ? styles.small : ""}
+              `}
+              style={{ maxHeight: maximumHeight ? `${maximumHeight}px` : "" }}
+            >
+              <ul className={styles.resultList} role="listbox">
+                {noChoiceItem && (
+                  <li
+                    key={noChoiceItem.key}
+                    className={styles.resultListItem}
+                    role="presentation"
+                  >
+                    <ChoiceItem choice={noChoiceItem} />
+                  </li>
+                )}
+                {choices.map((choice) => (
+                  <li
+                    key={choice.key}
+                    className={styles.resultListItem}
+                    role="presentation"
+                  >
+                    <ChoiceItem choice={choice} />
+                  </li>
+                ))}
+              </ul>
+            </fieldset>
+          </div>
+        )}
+
+      </form>
 
       {chips && (
         <div className={styles.chipContainer}>
@@ -507,7 +523,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
           ))}
         </div>
       )}
-
-    </form>
+    </div>
   );
 };

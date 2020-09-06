@@ -51,7 +51,6 @@
   display: flex;
   align-items: center;
   padding-left: 8px;
-  padding-right: 4px;
   margin-top: 8px;
   align-self: end;
 }
@@ -61,6 +60,23 @@
   height: 20px;
   width: 20px;
 }
+
+.clearContainer {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+  margin-top: 8px;
+  align-self: end;
+}
+
+.clearButton {
+  color: #9aa0a6;
+  height: 20px;
+  width: 20px;
+  border: 0;
+  background: transparent;
+}
+
 
 .inputField {
   color: #444;

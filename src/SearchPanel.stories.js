@@ -14,6 +14,8 @@ const styles = {
 const choices = [
   { key: "choice1", description: "A choice" },
   { key: "choice2", description: "Another choice" },
+  { key: "choice3", description: "This choice" },
+  { key: "choice4", description: "That choice" },
 ];
 
 const noChoiceItem = { key: "none", description: "None" };
@@ -170,6 +172,59 @@ export const LinkVariantSmall = () => {
         onChange={event => setInput(event.target.value)}
         placeholder="Search"
         small
+        value={input}
+      />
+    </div>
+  );
+};
+
+export const FloatingResults = () => {
+  const [input, setInput] = useState("");
+  return (
+    <div style={styles.constrained}>
+      <SearchPanel
+        choices={choices}
+        float
+        maximumHeight={100}
+        variant={SearchPanelVariant.link}
+        onChange={event => setInput(event.target.value)}
+        placeholder="Search"
+        shadow
+        value={input}
+        width={350}
+      />
+    </div>
+  );
+};
+
+export const LoadingIndicator = () => {
+  const [input, setInput] = useState("");
+  return (
+    <div style={styles.constrained}>
+      <SearchPanel
+        choices={choices}
+        isLoading
+        variant={SearchPanelVariant.link}
+        onChange={event => setInput(event.target.value)}
+        placeholder="Search"
+        shadow
+        value={input}
+      />
+    </div>
+  );
+};
+
+export const ClearButton = () => {
+  const [input, setInput] = useState("");
+  return (
+    <div style={styles.constrained}>
+      <SearchPanel
+        choices={choices}
+        variant={SearchPanelVariant.link}
+        onChange={event => setInput(event.target.value)}
+        onClear={() => setInput("")}
+        placeholder="Search"
+        shadow
         value={input}
       />
     </div>

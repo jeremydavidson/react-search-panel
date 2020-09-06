@@ -62,7 +62,7 @@ const App = () => {
   const [input, setInput] = useState("");
   const [variant, setVariant] = useState<SearchPanelVariant>(SearchPanelVariant.link);
   const [choices, setChoices] = useState<Array<SearchPanelChoice>>([]);
-  const [selectedChoices, setSelectedChoices] = useState<Array<string>>([]);
+  const [, setSelectedChoices] = useState<Array<string>>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   /**
@@ -158,16 +158,18 @@ const App = () => {
           isLoading={isLoading}
           maximumHeight={200}
           onChange={handleSearchChange}
+          onClear={() => setInput("")}
           onSelectionChange={handleSelectionChange}
           placeholder="Search TV shows"
+          shadow
           value={input}
           variant={variant}
-          width={300}
+          width={400}
         />
       </div>
-      <p style={styles.selected}>
+      {/* <p style={styles.selected}>
         Selected: {JSON.stringify(selectedChoices)}
-      </p>
+      </p> */}
     </div>
   );
 };

@@ -76,11 +76,14 @@
 								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="_searchpanel_test_.html#mockchoices" class="tsd-kind-icon">mock<wbr>Choices</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="_searchpanel_test_.html#mockhandlechange" class="tsd-kind-icon">mock<wbr>Handle<wbr>Change</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="_searchpanel_test_.html#mockhandleselectionchange" class="tsd-kind-icon">mock<wbr>Handle<wbr>Selection<wbr>Change</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="_searchpanel_test_.html#mockonclear" class="tsd-kind-icon">mock<wbr>OnClear</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Object literals</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_searchpanel_test_.html#mockchoice1" class="tsd-kind-icon">mock<wbr>Choice1</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_searchpanel_test_.html#mockchoice2" class="tsd-kind-icon">mock<wbr>Choice2</a></li>
 								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_searchpanel_test_.html#nochoiceitem" class="tsd-kind-icon">no<wbr>Choice<wbr>Item</a></li>
 							</ul>
 						</section>
@@ -92,10 +95,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 					<a name="mockchoices" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> mock<wbr>Choices</h3>
-					<div class="tsd-signature tsd-kind-icon">mock<wbr>Choices<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_searchpanel_.searchpanelchoice.html" class="tsd-signature-type">SearchPanelChoice</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [{ key: &quot;choice1&quot;, description: &quot;Mock choice 1&quot; },{ key: &quot;choice2&quot;, description: &quot;Mock another choice&quot; },]</span></div>
+					<div class="tsd-signature tsd-kind-icon">mock<wbr>Choices<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_searchpanel_.searchpanelchoice.html" class="tsd-signature-type">SearchPanelChoice</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [mockChoice1, mockChoice2]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/c106824/src/SearchPanel.test.tsx#L9">SearchPanel.test.tsx:9</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L12">SearchPanel.test.tsx:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -105,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">mock<wbr>Handle<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/c106824/src/SearchPanel.test.tsx#L6">SearchPanel.test.tsx:6</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L6">SearchPanel.test.tsx:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -115,7 +118,17 @@
 					<div class="tsd-signature tsd-kind-icon">mock<wbr>Handle<wbr>Selection<wbr>Change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/c106824/src/SearchPanel.test.tsx#L7">SearchPanel.test.tsx:7</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L7">SearchPanel.test.tsx:7</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="mockonclear" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> mock<wbr>OnClear</h3>
+					<div class="tsd-signature tsd-kind-icon">mock<wbr>OnClear<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Mock</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = jest.fn()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L8">SearchPanel.test.tsx:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -123,31 +136,91 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Object literals</h2>
 				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="mockchoice1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> mock<wbr>Choice1</h3>
+					<div class="tsd-signature tsd-kind-icon">mock<wbr>Choice1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L10">SearchPanel.test.tsx:10</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="mockchoice1.description" class="tsd-anchor"></a>
+						<h3>description</h3>
+						<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;Mock choice 1&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L10">SearchPanel.test.tsx:10</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="mockchoice1.key" class="tsd-anchor"></a>
+						<h3>key</h3>
+						<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;choice1&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L10">SearchPanel.test.tsx:10</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="mockchoice2" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> mock<wbr>Choice2</h3>
+					<div class="tsd-signature tsd-kind-icon">mock<wbr>Choice2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L11">SearchPanel.test.tsx:11</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="mockchoice2.description-1" class="tsd-anchor"></a>
+						<h3>description</h3>
+						<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;Mock another choice&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L11">SearchPanel.test.tsx:11</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="mockchoice2.key-1" class="tsd-anchor"></a>
+						<h3>key</h3>
+						<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;choice2&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L11">SearchPanel.test.tsx:11</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
 					<a name="nochoiceitem" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> no<wbr>Choice<wbr>Item</h3>
 					<div class="tsd-signature tsd-kind-icon">no<wbr>Choice<wbr>Item<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/c106824/src/SearchPanel.test.tsx#L14">SearchPanel.test.tsx:14</a></li>
+							<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L14">SearchPanel.test.tsx:14</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="nochoiceitem.description" class="tsd-anchor"></a>
+						<a name="nochoiceitem.description-2" class="tsd-anchor"></a>
 						<h3>description</h3>
 						<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;Mock None&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/c106824/src/SearchPanel.test.tsx#L14">SearchPanel.test.tsx:14</a></li>
+								<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L14">SearchPanel.test.tsx:14</a></li>
 							</ul>
 						</aside>
 					</section>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="nochoiceitem.key" class="tsd-anchor"></a>
+						<a name="nochoiceitem.key-2" class="tsd-anchor"></a>
 						<h3>key</h3>
 						<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;none&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/c106824/src/SearchPanel.test.tsx#L14">SearchPanel.test.tsx:14</a></li>
+								<li>Defined in <a href="https://github.com/jeremydavidson/react-search-panel/blob/ba11552/src/SearchPanel.test.tsx#L14">SearchPanel.test.tsx:14</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -172,17 +245,8 @@
 					<li class=" tsd-kind-module">
 						<a href="_searchpanel_stories_.html">&quot;<wbr>Search<wbr>Panel.stories&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="_searchpanel_styles_.html">&quot;<wbr>Search<wbr>Panel.styles&quot;</a>
-					</li>
 					<li class="current tsd-kind-module">
 						<a href="_searchpanel_test_.html">&quot;<wbr>Search<wbr>Panel.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="_searchpanelitem_.html">&quot;<wbr>Search<wbr>Panel<wbr>Item&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="_searchpanelmaterialui_.html">&quot;<wbr>Search<wbr>Panel<wbr>MaterialUI&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="_index_.html">&quot;index&quot;</a>
@@ -199,6 +263,15 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_searchpanel_test_.html#mockhandleselectionchange" class="tsd-kind-icon">mock<wbr>Handle<wbr>Selection<wbr>Change</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_searchpanel_test_.html#mockonclear" class="tsd-kind-icon">mock<wbr>OnClear</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_searchpanel_test_.html#mockchoice1" class="tsd-kind-icon">mock<wbr>Choice1</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_searchpanel_test_.html#mockchoice2" class="tsd-kind-icon">mock<wbr>Choice2</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_searchpanel_test_.html#nochoiceitem" class="tsd-kind-icon">no<wbr>Choice<wbr>Item</a>

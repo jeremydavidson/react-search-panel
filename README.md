@@ -39,8 +39,7 @@ import { SearchPanel } from "react-search-panel";
 
 const App = () => {
   const [input, setInput] = React.useState("");
-  const [, setSelectedKeys] = React.useState<Array<string>>([]);
-
+  const [selectedChoices, setSelectedChoices] = useState(choices);
   return (
     <SearchPanel
       chips
@@ -49,9 +48,10 @@ const App = () => {
       maximumHeight={250}
       onChange={event => setInput((event as React.ChangeEvent<HTMLInputElement>).target.value)}
       onClear={() => setInput("")}
-      onSelectionChange={selected => setSelectedKeys(selected)}
+      onSelectionChange={setSelectedChoices}
       noChoiceItem={noChoiceItem}
       placeholder="Search"
+      selectedChoices={selectedChoices}
       shadow
       small
       value={input}
@@ -73,12 +73,14 @@ import { SearchPanel } from "react-search-panel";
 
 const App = () => {
   const [input, setInput] = React.useState("");
-
+  const [selectedChoices, setSelectedChoices] = useState(choices);
   return (
     <SearchPanel
       choices={choices}
       onChange={event => setInput(event.target.value)}
+      onSelectionChange={setSelectedChoices}
       placeholder="Search"
+      selectedChoices={selectedChoices}
       value={input}
     />
   );

@@ -163,20 +163,22 @@ const App = () => {
         <SearchPanel
           chips
           choices={choices}
+          float
           isLoading={isLoading}
-          maximumHeight={200}
+          maximumHeight={150}
           onChange={handleSearchChange}
           onClear={() => setInput("")}
           onSelectionChange={handleSelectionChange}
           placeholder="Search TV shows"
           preSelectedChoices={selectedChoices}
+          shadow
           value={input}
           variant={variant}
         />
       </div>
-      <p style={styles.selected}>
+      {/* <p style={styles.selected}>
         Selected: {JSON.stringify(selectedChoices)}
-      </p>
+      </p> */}
     </div>
   );
 };

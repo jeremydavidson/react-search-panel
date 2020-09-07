@@ -299,3 +299,28 @@ export const PreselectedChoices = () => {
     </div>
   );
 };
+
+export const PreselectedSmall = () => {
+  const [input, setInput] = useState("");
+  const [selectedChoices, setSelectedChoices] = useState(choices);
+  return (
+    <div style={styles.constrained}>
+      <SearchPanel
+        chips
+        float
+        height={120}
+        choices={choices}
+        variant={SearchPanelVariant.checkbox}
+        onChange={event => setInput(event.target.value)}
+        onClear={() => setInput("")}
+        onSelectionChange={setSelectedChoices}
+        placeholder="Search"
+        preSelectedChoices={selectedChoices}
+        shadow
+        small
+        value={input}
+        width={226}
+      />
+    </div>
+  );
+};

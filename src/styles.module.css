@@ -1,8 +1,7 @@
 .topContainer {
   font: 16px arial, sans-serif;
-  color: #444;
-  fill: #999;
 }
+
 .topContainer.small {
   font: 14px arial, sans-serif;
 }
@@ -73,7 +72,7 @@
   color: #9aa0a6;
   height: 32px;
   width: 32px;
-  border: 0;
+  border: none;
   background: transparent;
 }
 
@@ -152,7 +151,7 @@
 
 .resultList {
   flex: auto;
-  padding-left: 10px;
+  padding-left: 1rem;
   margin-top: 4px;
 }
 

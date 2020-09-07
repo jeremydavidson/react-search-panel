@@ -441,7 +441,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
             ${small ? styles.small : ""}
             ${shadow ? styles.searchContainerShadow : ""}
           `}
-          style={{ width: actualWidth ? `${actualWidth - 2}px` : "" }}
+          style={{ width: actualWidth ? `${actualWidth}px` : "" }}
         >
           <div className={styles.flexContainer}>
             <div className={styles.searchIconContainer}>

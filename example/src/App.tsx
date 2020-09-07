@@ -41,7 +41,7 @@ const MIN_INPUT = 3;
  * @interface Show
  */
 export interface Show {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -54,15 +54,17 @@ export interface ShowContainer {
   show: Show;
 }
 
+const preselectedChoices: SearchPanelChoice[] = [{ key: "38963", description: "The Mandalorian" }, { key: "563", description: "Star Wars: The Clone Wars" }];
+
 /**
  * A demo application
  * @returns
  */
 const App = () => {
   const [input, setInput] = useState("");
-  const [variant, setVariant] = useState<SearchPanelVariant>(SearchPanelVariant.link);
+  const [variant, setVariant] = useState<SearchPanelVariant>(SearchPanelVariant.checkbox);
   const [choices, setChoices] = useState<Array<SearchPanelChoice>>([]);
-  const [, setSelectedChoices] = useState<Array<string>>([]);
+  const [selectedChoices, setSelectedChoices] = useState<Array<SearchPanelChoice>>(preselectedChoices);
   const [isLoading, setIsLoading] = useState(false);
 
   /**
@@ -78,14 +80,20 @@ const App = () => {
    * Handle when selections are made.
    * When picking a link variant, clear search box
    * because we would presumably navigate somewhere.
-   * @param selectedKeys
+   * @param selectedChoices
    */
-  const handleSelectionChange = (selectedKeys: Array<string>) => {
-    setSelectedChoices(selectedKeys);
-    if (variant === SearchPanelVariant.link) {
-      setInput("");
-    }
+  const handleSelectionChange = (selectedChoices: Array<SearchPanelChoice>) => {
+    setSelectedChoices(selectedChoices);
+    // const combinedDescriptions = selectedChoices.map(choice => (choice.description)).join(" ");
+    // setInput(combinedDescriptions);
   };
+
+  useEffect(() => {
+    if (variant === SearchPanelVariant.link || variant === SearchPanelVariant.radio) {
+      setSelectedChoices([]);
+    }
+    setInput("");
+  }, [variant]);
 
   /**
    * Perform a search when input changes.
@@ -103,7 +111,7 @@ const App = () => {
 
         // Transform results to choices.
         results.forEach((result: ShowContainer) => {
-          const choice = { key: result.show.id, description: result.show.name };
+          const choice = { key: result.show.id.toString(), description: result.show.name };
           resultChoices.push(choice);
         });
       }
@@ -153,7 +161,7 @@ const App = () => {
       </p>
       <div style={styles.constrained}>
         <SearchPanel
-          chips={variant === SearchPanelVariant.checkbox}
+          chips
           choices={choices}
           isLoading={isLoading}
           maximumHeight={200}
@@ -161,13 +169,14 @@ const App = () => {
           onClear={() => setInput("")}
           onSelectionChange={handleSelectionChange}
           placeholder="Search TV shows"
+          preSelectedChoices={selectedChoices}
           value={input}
           variant={variant}
         />
       </div>
-      {/* <p style={styles.selected}>
+      <p style={styles.selected}>
         Selected: {JSON.stringify(selectedChoices)}
-      </p> */}
+      </p>
     </div>
   );
 };

@@ -60,6 +60,11 @@ interface SearchPanelProps {
   className?: string,
 
   /**
+   * A label for clear button, should be provided if onClear is provided.
+   */
+  clearLabel?: string,
+
+  /**
    * Result list will float above content. Setting width is required.
    */
   float?: boolean,
@@ -93,7 +98,12 @@ interface SearchPanelProps {
   /**
    * Function that will handle event when selected items change.
    */
-  onSelectionChange?: (selectedChoices: Array<string>) => void,
+  onSelectionChange: (selectedChoices: Array<SearchPanelChoice>) => void,
+
+  /**
+   * State of selected choices.
+   */
+  preSelectedChoices?: Array<SearchPanelChoice>,
 
   /**
    * Display a shadow on hover and when expanded.
@@ -135,6 +145,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     chips,
     choices,
     className,
+    clearLabel,
     float,
     isLoading,
     maximumHeight,
@@ -143,6 +154,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     onClear,
     onSelectionChange,
     placeholder,
+    preSelectedChoices,
     shadow,
     small,
     value,
@@ -151,13 +163,20 @@ export const SearchPanel = (props: SearchPanelProps) => {
   } = props;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
-  const [selectedChoices, setSelectedChoices] = React.useState<Array<string>>([]);
+  let initialSelectedChoices: Array<SearchPanelChoice> = [];
+  if (preSelectedChoices) {
+    initialSelectedChoices = preSelectedChoices;
+  }
+  const [selectedChoices, setSelectedChoices] = React.useState<Array<SearchPanelChoice>>(initialSelectedChoices);
   const fieldsetId: string = "ChoiceGroup";
   const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
 
   if (float && !width) {
     console.log("Property 'float' only works when 'width' is also set.");
+  }
+  if (onClear && !clearLabel) {
+    console.log("Developer should provide a value for clearLabel.");
   }
   let isMultiSelect = false;
   let isText = true;
@@ -208,28 +227,39 @@ export const SearchPanel = (props: SearchPanelProps) => {
 
   /**
    * Remove a selected key
-   * @param key
-   * @param updateKeys
+   * @param choice
+   * @param updateChoices
    */
-  const removeSelectedKey = (key: string, updateKeys: Array<string>) => {
-    const index: number = updateKeys.indexOf(key);
+  const removeSelectedChoice = (choice: SearchPanelChoice, updateChoices: Array<SearchPanelChoice>) => {
+    const index: number = getIndex(choice, updateChoices);
     if (index > -1) {
-      updateKeys.splice(index, 1);
+      updateChoices.splice(index, 1);
     }
+  };
+
+  const getIndex = (choice: SearchPanelChoice, choices: Array<SearchPanelChoice>) => {
+    let index:number = -1;
+    const mappedKeys = choices.map(eachChoice => {
+      return eachChoice.key;
+    });
+    console.log("mappedKeys: " + JSON.stringify(mappedKeys));
+    index = mappedKeys.indexOf(choice.key);
+    console.log("find index: " + index);
+    return index;
   };
 
   /**
    * Add a selected key, if not multi-select, remove any previous selected key.
    * @param key
-   * @param updateKeys
+   * @param updateChoices
    */
-  const addSelectedKey = (key: string, updateKeys: Array<string>) => {
+  const addSelectedChoice = (key: SearchPanelChoice, updateChoices: Array<SearchPanelChoice>) => {
     if (isMultiSelect) {
-      updateKeys.push(key);
+      updateChoices.push(key);
     }
     else {
-      updateKeys.splice(0, updateKeys.length);
-      updateKeys.push(key);
+      updateChoices.splice(0, updateChoices.length);
+      updateChoices.push(key);
     }
   };
 
@@ -237,60 +267,56 @@ export const SearchPanel = (props: SearchPanelProps) => {
    * Handle when an item is selected.
    * Handle cases where item is single or multi select.
    * @param event
-   * @param selectedKey
+   * @param selectedChoice
    */
-  const handleCheckChanged = (event: React.ChangeEvent, selectedKey: string) => {
+  const handleCheckChanged = (event: React.ChangeEvent, selectedChoice: SearchPanelChoice) => {
     const target = event.target as HTMLInputElement;
-    let updateKeys = [...selectedChoices];
+    let updateChoices = [...selectedChoices];
     let isNoneSelected = false;
 
     // Set selected key if checked, remove it otherwise.
     if (target.checked) {
-      addSelectedKey(selectedKey, updateKeys);
+      addSelectedChoice(selectedChoice, updateChoices);
     }
     else {
-      removeSelectedKey(selectedKey, updateKeys);
+      removeSelectedChoice(selectedChoice, updateChoices);
     }
 
     // If the "None" option was selected, make it the only selected item.
     if (noChoiceItem) {
-      if (selectedKey === noChoiceItem.key && target.checked) {
-        updateKeys = [selectedKey];
+      if (selectedChoice.key === noChoiceItem.key && target.checked) {
+        updateChoices = [selectedChoice];
         // Special case for "None" option, consumer should get an empty array
         // while the "None" option is checked on screen.
         isNoneSelected = true;
       }
       // If any other item was selected, uncheck the "None" item
       else {
-        removeSelectedKey(noChoiceItem.key, updateKeys);
+        removeSelectedChoice(noChoiceItem, updateChoices);
       }
     }
 
     // Set state
-    setSelectedChoices(updateKeys);
+    setSelectedChoices(updateChoices);
 
-    // Notify the consumer of the currently selected keys
-    if (onSelectionChange) {
-      if (isNoneSelected) {
-        onSelectionChange([]);
-      }
-      else {
-        onSelectionChange(updateKeys);
-      }
+    // Notify the consumer of the currently selected choices
+    if (isNoneSelected) {
+      onSelectionChange([]);
+    }
+    else {
+      onSelectionChange(updateChoices);
     }
   };
 
   /**
    * Handle removing a selected key
-   * @param key
+   * @param choice
    */
-  const handleRemoveSelectedChoice = (key: string) => {
-    const updateKeys = [...selectedChoices];
-    removeSelectedKey(key, updateKeys);
-    setSelectedChoices(updateKeys);
-    if (onSelectionChange) {
-      onSelectionChange(updateKeys);
-    }
+  const handleRemoveSelectedChoice = (choice: SearchPanelChoice) => {
+    const updateChoices = [...selectedChoices];
+    removeSelectedChoice(choice, updateChoices);
+    setSelectedChoices(updateChoices);
+    onSelectionChange(updateChoices);
   };
 
   /**
@@ -308,18 +334,17 @@ export const SearchPanel = (props: SearchPanelProps) => {
    */
   const handleLinkPress = (event: React.MouseEvent<HTMLAnchorElement>, choice: SearchPanelChoice) => {
     event.preventDefault();
-    const selectedKeys = [choice.key];
-    setSelected(selectedKeys);
+    const selectedChoices = [choice];
+    setSelected(selectedChoices);
+    setIsExpanded(false);
   };
 
   /**
-   * Set selected keys and notify consumer of the change.
+   * Set selected choices and notify consumer of the change.
    */
-  const setSelected = (selectedKeys: Array<string>) => {
-    setSelectedChoices(selectedKeys);
-    if (onSelectionChange) {
-      onSelectionChange(selectedKeys);
-    }
+  const setSelected = (selectedChoices: Array<SearchPanelChoice>) => {
+    setSelectedChoices(selectedChoices);
+    onSelectionChange(selectedChoices);
   };
 
   /**
@@ -335,15 +360,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
       }
     }
   }, [choices]);
-
-  /**
-   * Reset selected keys when variant changes,
-   * because radio and link variant support single selection,
-   * while checkbox variant supports multiple.
-   */
-  useEffect(() => {
-    setSelected([]);
-  }, [variant]);
 
   /**
    * Definition of ChoiceItem properties
@@ -380,9 +396,9 @@ export const SearchPanel = (props: SearchPanelProps) => {
               key={choiceId}
               name={fieldsetId}
               type={inputType}
-              onChange={(event) => handleCheckChanged(event, choice.key)}
+              onChange={(event) => handleCheckChanged(event, choice)}
               value={choice.key}
-              checked={selectedChoices.indexOf(choice.key) > -1}
+              checked={getIndex(choice, selectedChoices) > -1}
               tabIndex={0}
               className={styles.resultItemControl}
             />
@@ -398,131 +414,131 @@ export const SearchPanel = (props: SearchPanelProps) => {
   useKeypress("Enter", handlePressOutside);
 
   return (
-    <div>
-      <form
-        className={`
+    <form
+      className={`
           ${className}
           ${styles.topContainer}
           ${small ? styles.small : ""}
         `}
-        ref={clickOutsideRef}
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
-      >
-        <div
-          className={`
+      ref={clickOutsideRef}
+      onFocus={handleOnFocus}
+      onBlur={handleOnBlur}
+    >
+      <div
+        className={`
             ${styles.searchContainer}
             ${isExpanded && (choices.length > 0) ? styles.searchContainerExpanded : ""}
             ${isExpanded && shadow ? styles.searchContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
             ${shadow ? styles.searchContainerShadow : ""}
           `}
-          style={{ width: width ? `${width - 2}px` : "" }}
-        >
-          <div className={styles.flexContainer}>
-            <div className={styles.searchIconContainer}>
+        style={{ width: width ? `${width - 2}px` : "" }}
+      >
+        <div className={styles.flexContainer}>
+          <div className={styles.searchIconContainer}>
+            <span className={styles.searchIcon}>
+              <FontAwesomeIcon icon={faSearch} />
+            </span>
+          </div>
+          <div className={styles.inputContainer}>
+            <div className={styles.inputFieldContainer} />
+            <input
+              ref={searchField}
+              className={`${styles.inputField} ${small ? styles.small : ""}`}
+              type="text"
+              aria-autocomplete="both"
+              aria-haspopup="false"
+              autoCapitalize="off"
+              autoComplete="off"
+              autoCorrect="off"
+              role="combobox"
+              spellCheck="false"
+              title={placeholder}
+              aria-label={placeholder}
+              aria-controls={resultContainerId}
+              aria-expanded={isExpanded}
+              placeholder={placeholder}
+              onChange={handleSearchChange}
+              value={value}
+            />
+          </div>
+          {isLoading && (
+            <div className={`${styles.spinnerContainer} ${small ? styles.small : ""}`}>
               <span className={styles.searchIcon}>
-                <FontAwesomeIcon icon={faSearch} />
+                <FontAwesomeIcon icon={faSpinner} spin />
               </span>
             </div>
-            <div className={styles.inputContainer}>
-              <div className={styles.inputFieldContainer} />
-              <input
-                ref={searchField}
-                className={`${styles.inputField} ${small ? styles.small : ""}`}
-                type="text"
-                aria-autocomplete="both"
-                aria-haspopup="false"
-                autoCapitalize="off"
-                autoComplete="off"
-                autoCorrect="off"
-                role="combobox"
-                spellCheck="false"
-                title={placeholder}
-                aria-label={placeholder}
-                aria-controls={resultContainerId}
-                aria-expanded={isExpanded}
-                placeholder={placeholder}
-                onChange={handleSearchChange}
-                value={value}
-              />
+          )}
+          {onClear && value && (
+            <div className={styles.clearContainer}>
+              <button
+                onClick={onClear}
+                title={clearLabel}
+                className={`${styles.clearButton} ${small ? styles.small : ""}`}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
             </div>
-            {isLoading && (
-              <div className={styles.spinnerContainer}>
-                <span className={styles.searchIcon}>
-                  <FontAwesomeIcon icon={faSpinner} spin />
-                </span>
-              </div>
-            )}
-            {onClear && value && (
-              <div className={styles.clearContainer}>
-                <button className={styles.clearButton} onClick={onClear}>
-                  <FontAwesomeIcon icon={faTimes} />
-                </button>
-              </div>
-            )}
-          </div>
+          )}
         </div>
-        {isExpanded && (choices.length > 0) && (
-          <div
-            id={resultContainerId}
-            className={styles.resultContainer}
-            style={{ width: `${width}px` || "", position: (width && float) ? "absolute" : "inherit" }}
-          >
-            <div className={`
+      </div>
+      {isExpanded && (choices.length > 0) && (
+        <div
+          id={resultContainerId}
+          className={styles.resultContainer}
+          style={{ width: `${width}px` || "", position: (width && float) ? "absolute" : "inherit" }}
+        >
+          <div className={`
                 ${styles.resultSeperatorContainer}
                 ${shadow ? styles.resultSeperatorContainerShadow : ""}
               `}
-            >
-              <div className={styles.resultSeperator} />
-            </div>
-            <fieldset
-              id={fieldsetId}
-              className={`
+          >
+            <div className={styles.resultSeperator} />
+          </div>
+          <fieldset
+            id={fieldsetId}
+            className={`
                 ${styles.resultListContainer}
                 ${shadow ? styles.resultListContainerExpandedShadow : ""}
                 ${small ? styles.small : ""}
               `}
-              style={{ maxHeight: maximumHeight ? `${maximumHeight}px` : "" }}
-            >
-              <ul className={styles.resultList} role="listbox">
-                {noChoiceItem && (
-                  <li
-                    key={noChoiceItem.key}
-                    className={styles.resultListItem}
-                    role="presentation"
-                  >
-                    <ChoiceItem choice={noChoiceItem} />
-                  </li>
-                )}
-                {choices.map((choice) => (
-                  <li
-                    key={choice.key}
-                    className={styles.resultListItem}
-                    role="presentation"
-                  >
-                    <ChoiceItem choice={choice} />
-                  </li>
-                ))}
-              </ul>
-            </fieldset>
-          </div>
-        )}
-
-      </form>
-
+            style={{ maxHeight: maximumHeight ? `${maximumHeight}px` : "" }}
+          >
+            <ul className={styles.resultList} role="listbox">
+              {noChoiceItem && (
+                <li
+                  key={noChoiceItem.key}
+                  className={styles.resultListItem}
+                  role="presentation"
+                >
+                  <ChoiceItem choice={noChoiceItem} />
+                </li>
+              )}
+              {choices.map((choice) => (
+                <li
+                  key={choice.key}
+                  className={styles.resultListItem}
+                  role="presentation"
+                >
+                  <ChoiceItem choice={choice} />
+                </li>
+              ))}
+            </ul>
+          </fieldset>
+        </div>
+      )}
       {chips && (
         <div className={styles.chipContainer}>
-          {selectedChoices.map(key => (
+          {selectedChoices.map(choice => (
             <Chip
-              deleteLabel={`Delete ${key}`}
-              onDelete={() => handleRemoveSelectedChoice(key)}
-              key={key}
-              value={choices[choices.indexOf(choices.filter(item => item.key === key)[0])].description}
+              deleteLabel={`Delete ${choice.description}`}
+              onDelete={() => handleRemoveSelectedChoice(choice)}
+              key={choice.key}
+              value={choice.description}
             />
           ))}
         </div>
       )}
-    </div>
+    </form>
   );
 };

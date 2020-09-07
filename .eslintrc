@@ -34,7 +34,7 @@
     "quotes": ["error", "double"],
     "semi": [2, "always"],
     "operator-linebreak": ["error", "before"],
-    "no-unused-vars": ["warn"],
+    "no-unused-vars": ["off"],
     "@typescript-eslint/no-unused-vars": ["warn"],
     "react-hooks/exhaustive-deps": ["off"]
   }

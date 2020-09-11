@@ -166,7 +166,7 @@ export const PreselectedSmall = () => {
       preSelectedChoices={selectedChoices}
       small
       value={input}
-      width={226}
+      width={400}
     />
 
   );

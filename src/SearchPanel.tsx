@@ -164,7 +164,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
   const [selectedChoices, setSelectedChoices] = React.useState<Array<SearchPanelChoice>>([]);
-  const fieldsetId: string = "ChoiceGroup";
   const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
 
@@ -388,7 +387,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
    * @param param0
    */
   const ChoiceItem = ({ choice }: ChoiceItemProps) => {
-    const choiceId = `choice_${choice.key}_${Math.random()}`;
     let inputType: string = "radio";
     if (isMultiSelect) {
       inputType = "checkbox";
@@ -407,9 +405,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
         {!isText && (
           <label className={styles.resultItemLabel}>
             <input
-              id={choiceId}
-              key={choiceId}
-              name={fieldsetId}
               type={inputType}
               onChange={(event) => handleCheckChanged(event, choice)}
               value={choice.key}
@@ -517,7 +512,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
               <div className={styles.resultSeperator} />
             </div>
             <fieldset
-              id={fieldsetId}
               className={`
                 ${styles.resultListContainer}
                 ${shadow ? styles.resultListContainerExpandedShadow : ""}

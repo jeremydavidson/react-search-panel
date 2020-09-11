@@ -163,11 +163,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
   } = props;
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
-  let initialSelectedChoices: Array<SearchPanelChoice> = [];
-  if (preSelectedChoices) {
-    initialSelectedChoices = preSelectedChoices;
-  }
-  const [selectedChoices, setSelectedChoices] = React.useState<Array<SearchPanelChoice>>(initialSelectedChoices);
+  const [selectedChoices, setSelectedChoices] = React.useState<Array<SearchPanelChoice>>([]);
   const fieldsetId: string = "ChoiceGroup";
   const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
@@ -370,6 +366,17 @@ export const SearchPanel = (props: SearchPanelProps) => {
   }, [choices]);
 
   /**
+   * Update selected choices
+   * @param {SearchPanelProps} props
+   * @returns
+   */
+  useEffect(() => {
+    if (preSelectedChoices) {
+      setSelectedChoices(preSelectedChoices);
+    }
+  }, [preSelectedChoices]);
+
+  /**
    * Definition of ChoiceItem properties
    */
   interface ChoiceItemProps {
@@ -422,7 +429,12 @@ export const SearchPanel = (props: SearchPanelProps) => {
   useKeypress("Enter", handlePressOutside);
 
   return (
-    <div>
+    <div
+      // Percentage width can work here,
+      // if corresponding width on resultList should be 100%
+      // Also, need to calculate minimum percentage
+      style={{ width: actualWidth ? `${actualWidth}px` : "" }}
+    >
       <form
         className={`
           ${className}
@@ -441,7 +453,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
             ${small ? styles.small : ""}
             ${shadow ? styles.searchContainerShadow : ""}
           `}
-          style={{ width: actualWidth ? `${actualWidth}px` : "" }}
         >
           <div className={styles.flexContainer}>
             <div className={styles.searchIconContainer}>
@@ -497,7 +508,8 @@ export const SearchPanel = (props: SearchPanelProps) => {
             className={styles.resultContainer}
             style={{ width: `${actualWidth}px` || "", position: (width && float) ? "absolute" : "inherit" }}
           >
-            <div className={`
+            <div
+              className={`
                 ${styles.resultSeperatorContainer}
                 ${shadow ? styles.resultSeperatorContainerShadow : ""}
               `}

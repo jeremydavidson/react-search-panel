@@ -11,6 +11,8 @@
 }
 
 .chipLabel {
+  color: #444;
+  font: 14px arial, sans-serif;
   margin-right: 5px;
 }
 

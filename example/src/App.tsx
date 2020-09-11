@@ -163,7 +163,6 @@ const App = () => {
         <SearchPanel
           chips
           choices={choices}
-          float
           isLoading={isLoading}
           maximumHeight={150}
           onChange={handleSearchChange}
@@ -174,6 +173,7 @@ const App = () => {
           shadow
           value={input}
           variant={variant}
+          width={400}
         />
       </div>
       {/* <p style={styles.selected}>

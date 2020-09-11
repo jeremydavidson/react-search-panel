@@ -5,11 +5,11 @@ export default {
   title: "SearchPanel",
 };
 
-const styles = {
-  constrained: {
-    width: "300px",
-  }
-};
+// const styles = {
+//   constrained: {
+//     width: "300px",
+//   }
+// };
 
 const choices = [
   { key: "choice1", description: "A choice" },
@@ -43,45 +43,30 @@ export const Default = () => {
   );
 };
 
+export const Small = () => {
+  const [input, setInput] = useState("");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      placeholder="Search"
+      small
+      value={input}
+      width={300}
+    />
+
+  );
+};
+
 export const Shadow = () => {
   const [input, setInput] = useState("");
 
   return (
     <SearchPanel
       choices={choices}
-      onChange={event => setInput(event.target.value)}
-      onSelectionChange={() => {}}
-      placeholder="Search"
-      shadow
-      value={input}
-    />
-  );
-};
-
-export const SingleSelect = () => {
-  const [input, setInput] = useState("");
-
-  return (
-    <SearchPanel
-      choices={choices}
-      variant={SearchPanelVariant.radio}
-      onChange={event => setInput(event.target.value)}
-      onSelectionChange={() => {}}
-      placeholder="Search"
-      shadow
-      value={input}
-    />
-  );
-};
-
-export const SingleNoneOption = () => {
-  const [input, setInput] = useState("");
-
-  return (
-    <SearchPanel
-      choices={choices}
-      variant={SearchPanelVariant.radio}
-      noChoiceItem={noChoiceItem}
       onChange={event => setInput(event.target.value)}
       onSelectionChange={() => {}}
       placeholder="Search"
@@ -143,160 +128,24 @@ export const SmallWithMultiSelect = () => {
   );
 };
 
-export const SmallConstrained = () => {
-  const [input, setInput] = useState("");
-
-  return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        choices={choices}
-        variant={SearchPanelVariant.checkbox}
-        onChange={event => setInput(event.target.value)}
-        onSelectionChange={() => {}}
-        noChoiceItem={noChoiceItem}
-        placeholder="Search"
-        small
-        value={input}
-      />
-    </div>
-  );
-};
-
-export const LinkVariant = () => {
-  const [input, setInput] = useState("");
-
-  return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        choices={choices}
-        variant={SearchPanelVariant.link}
-        onChange={event => setInput(event.target.value)}
-        onSelectionChange={() => {}}
-        placeholder="Search"
-        shadow
-        value={input}
-      />
-    </div>
-  );
-};
-
-export const LinkVariantSmall = () => {
-  const [input, setInput] = useState("");
-
-  return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        choices={choices}
-        variant={SearchPanelVariant.link}
-        onChange={event => setInput(event.target.value)}
-        onSelectionChange={() => {}}
-        placeholder="Search"
-        small
-        value={input}
-      />
-    </div>
-  );
-};
-
-export const FloatingResults = () => {
-  const [input, setInput] = useState("");
-
-  return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        choices={choices}
-        float
-        maximumHeight={100}
-        variant={SearchPanelVariant.link}
-        onChange={event => setInput(event.target.value)}
-        onSelectionChange={() => {}}
-        placeholder="Search"
-        shadow
-        value={input}
-        width={350}
-      />
-    </div>
-  );
-};
-
-export const LoadingIndicator = () => {
-  const [input, setInput] = useState("");
-
-  return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        choices={choices}
-        isLoading
-        variant={SearchPanelVariant.link}
-        onChange={event => setInput(event.target.value)}
-        onSelectionChange={() => {}}
-        placeholder="Search"
-        shadow
-        value={input}
-      />
-    </div>
-  );
-};
-
-export const ClearButton = () => {
-  const [input, setInput] = useState("Default input");
-
-  return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        choices={choices}
-        isLoading
-        variant={SearchPanelVariant.link}
-        onChange={event => setInput(event.target.value)}
-        onClear={() => setInput("")}
-        onSelectionChange={() => {}}
-        placeholder="Search"
-        shadow
-        value={input}
-      />
-    </div>
-  );
-};
-
-export const ClearButtonSmall = () => {
-  const [input, setInput] = useState("Default input");
-
-  return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        choices={choices}
-        isLoading
-        variant={SearchPanelVariant.link}
-        onChange={event => setInput(event.target.value)}
-        onClear={() => setInput("")}
-        onSelectionChange={() => {}}
-        placeholder="Search"
-        shadow
-        small
-        value={input}
-      />
-    </div>
-  );
-};
-
 export const PreselectedChoices = () => {
   const [input, setInput] = useState("");
   const [selectedChoices, setSelectedChoices] = useState(choices);
   return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        chips
-        choices={choices}
-        variant={SearchPanelVariant.checkbox}
-        onChange={event => setInput(event.target.value)}
-        onClear={() => setInput("")}
-        onSelectionChange={setSelectedChoices}
-        placeholder="Search"
-        preSelectedChoices={selectedChoices}
-        shadow
-        value={input}
-      />
-    </div>
+
+    <SearchPanel
+      chips
+      choices={choices}
+      variant={SearchPanelVariant.checkbox}
+      onChange={event => setInput(event.target.value)}
+      onClear={() => setInput("")}
+      onSelectionChange={setSelectedChoices}
+      placeholder="Search"
+      preSelectedChoices={selectedChoices}
+      shadow
+      value={input}
+    />
+
   );
 };
 
@@ -304,23 +153,214 @@ export const PreselectedSmall = () => {
   const [input, setInput] = useState("");
   const [selectedChoices, setSelectedChoices] = useState(choices);
   return (
-    <div style={styles.constrained}>
-      <SearchPanel
-        chips
-        float
-        height={120}
-        choices={choices}
-        variant={SearchPanelVariant.checkbox}
-        onChange={event => setInput(event.target.value)}
-        onClear={() => setInput("")}
-        onSelectionChange={setSelectedChoices}
-        placeholder="Search"
-        preSelectedChoices={selectedChoices}
-        shadow
-        small
-        value={input}
-        width={226}
-      />
-    </div>
+
+    <SearchPanel
+      chips
+      height={120}
+      choices={choices}
+      variant={SearchPanelVariant.checkbox}
+      onChange={event => setInput(event.target.value)}
+      onClear={() => setInput("")}
+      onSelectionChange={setSelectedChoices}
+      placeholder="Search"
+      preSelectedChoices={selectedChoices}
+      small
+      value={input}
+      width={226}
+    />
+
+  );
+};
+
+export const SingleSelectNone = () => {
+  const [input, setInput] = useState("");
+
+  return (
+    <SearchPanel
+      choices={choices}
+      variant={SearchPanelVariant.radio}
+      noChoiceItem={noChoiceItem}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      placeholder="Search"
+      shadow
+      value={input}
+    />
+  );
+};
+
+export const DefaultWithWidth = () => {
+  const [input, setInput] = useState("");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      variant={SearchPanelVariant.checkbox}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      noChoiceItem={noChoiceItem}
+      placeholder="Search"
+      value={input}
+      width={300}
+    />
+
+  );
+};
+
+export const SmallWithWidth = () => {
+  const [input, setInput] = useState("");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      variant={SearchPanelVariant.checkbox}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      noChoiceItem={noChoiceItem}
+      placeholder="Search"
+      small
+      value={input}
+      width={300}
+    />
+
+  );
+};
+
+export const ShadowWithWidth = () => {
+  const [input, setInput] = useState("");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      variant={SearchPanelVariant.checkbox}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      noChoiceItem={noChoiceItem}
+      placeholder="Search"
+      shadow
+      value={input}
+      width={300}
+    />
+
+  );
+};
+
+export const LinkVariant = () => {
+  const [input, setInput] = useState("");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      variant={SearchPanelVariant.link}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      placeholder="Search"
+      shadow
+      value={input}
+    />
+
+  );
+};
+
+export const LinkVariantSmall = () => {
+  const [input, setInput] = useState("");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      variant={SearchPanelVariant.link}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      placeholder="Search"
+      small
+      value={input}
+    />
+
+  );
+};
+
+export const FloatingResults = () => {
+  const [input, setInput] = useState("");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      float
+      maximumHeight={100}
+      variant={SearchPanelVariant.link}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      placeholder="Search"
+      shadow
+      value={input}
+      width={350}
+    />
+
+  );
+};
+
+export const LoadingIndicator = () => {
+  const [input, setInput] = useState("");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      isLoading
+      variant={SearchPanelVariant.link}
+      onChange={event => setInput(event.target.value)}
+      onSelectionChange={() => {}}
+      placeholder="Search"
+      shadow
+      value={input}
+    />
+
+  );
+};
+
+export const ClearButton = () => {
+  const [input, setInput] = useState("Default input");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      isLoading
+      variant={SearchPanelVariant.link}
+      onChange={event => setInput(event.target.value)}
+      onClear={() => setInput("")}
+      onSelectionChange={() => {}}
+      placeholder="Search"
+      shadow
+      value={input}
+    />
+
+  );
+};
+
+export const ClearButtonSmall = () => {
+  const [input, setInput] = useState("Default input");
+
+  return (
+
+    <SearchPanel
+      choices={choices}
+      isLoading
+      variant={SearchPanelVariant.link}
+      onChange={event => setInput(event.target.value)}
+      onClear={() => setInput("")}
+      onSelectionChange={() => {}}
+      placeholder="Search"
+      shadow
+      small
+      value={input}
+    />
+
   );
 };

@@ -92,7 +92,6 @@
   outline: none;
   display: flex;
   flex: 100%;
-  -webkit-tap-highlight-color: transparent;
   margin-top: -36px;
   height: 34px;
 }

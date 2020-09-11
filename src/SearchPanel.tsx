@@ -131,9 +131,9 @@ interface SearchPanelProps {
   variant?: SearchPanelVariant,
 
   /**
-   * Width in pixels.
+   * Width in units or percentage.
    */
-  width?: number,
+  width?: string,
 }
 
 /**
@@ -168,19 +168,18 @@ export const SearchPanel = (props: SearchPanelProps) => {
   const resultContainerId: string = "ResultContainer";
   const searchField = React.useRef<HTMLInputElement>(null);
 
+  const minimumWidth = "254px";
+
   if (float && !width) {
     console.log("Property 'float' only works when 'width' is also set.");
   }
-  let actualWidth;
-  if (width) {
-    if (width < 254) {
-      console.log("Minimum width is 254");
-      actualWidth = 254;
-    }
-    else {
-      actualWidth = width;
-    }
-  }
+  const actualWidth = width;
+  // let resultWidth = width;
+  // if (width) {
+  //   if (width.indexOf("%") > -1) {
+  //     resultWidth = "100%";
+  //   }
+  // }
   if (onClear && !clearLabel) {
     console.log("Developer should provide a value for clearLabel.");
   }
@@ -433,7 +432,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
       // Percentage width can work here,
       // if corresponding width on resultList should be 100%
       // Also, need to calculate minimum percentage
-      style={{ width: actualWidth ? `${actualWidth}px` : "" }}
+      style={{ minWidth: minimumWidth, width: actualWidth ? `${actualWidth}` : "" }}
     >
       <form
         className={`
@@ -506,7 +505,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
           <div
             id={resultContainerId}
             className={styles.resultContainer}
-            style={{ width: `${actualWidth}px` || "", position: (width && float) ? "absolute" : "inherit" }}
+            style={{ minWidth: minimumWidth, width: `${actualWidth}` || "", position: (width && float) ? "absolute" : "inherit" }}
           >
             <div
               className={`

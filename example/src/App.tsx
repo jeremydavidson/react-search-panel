@@ -171,9 +171,10 @@ const App = () => {
           placeholder="Search TV shows"
           preSelectedChoices={selectedChoices}
           shadow
+          float
           value={input}
           variant={variant}
-          width={400}
+          width="80%"
         />
       </div>
       {/* <p style={styles.selected}>

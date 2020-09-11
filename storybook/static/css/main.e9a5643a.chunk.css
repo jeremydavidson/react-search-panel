@@ -1,8 +1,7 @@
 .styles_topContainer__ze2Q1 {
   font: 16px arial, sans-serif;
-  color: #444;
-  fill: #999;
 }
+
 .styles_topContainer__ze2Q1.styles_small__3T3I_ {
   font: 14px arial, sans-serif;
 }
@@ -73,7 +72,7 @@
   color: #9aa0a6;
   height: 32px;
   width: 32px;
-  border: 0;
+  border: none;
   background: transparent;
 }
 
@@ -93,7 +92,6 @@
   outline: none;
   display: flex;
   flex: 100% 1;
-  -webkit-tap-highlight-color: transparent;
   margin-top: -36px;
   height: 34px;
 }
@@ -152,7 +150,7 @@
 
 .styles_resultList__nsgTr {
   flex: auto;
-  padding-left: 10px;
+  padding-left: 1rem;
   margin-top: 4px;
 }
 
@@ -214,9 +212,6 @@
 }
 
 .Chip_chip__3Mvv4 {
-  color: #555555;
-  font-weight: bold;
-  font-size: 13.3px;
   display: inline-block;
   padding: 0 15px;
   height: 30px;
@@ -229,6 +224,8 @@
 }
 
 .Chip_chipLabel__umP2T {
+  color: #444;
+  font: 14px arial, sans-serif;
   margin-right: 5px;
 }
 
@@ -248,4 +245,4 @@
 }
 
 
-/*# sourceMappingURL=main.305e86e2.chunk.css.map*/
+/*# sourceMappingURL=main.e9a5643a.chunk.css.map*/

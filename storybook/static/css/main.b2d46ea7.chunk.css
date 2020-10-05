@@ -239,6 +239,7 @@
 .Chip_chipDeleteContainer__1txME {
   padding: 2px;
   border: 0;
+  background-color: transparent;
 }
 
 .Chip_chipClose__2xwZR:hover, .Chip_chipDeleteContainer__1txME:focus .Chip_chipClose__2xwZR {
@@ -246,4 +247,4 @@
 }
 
 
-/*# sourceMappingURL=main.6c5b62c5.chunk.css.map*/
+/*# sourceMappingURL=main.b2d46ea7.chunk.css.map*/

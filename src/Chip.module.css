@@ -25,6 +25,7 @@
 .chipDeleteContainer {
   padding: 2px;
   border: 0;
+  background-color: transparent;
 }
 
 .chipClose:hover, .chipDeleteContainer:focus .chipClose {

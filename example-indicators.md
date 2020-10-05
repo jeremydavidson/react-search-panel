@@ -1,0 +1,5 @@
+[![NPM](https://img.shields.io/npm/v/react-radio-group-context.svg)](https://www.npmjs.com/package/react-radio-group-context)
+[![Code style: Prettier](https://img.shields.io/badge/Code_style-Prettier-e31f2e.svg)](https://github.com/prettier/prettier)
+[![Circle CI status](https://circleci.com/gh/EmaSuriano/react-radio-group-context.png?circle-token=:circle-token)](https://circleci.com/gh/EmaSuriano/react-radio-group-context/tree/master)
+[![Storybook](https://img.shields.io/badge/%F0%9F%93%93-Storybook-ff69b4.svg)](https://emasuriano.github.io/react-radio-group-context/)
+[![eslint](https://img.shields.io/badge/eslint-enabled-green.svg)](https://eslint.org/)

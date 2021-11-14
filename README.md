@@ -48,6 +48,7 @@ const App = () => {
       maximumHeight={250}
       onChange={event => setInput((event as React.ChangeEvent<HTMLInputElement>).target.value)}
       onClear={() => setInput("")}
+      onFocus={event => handleFocus((event as React.FocusEvent<HTMLInputElement>).target.value)}
       onSelectionChange={setSelectedChoices}
       noChoiceItem={noChoiceItem}
       placeholder="Search"

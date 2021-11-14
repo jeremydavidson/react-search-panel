@@ -96,6 +96,11 @@ interface SearchPanelProps {
   onClear?: (event: React.MouseEvent) => void,
 
   /**
+   * Function that will handle event when search input is focused.
+   */
+  onFocus?: (event: React.FocusEvent) => void,
+
+  /**
    * Function that will handle event when selected items change.
    */
   onSelectionChange: (selectedChoices: Array<SearchPanelChoice>) => void,
@@ -152,6 +157,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
     noChoiceItem,
     onChange,
     onClear,
+    onFocus,
     onSelectionChange,
     placeholder,
     preSelectedChoices,
@@ -331,6 +337,14 @@ export const SearchPanel = (props: SearchPanelProps) => {
   };
 
   /**
+   * Handle focus event
+   * @param event
+   */
+  const handleFocusEvent = async (event: React.FocusEvent) => {
+    onFocus && await onFocus(event);
+  };
+
+  /**
    * Handle link variant click
    * @param event
    * @param choice
@@ -474,6 +488,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
                 aria-expanded={isExpanded}
                 placeholder={placeholder}
                 onChange={handleSearchChange}
+                onFocus={handleFocusEvent}
                 value={value}
               />
             </div>

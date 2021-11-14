@@ -5,6 +5,7 @@ import { SearchPanel, SearchPanelChoice, SearchPanelVariant } from ".";
 
 const mockHandleChange = jest.fn();
 const mockHandleSelectionChange = jest.fn();
+const mockHandleFocus = jest.fn();
 const mockOnClear = jest.fn();
 
 const mockChoice1 = { key: "choice1", description: "Mock choice 1" };
@@ -22,6 +23,7 @@ describe("SearchPanel", () => {
         clearLabel="Mock clear"
         onChange={mockHandleChange}
         onClear={mockOnClear}
+        onFocus={mockHandleFocus}
         onSelectionChange={mockHandleSelectionChange}
         placeholder="Search"
         value="mock default"
@@ -46,6 +48,12 @@ describe("SearchPanel", () => {
     const clearButton = await screen.findByTitle("Mock clear");
     await fireEvent.click(clearButton);
     expect(mockOnClear).toHaveBeenCalled();
+  });
+
+  it("should call focus handler when it is focused", async() => {
+    const component = await screen.findByPlaceholderText("Search");
+    await fireEvent.focus(component);
+    expect(mockHandleFocus).toHaveBeenCalled();
   });
 });
 

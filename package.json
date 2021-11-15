@@ -1,6 +1,6 @@
 {
   "name": "react-search-panel",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "An expandable search panel React component where results can be displayed as links, checkboxes, or radio buttons, with optional chips.",
   "author": "Jeremy Davidson",
   "license": "MIT",

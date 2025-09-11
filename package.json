@@ -111,7 +111,7 @@
     "react-cool-onclickoutside": "^1.5.5",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^5.0.1",
     "react-use-keypress": "^1.0.1",
     "rollup": "^2.26.10",
     "rollup-plugin-postcss": "^3.1.8",

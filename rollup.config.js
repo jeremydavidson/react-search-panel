@@ -16,6 +16,11 @@ const plugins = [
   }),
   typescript({
     typescript: require("typescript"),
+    tsconfigOverride: {
+      compilerOptions: {
+        skipLibCheck: true,
+      },
+    },
   }),
 ];
 

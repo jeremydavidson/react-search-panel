@@ -1,8 +1,11 @@
+import { createRequire } from "module";
 import typescript from "rollup-plugin-typescript2";
-import pkg from "./package.json";
 import postcss from "rollup-plugin-postcss";
 import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
+
+const require = createRequire(import.meta.url);
+const pkg = require("./package.json");
 
 const input = "src/index.tsx";
 

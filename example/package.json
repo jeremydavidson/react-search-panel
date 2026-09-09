@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "vite build && rm -rf ../docs/demo && mv dist ../docs/demo",
     "preview": "vite preview"
@@ -16,6 +17,7 @@
     "@types/node": "file:../node_modules/@types/node",
     "@types/react": "file:../node_modules/@types/react",
     "@types/react-dom": "file:../node_modules/@types/react-dom",
+    "axios": "file:../node_modules/axios",
     "msw": "file:../node_modules/msw",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",

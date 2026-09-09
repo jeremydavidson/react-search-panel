@@ -502,6 +502,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
             {onClear && value && (
               <div className={styles.clearContainer}>
                 <button
+                  type="button"
                   onClick={onClear}
                   title={clearLabel}
                   className={`${styles.clearButton} ${small ? styles.small : ""}`}

@@ -51,7 +51,7 @@
   "scripts": {
     "build": "vite build",
     "build-storybook": "cross-env STORYBOOK_DISABLE_TELEMETRY=1 storybook build -o docs/storybook",
-    "deploy": "gh-pages -d docs -t true",
+    "deploy": "gh-pages -d docs -t --nojekyll",
     "doc": "typedoc --options typedoc.json",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

@@ -212,7 +212,7 @@ export const LoadingIndicator: Story = {
 export const ClearButton: Story = {
   args: {
     clearLabel: "Clear search",
-    isLoading: true,
+    isLoading: false,
     shadow: true,
     variant: SearchPanelVariant.link,
   },
@@ -221,15 +221,20 @@ export const ClearButton: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
+    const input = canvas.getByPlaceholderText("Search")
+    await expect(input).toHaveValue("Default input")
+    await expect(canvas.getByTitle("Clear search")).toBeInTheDocument()
     await userEvent.click(canvas.getByTitle("Clear search"))
-    await expect(canvas.getByPlaceholderText("Search")).toHaveValue("")
+    await expect(input).toHaveValue("")
+    await userEvent.type(input, "Default input")
+    await expect(canvas.getByTitle("Clear search")).toBeInTheDocument()
   },
 }
 
 export const ClearButtonSmall: Story = {
   args: {
     clearLabel: "Clear search",
-    isLoading: true,
+    isLoading: false,
     shadow: true,
     small: true,
     variant: SearchPanelVariant.link,

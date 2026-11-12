@@ -20,9 +20,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - run: npm ci
+      - run: npm install --prefix example --ignore-scripts --no-audit --no-fund
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run test
       - run: npm run build
+      - run: npm run build:example
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e

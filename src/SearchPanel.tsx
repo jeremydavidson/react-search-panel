@@ -347,7 +347,6 @@ export const SearchPanel = (props: SearchPanelProps) => {
               </span>
             </div>
             <div className={styles.inputContainer}>
-              <div className={styles.inputFieldContainer} />
               <input
                 ref={searchField}
                 className={`${styles.inputField} ${small ? styles.small : ""}`}

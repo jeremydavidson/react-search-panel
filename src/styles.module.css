@@ -35,50 +35,64 @@
 .flexContainer {
   flex: 1;
   display: flex;
-  padding: 5px 4px 0 16px;
-  padding-left: 14px;
+  align-items: center;
+  height: 100%;
+  padding: 0 8px 0 14px;
+  box-sizing: border-box;
 }
 
 .searchIconContainer {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   padding-right: 8px;
-  margin-top: -2px;
 }
 
-.spinnerContainer {
+.spinnerContainer,
+.clearContainer {
   display: flex;
   align-items: center;
-  padding-left: 8px;
-  margin-top: 8px;
-  align-self: end;
+  justify-content: center;
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 36px;
+  margin: 0;
+  padding: 0;
 }
 
-.spinnerContainer.small {
-  display: flex;
-  align-items: center;
-  padding-left: 8px;
-  margin-top: 2px;
-  align-self: end;
+.spinnerContainer.small,
+.clearContainer.small {
+  width: 28px;
 }
 
 .searchIcon {
   color: #9aa0a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 20px;
   width: 20px;
+  line-height: 1;
 }
 
 .clearButton {
   color: #9aa0a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 32px;
   width: 32px;
+  margin: 0;
+  padding: 0;
   border: none;
   background: transparent;
+  cursor: pointer;
 }
 
 .clearButton.small {
-  height: 21px;
-  width: 32px;
+  height: 24px;
+  width: 24px;
 }
 
 .inputField {
@@ -90,28 +104,27 @@
   padding: 0;
   word-wrap: break-word;
   outline: none;
-  display: flex;
-  flex: 100%;
-  margin-top: -36px;
+  display: block;
+  width: 100%;
   height: 34px;
+  line-height: 34px;
 }
 
 .inputField.small {
   font: 14px arial, sans-serif;
-  margin-top: -41px;
+  height: 24px;
+  line-height: 24px;
 }
 
 .inputContainer {
   display: flex;
   flex: 1;
-  flex-wrap: wrap;
+  align-items: center;
+  min-width: 0;
 }
 
 .inputFieldContainer {
-  color: transparent;
-  flex: 100%;
-  white-space: pre;
-  height: 34px;
+  display: none;
 }
 
 .inputFieldContainer span {

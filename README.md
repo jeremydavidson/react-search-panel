@@ -113,6 +113,21 @@ npm run test:e2e
 | `npm run storybook` | Component explorer |
 | `npm run typecheck` | TypeScript project check |
 | `npm run lint` | ESLint flat config |
+| `npm run release` | Bump version, commit, tag, push, and `npm publish` |
+| `npm run sync-version` | Bump/sync `package.json` version without releasing |
+
+### Release
+
+Requires a clean git working tree. Defaults to a patch bump:
+
+```bash
+npm run release
+npm run release -- --minor
+npm run release -- --major
+npm run release -- --dry-run
+npm run release -- --no-publish
+npm run release -- --otp 123456
+```
 
 ## License
 

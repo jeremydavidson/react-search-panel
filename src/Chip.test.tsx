@@ -53,4 +53,23 @@ describe("Chip component", () => {
     fireEvent.click(await screen.findByTitle("Mock delete it"))
     expect(mockOnDelete).toHaveBeenCalledTimes(1)
   })
+
+  it("places the delete control on the trailing edge of the chip", () => {
+    const { container } = render(
+      <Chip
+        deleteLabel="Mock delete it"
+        value="Mock value"
+        onDelete={mockOnDelete}
+      />,
+    )
+    const chip = container.firstElementChild as HTMLElement
+    const button = screen.getByTitle("Mock delete it")
+    const chipStyle = getComputedStyle(chip)
+    const buttonStyle = getComputedStyle(button)
+
+    expect(chipStyle.display).toBe("inline-flex")
+    expect(buttonStyle.marginTop).toBe(buttonStyle.marginRight)
+    expect(buttonStyle.marginBottom).toBe(buttonStyle.marginRight)
+    expect(chip.lastElementChild).toBe(button)
+  })
 })

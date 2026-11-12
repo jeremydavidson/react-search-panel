@@ -72,6 +72,10 @@ export const App = () => {
 - `placeholder`
 - `value`
 
+### Optional chips
+
+Selection chips render **only when** `chips={true}` **and** there is at least one selected choice (`preSelectedChoices` or a user selection). They are off by default, so layout-focused Storybook stories such as Default, Small, and Shadow do not show chips unless you toggle the `chips` control. Checkbox/radio selection stories enable `chips` to demonstrate that UI.
+
 ## Local development
 
 ```bash

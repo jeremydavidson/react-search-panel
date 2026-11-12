@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { type ComponentProps,useState } from "react"
+import { type ComponentProps, useState } from "react"
 import { expect, fn, userEvent, within } from "storybook/test"
 
 import {
@@ -106,6 +106,7 @@ export const MultiSelect: Story = {
 
 export const MultiSelectWithNone: Story = {
   args: {
+    chips: true,
     noChoiceItem,
     shadow: true,
     variant: SearchPanelVariant.checkbox,
@@ -115,6 +116,7 @@ export const MultiSelectWithNone: Story = {
 
 export const SmallWithMultiSelect: Story = {
   args: {
+    chips: true,
     noChoiceItem,
     shadow: true,
     small: true,
@@ -149,6 +151,7 @@ export const PreselectedSmall: Story = {
 
 export const SingleSelectNone: Story = {
   args: {
+    chips: true,
     noChoiceItem,
     shadow: true,
     variant: SearchPanelVariant.radio,
@@ -158,6 +161,7 @@ export const SingleSelectNone: Story = {
 
 export const DefaultWithWidth: Story = {
   args: {
+    chips: true,
     noChoiceItem,
     variant: SearchPanelVariant.checkbox,
     width: 300,

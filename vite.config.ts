@@ -4,17 +4,23 @@ import react from "@vitejs/plugin-react"
 import dts from "vite-plugin-dts"
 import { defineConfig } from "vitest/config"
 
+const isStorybook = Boolean(process.env.STORYBOOK)
+
 export default defineConfig({
   plugins: [
     react(),
-    dts({
-      include: ["src"],
-      exclude: [
-        "src/**/*.{test,spec}.{ts,tsx}",
-        "src/**/*.stories.{ts,tsx}",
-      ],
-      tsconfigPath: "./tsconfig.json",
-    }),
+    ...(!isStorybook
+      ? [
+        dts({
+          include: ["src"],
+          exclude: [
+            "src/**/*.{test,spec}.{ts,tsx}",
+            "src/**/*.stories.{ts,tsx}",
+          ],
+          tsconfigPath: "./tsconfig.json",
+        }),
+      ]
+      : []),
   ],
   build: {
     lib: {

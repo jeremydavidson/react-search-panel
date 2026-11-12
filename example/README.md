@@ -1,7 +1,15 @@
-# React Search Panel Example
+# react-search-panel example
 
-An example using React Search Panel.
+Vite + React demo that searches TV shows via the public TVMAZE API.
 
-## Install
+```bash
+# from repo root
+npm install
+npm run build
 
-- `npm install`
+cd example
+npm install
+npm start
+```
+
+Open http://localhost:3000.

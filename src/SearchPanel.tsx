@@ -1,25 +1,41 @@
-import React, { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
-import styles from "./styles.module.css";
-import useOnclickOutside from "react-cool-onclickoutside";
-import useKeypress from "react-use-keypress";
-import Chip from "./Chip";
+import { faSearch, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type MouseEvent,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react"
+import useOnclickOutside from "react-cool-onclickoutside"
+import useKeypress from "react-use-keypress"
+
+import { Chip } from "./Chip"
+import { ChoiceItem } from "./ChoiceItem"
+import {
+  addSelectedChoice,
+  getChoiceIndex,
+  removeSelectedChoice,
+  resolvePanelWidth,
+} from "./searchPanelUtils"
+import styles from "./styles.module.css"
 
 /**
- * Definition of a SearchPanelChoice
+ * Definition of a SearchPanelChoice.
  */
 export interface SearchPanelChoice {
   /**
    * Key for a choice can be any unique string.
    * For link variant, recommend using a url.
    */
-  key: string;
+  key: string
 
   /**
    * The description that will be displayed in search results.
    */
-  description: string;
+  description: string
 }
 
 export enum SearchPanelVariant {
@@ -42,117 +58,115 @@ export enum SearchPanelVariant {
 /**
  * Definition of props for SearchPanel.
  */
-interface SearchPanelProps {
-
+export interface SearchPanelProps {
   /**
    * Display Chips to represent selected choices.
    */
-  chips?: boolean,
+  chips?: boolean
 
   /**
    * An array of choices to be displayed.
    */
-  choices: Array<SearchPanelChoice>,
+  choices: SearchPanelChoice[]
 
   /**
    * Optional class name to be applied to the top level of the component.
    */
-  className?: string,
+  className?: string
 
   /**
    * A label for clear button, should be provided if onClear is provided.
    */
-  clearLabel?: string,
+  clearLabel?: string
 
   /**
    * Result list will float above content. Setting width is required.
    */
-  float?: boolean,
+  float?: boolean
 
   /**
    * Indicate when consumer is loading to display a spinner.
    */
-  isLoading?: boolean,
+  isLoading?: boolean
 
   /**
-   * Optional maximum height of result list in pixels: <SearchPanel maximumHeight={250} />
+   * Optional maximum height of result list in pixels.
    */
-  maximumHeight?: number,
+  maximumHeight?: number
 
   /**
    * Provide a "None" choice item so user can "unselect" a select choice
-   * when variant={SearchPanelVariant.checkbox} or variant={SearchPanelVariant.radio}
+   * when variant is checkbox or radio.
    */
-  noChoiceItem?: SearchPanelChoice,
+  noChoiceItem?: SearchPanelChoice
 
   /**
    * Function that will handle event when search input changes.
    */
-  onChange: (event: React.ChangeEvent) => void,
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void
 
   /**
    * Function that will handle event when user presses clear button.
    */
-  onClear?: (event: React.MouseEvent) => void,
+  onClear?: (event: MouseEvent<HTMLButtonElement>) => void
 
   /**
    * Function that will handle event when search input is focused.
    */
-  onFocus?: (event: React.FocusEvent) => void,
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => void
 
   /**
    * Function that will handle event when selected items change.
    */
-  onSelectionChange: (selectedChoices: Array<SearchPanelChoice>) => void,
+  onSelectionChange: (selectedChoices: SearchPanelChoice[]) => void
 
   /**
    * State of selected choices.
    */
-  preSelectedChoices?: Array<SearchPanelChoice>,
+  preSelectedChoices?: SearchPanelChoice[]
 
   /**
    * Display a shadow on hover and when expanded.
    */
-  shadow?: boolean,
+  shadow?: boolean
 
   /**
    * A smaller variant.
    */
-  small?: boolean,
+  small?: boolean
 
   /**
    * Placeholder label in the search input box.
    */
-  placeholder: string,
+  placeholder: string
 
   /**
    * Value of search input.
    */
-  value: string,
+  value: string
 
   /**
-   * Variants available: checkbox, radio, link (can be used as links by consumer)
+   * Variants available: checkbox, radio, link.
    */
-  variant?: SearchPanelVariant,
+  variant?: SearchPanelVariant
 
   /**
    * Width in pixels.
    */
-  width?: number,
+  width?: number
 }
 
 /**
- * SearchPanel component
- * @param props
+ * Expandable search panel with checkbox, radio, or link result variants.
  */
 export const SearchPanel = (props: SearchPanelProps) => {
   const {
-    chips,
+    chips = false,
     choices,
-    className,
+    className = "",
     clearLabel,
-    float,
-    isLoading,
+    float = false,
+    isLoading = false,
     maximumHeight,
     noChoiceItem,
     onChange,
@@ -161,289 +175,153 @@ export const SearchPanel = (props: SearchPanelProps) => {
     onSelectionChange,
     placeholder,
     preSelectedChoices,
-    shadow,
-    small,
+    shadow = false,
+    small = false,
     value,
-    variant,
-    width
-  } = props;
-  const [isExpanded, setIsExpanded] = React.useState(false);
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [selectedChoices, setSelectedChoices] = React.useState<Array<SearchPanelChoice>>([]);
-  const resultContainerId: string = "ResultContainer";
-  const searchField = React.useRef<HTMLInputElement>(null);
+    variant = SearchPanelVariant.link,
+    width,
+  } = props
 
-  if (float && !width) {
-    console.log("Property 'float' only works when 'width' is also set.");
-  }
-  let actualWidth;
-  if (width) {
-    if (width < 254) {
-      console.log("Minimum width is 254");
-      actualWidth = 254;
-    }
-    else {
-      actualWidth = width;
-    }
-  }
-  if (onClear && !clearLabel) {
-    console.log("Developer should provide a value for clearLabel.");
-  }
-  let isMultiSelect = false;
-  let isText = true;
-  if (SearchPanelVariant.checkbox === variant) {
-    isMultiSelect = true;
-  }
-  if (SearchPanelVariant.link !== variant) {
-    isText = false;
-  }
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+  const [selectedChoices, setSelectedChoices] = useState<SearchPanelChoice[]>(
+    () => preSelectedChoices ?? [],
+  )
+  const resultContainerId = useId()
+  const searchField = useRef<HTMLInputElement>(null)
+  const actualWidth = resolvePanelWidth(width)
+  const isMultiSelect = variant === SearchPanelVariant.checkbox
+  const isText = variant === SearchPanelVariant.link
 
-  /**
-   * Handle event when user presses outside this component.
-   */
+  useEffect(() => {
+    if (float && !width) {
+      console.warn("Property \"float\" only works when \"width\" is also set.")
+    }
+  }, [float, width])
+
+  useEffect(() => {
+    if (width !== undefined && width < 254) {
+      console.warn("Minimum width is 254")
+    }
+  }, [width])
+
+  useEffect(() => {
+    if (onClear && !clearLabel) {
+      console.warn("Developer should provide a value for clearLabel.")
+    }
+  }, [onClear, clearLabel])
+
   const handlePressOutside = () => {
-    if (searchField.current) {
-      searchField.current.blur();
-    }
-    setIsExpanded(false);
-    setIsFocused(false);
-  };
+    searchField.current?.blur()
+    setIsExpanded(false)
+    setIsFocused(false)
+  }
 
-  /**
-   * Handle event when component receives focus.
-   */
   const handleOnFocus = () => {
-    setIsFocused(true);
-    setIsExpanded(true);
-  };
+    setIsFocused(true)
+    setIsExpanded(true)
+  }
 
-  /**
-   * Handle component blur event to find if the newly focused element
-   * is within the component or not. If not, collapse the search bar.
-   * @param event
-   */
-  // const handleOnBlur = (event: React.FormEvent) => {
-  const handleOnBlur = () => {
-    // const currentTarget = event.currentTarget;
+  const handleCheckChanged = (
+    event: ChangeEvent<HTMLInputElement>,
+    selectedChoice: SearchPanelChoice,
+  ) => {
+    const target = event.target
+    let updateChoices = [...selectedChoices]
+    let isNoneSelected = false
 
-    // // Check the newly focused element in the next tick of the event loop
-    // setTimeout(() => {
-    //   // Check if the new activeElement is a child of the original container
-    //   if (!currentTarget.contains(document.activeElement)) {
-    //     // You can invoke a callback or add custom logic here
-    //     setIsExpanded(false);
-    //   }
-    // }, 0);
-  };
-
-  /**
-   * Remove a selected key
-   * @param choice
-   * @param updateChoices
-   */
-  const removeSelectedChoice = (choice: SearchPanelChoice, updateChoices: Array<SearchPanelChoice>) => {
-    const index: number = getIndex(choice, updateChoices);
-    if (index > -1) {
-      updateChoices.splice(index, 1);
-    }
-  };
-
-  const getIndex = (choice: SearchPanelChoice, choices: Array<SearchPanelChoice>) => {
-    let index:number = -1;
-    const mappedKeys = choices.map(eachChoice => {
-      return eachChoice.key;
-    });
-    index = mappedKeys.indexOf(choice.key);
-    return index;
-  };
-
-  /**
-   * Add a selected key, if not multi-select, remove any previous selected key.
-   * @param key
-   * @param updateChoices
-   */
-  const addSelectedChoice = (key: SearchPanelChoice, updateChoices: Array<SearchPanelChoice>) => {
-    if (isMultiSelect) {
-      updateChoices.push(key);
-    }
-    else {
-      updateChoices.splice(0, updateChoices.length);
-      updateChoices.push(key);
-    }
-  };
-
-  /**
-   * Handle when an item is selected.
-   * Handle cases where item is single or multi select.
-   * @param event
-   * @param selectedChoice
-   */
-  const handleCheckChanged = (event: React.ChangeEvent, selectedChoice: SearchPanelChoice) => {
-    const target = event.target as HTMLInputElement;
-    let updateChoices = [...selectedChoices];
-    let isNoneSelected = false;
-
-    // Set selected key if checked, remove it otherwise.
     if (target.checked) {
-      addSelectedChoice(selectedChoice, updateChoices);
+      addSelectedChoice(selectedChoice, updateChoices, isMultiSelect)
     }
     else {
-      removeSelectedChoice(selectedChoice, updateChoices);
+      removeSelectedChoice(selectedChoice, updateChoices)
     }
 
-    // If the "None" option was selected, make it the only selected item.
     if (noChoiceItem) {
       if (selectedChoice.key === noChoiceItem.key && target.checked) {
-        updateChoices = [selectedChoice];
-        // Special case for "None" option, consumer should get an empty array
-        // while the "None" option is checked on screen.
-        isNoneSelected = true;
-      }
-      // If any other item was selected, uncheck the "None" item
-      else {
-        removeSelectedChoice(noChoiceItem, updateChoices);
-      }
-    }
-
-    // Set state
-    setSelectedChoices(updateChoices);
-
-    // Notify the consumer of the currently selected choices
-    if (isNoneSelected) {
-      onSelectionChange([]);
-    }
-    else {
-      onSelectionChange(updateChoices);
-    }
-  };
-
-  /**
-   * Handle removing a selected key
-   * @param choice
-   */
-  const handleRemoveSelectedChoice = (choice: SearchPanelChoice) => {
-    const updateChoices = [...selectedChoices];
-    removeSelectedChoice(choice, updateChoices);
-    setSelectedChoices(updateChoices);
-    onSelectionChange(updateChoices);
-  };
-
-  /**
-   * Handle changing search input
-   * @param event
-   */
-  const handleSearchChange = async (event: React.ChangeEvent) => {
-    await onChange(event);
-  };
-
-  /**
-   * Handle focus event
-   * @param event
-   */
-  const handleFocusEvent = async (event: React.FocusEvent) => {
-    onFocus && await onFocus(event);
-  };
-
-  /**
-   * Handle link variant click
-   * @param event
-   * @param choice
-   */
-  const handleLinkPress = (event: React.MouseEvent<HTMLAnchorElement>, choice: SearchPanelChoice) => {
-    event.preventDefault();
-    const selectedChoices = [choice];
-    setSelected(selectedChoices);
-    setIsExpanded(false);
-  };
-
-  /**
-   * Set selected choices and notify consumer of the change.
-   */
-  const setSelected = (selectedChoices: Array<SearchPanelChoice>) => {
-    setSelectedChoices(selectedChoices);
-    onSelectionChange(selectedChoices);
-  };
-
-  /**
-   * Reset expanded state when choices change
-   */
-  useEffect(() => {
-    if (isFocused) {
-      if (choices.length) {
-        setIsExpanded(true);
+        updateChoices = [selectedChoice]
+        isNoneSelected = true
       }
       else {
-        setIsExpanded(false);
+        removeSelectedChoice(noChoiceItem, updateChoices)
       }
     }
-  }, [choices]);
 
-  /**
-   * Update selected choices
-   * @param {SearchPanelProps} props
-   * @returns
-   */
-  useEffect(() => {
-    if (preSelectedChoices) {
-      setSelectedChoices(preSelectedChoices);
-    }
-  }, [preSelectedChoices]);
-
-  /**
-   * Definition of ChoiceItem properties
-   */
-  interface ChoiceItemProps {
-    choice: SearchPanelChoice,
+    setSelectedChoices(updateChoices)
+    onSelectionChange(isNoneSelected ? [] : updateChoices)
   }
 
-  /**
-   * Definition of ChoiceItem, radio or checkbox input.
-   * @param param0
-   */
-  const ChoiceItem = ({ choice }: ChoiceItemProps) => {
-    let inputType: string = "radio";
-    if (isMultiSelect) {
-      inputType = "checkbox";
-    }
-    return (
-      <div className={`${styles.resultItem} ${small ? styles.small : ""}`}>
-        {isText && (
-          <a
-            href=""
-            className={styles.linkChoice}
-            onClick={(event) => handleLinkPress(event, choice)}
-          >
-            {choice.description}
-          </a>
-        )}
-        {!isText && (
-          <label className={styles.resultItemLabel}>
-            <input
-              type={inputType}
-              onChange={(event) => handleCheckChanged(event, choice)}
-              value={choice.key}
-              checked={getIndex(choice, selectedChoices) > -1}
-              tabIndex={0}
-              className={styles.resultItemControl}
-            />
-            {choice.description}
-          </label>
-        )}
-      </div>
-    );
-  };
+  const handleRemoveSelectedChoice = (choice: SearchPanelChoice) => {
+    const updateChoices = [...selectedChoices]
+    removeSelectedChoice(choice, updateChoices)
+    setSelectedChoices(updateChoices)
+    onSelectionChange(updateChoices)
+  }
 
-  const clickOutsideRef = useOnclickOutside(handlePressOutside);
-  useKeypress("Escape", handlePressOutside);
-  useKeypress("Enter", handlePressOutside);
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange(event)
+  }
+
+  const handleFocusEvent = (event: FocusEvent<HTMLInputElement>) => {
+    onFocus?.(event)
+  }
+
+  const setSelected = (nextSelectedChoices: SearchPanelChoice[]) => {
+    setSelectedChoices(nextSelectedChoices)
+    onSelectionChange(nextSelectedChoices)
+  }
+
+  const handleLinkPress = (
+    event: MouseEvent<HTMLAnchorElement>,
+    choice: SearchPanelChoice,
+  ) => {
+    event.preventDefault()
+    setSelected([choice])
+    setIsExpanded(false)
+  }
+
+  useEffect(() => {
+    let cancelled = false
+
+    queueMicrotask(() => {
+      if (cancelled || !isFocused) {
+        return
+      }
+
+      setIsExpanded(choices.length > 0)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [choices, isFocused])
+
+  useEffect(() => {
+    if (!preSelectedChoices) {
+      return
+    }
+
+    let cancelled = false
+
+    queueMicrotask(() => {
+      if (!cancelled) {
+        setSelectedChoices(preSelectedChoices)
+      }
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [preSelectedChoices])
+
+  const clickOutsideRef = useOnclickOutside(handlePressOutside)
+  useKeypress("Escape", handlePressOutside)
+  useKeypress("Enter", handlePressOutside)
+
+  const showResults = isExpanded && choices.length > 0
 
   return (
-    <div
-      // Percentage width can work here,
-      // if corresponding width on resultList should be 100%
-      // Also, need to calculate minimum percentage
-      style={{ width: actualWidth ? `${actualWidth}px` : "" }}
-    >
+    <div style={{ width: actualWidth ? `${actualWidth}px` : undefined }}>
       <form
         className={`
           ${className}
@@ -452,13 +330,12 @@ export const SearchPanel = (props: SearchPanelProps) => {
         `}
         ref={clickOutsideRef}
         onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
       >
         <div
           className={`
             ${styles.searchContainer}
-            ${isExpanded && (choices.length > 0) ? styles.searchContainerExpanded : ""}
-            ${isExpanded && shadow ? styles.searchContainerExpandedShadow : ""}
+            ${showResults ? styles.searchContainerExpanded : ""}
+            ${showResults && shadow ? styles.searchContainerExpandedShadow : ""}
             ${small ? styles.small : ""}
             ${shadow ? styles.searchContainerShadow : ""}
           `}
@@ -476,30 +353,30 @@ export const SearchPanel = (props: SearchPanelProps) => {
                 className={`${styles.inputField} ${small ? styles.small : ""}`}
                 type="text"
                 aria-autocomplete="both"
-                aria-haspopup="false"
+                aria-haspopup="listbox"
                 autoCapitalize="off"
                 autoComplete="off"
                 autoCorrect="off"
                 role="combobox"
-                spellCheck="false"
+                spellCheck={false}
                 title={placeholder}
                 aria-label={placeholder}
                 aria-controls={resultContainerId}
-                aria-expanded={isExpanded}
+                aria-expanded={showResults}
                 placeholder={placeholder}
                 onChange={handleSearchChange}
                 onFocus={handleFocusEvent}
                 value={value}
               />
             </div>
-            {isLoading && (
+            {isLoading ? (
               <div className={`${styles.spinnerContainer} ${small ? styles.small : ""}`}>
-                <span className={styles.searchIcon}>
+                <span className={styles.searchIcon} aria-label="Loading">
                   <FontAwesomeIcon icon={faSpinner} spin />
                 </span>
               </div>
-            )}
-            {onClear && value && (
+            ) : null}
+            {onClear && value ? (
               <div className={styles.clearContainer}>
                 <button
                   type="button"
@@ -510,14 +387,17 @@ export const SearchPanel = (props: SearchPanelProps) => {
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
-        {isExpanded && (choices.length > 0) && (
+        {showResults ? (
           <div
             id={resultContainerId}
             className={styles.resultContainer}
-            style={{ width: `${actualWidth}px` || "", position: (width && float) ? "absolute" : "inherit" }}
+            style={{
+              width: actualWidth ? `${actualWidth}px` : undefined,
+              position: width && float ? "absolute" : "inherit",
+            }}
           >
             <div
               className={`
@@ -533,35 +413,51 @@ export const SearchPanel = (props: SearchPanelProps) => {
                 ${shadow ? styles.resultListContainerExpandedShadow : ""}
                 ${small ? styles.small : ""}
               `}
-              style={{ maxHeight: maximumHeight ? `${maximumHeight}px` : "" }}
+              style={{ maxHeight: maximumHeight ? `${maximumHeight}px` : undefined }}
             >
               <ul className={styles.resultList} role="listbox">
-                {noChoiceItem && (
+                {noChoiceItem ? (
                   <li
                     key={noChoiceItem.key}
                     className={styles.resultListItem}
                     role="presentation"
                   >
-                    <ChoiceItem choice={noChoiceItem} />
+                    <ChoiceItem
+                      choice={noChoiceItem}
+                      isSelected={getChoiceIndex(noChoiceItem, selectedChoices) > -1}
+                      isText={isText}
+                      isMultiSelect={isMultiSelect}
+                      small={small}
+                      onCheckChanged={handleCheckChanged}
+                      onLinkPress={handleLinkPress}
+                    />
                   </li>
-                )}
+                ) : null}
                 {choices.map((choice) => (
                   <li
                     key={choice.key}
                     className={styles.resultListItem}
                     role="presentation"
                   >
-                    <ChoiceItem choice={choice} />
+                    <ChoiceItem
+                      choice={choice}
+                      isSelected={getChoiceIndex(choice, selectedChoices) > -1}
+                      isText={isText}
+                      isMultiSelect={isMultiSelect}
+                      small={small}
+                      onCheckChanged={handleCheckChanged}
+                      onLinkPress={handleLinkPress}
+                    />
                   </li>
                 ))}
               </ul>
             </fieldset>
           </div>
-        )}
+        ) : null}
       </form>
-      {chips && (
+      {chips ? (
         <div className={styles.chipContainer}>
-          {selectedChoices.map(choice => (
+          {selectedChoices.map((choice) => (
             <Chip
               deleteLabel={`Delete ${choice.description}`}
               onDelete={() => handleRemoveSelectedChoice(choice)}
@@ -570,7 +466,7 @@ export const SearchPanel = (props: SearchPanelProps) => {
             />
           ))}
         </div>
-      )}
+      ) : null}
     </div>
-  );
-};
+  )
+}

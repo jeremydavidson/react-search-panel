@@ -1,23 +1,16 @@
-/**
- * Default CSS definition for typescript,
- * will be overridden with file-specific definitions by rollup
- */
-declare module "*.css" {
-  const content: { [className: string]: string };
-  export default content;
+declare module "*.module.css" {
+  const classes: { readonly [key: string]: string }
+  export default classes
 }
 
-interface SvgrComponent
-  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
-
-declare module "*.svg" {
-  const svgUrl: string;
-  const svgComponent: SvgrComponent;
-  export default svgUrl;
-  export { svgComponent as ReactComponent };
+declare module "*.css" {
+  const content: string
+  export default content
 }
 
 declare module "react-use-keypress" {
-  function useKeypress(keys: string | string[], callback: () => void): void
-  export = useKeypress
+  export default function useKeypress(
+    keys: string | string[],
+    callback: () => void,
+  ): void
 }

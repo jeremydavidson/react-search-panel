@@ -1,45 +1,48 @@
-import React from "react";
-import styles from "./Chip.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import type { MouseEvent } from "react"
+
+import styles from "./Chip.module.css"
 
 /**
- * Properties for Chip component
+ * Properties for Chip component.
  */
-interface ChipProps {
-
+export interface ChipProps {
   /**
    * Label for tooltip on the delete button.
    */
-  deleteLabel?: string;
+  deleteLabel?: string
 
   /**
    * A handler for when delete button is pressed.
    */
-  onDelete: (event: React.MouseEvent) => void;
+  onDelete: (event: MouseEvent<HTMLButtonElement>) => void
 
   /**
    * Text value to display on Chip.
    */
-  value: string;
+  value: string
 }
 
 /**
- * A Chip component
- * @param props
+ * A removable chip used to represent selected search choices.
  */
-const Chip = (props: ChipProps) => {
-  const { deleteLabel, onDelete, value } = props;
+export const Chip = ({ deleteLabel, onDelete, value }: ChipProps) => {
   return (
     <div className={styles.chip}>
       <span className={styles.chipLabel}>{value}</span>
-      {deleteLabel && (
-        <button onClick={onDelete} title={deleteLabel} className={styles.chipDeleteContainer}>
-          <FontAwesomeIcon icon={faTimes} className={`${styles.chipClose}`} />
+      {deleteLabel ? (
+        <button
+          type="button"
+          onClick={onDelete}
+          title={deleteLabel}
+          className={styles.chipDeleteContainer}
+        >
+          <FontAwesomeIcon icon={faTimes} className={styles.chipClose} />
         </button>
-      )}
+      ) : null}
     </div>
-  );
-};
+  )
+}
 
-export default Chip;
+export default Chip

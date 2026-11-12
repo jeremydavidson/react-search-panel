@@ -3,30 +3,25 @@
   "homepage": ".",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "vite",
     "dev": "vite",
     "build": "vite build && rm -rf ../docs/demo && mv dist ../docs/demo",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "file:../node_modules/@testing-library/jest-dom",
-    "@testing-library/react": "file:../node_modules/@testing-library/react",
-    "@testing-library/user-event": "file:../node_modules/@testing-library/user-event",
-    "@types/jest": "file:../node_modules/@types/jest",
-    "@types/node": "file:../node_modules/@types/node",
-    "@types/react": "file:../node_modules/@types/react",
-    "@types/react-dom": "file:../node_modules/@types/react-dom",
-    "axios": "file:../node_modules/axios",
-    "msw": "file:../node_modules/msw",
-    "react": "file:../node_modules/react",
-    "react-dom": "file:../node_modules/react-dom",
-    "typescript": "file:../node_modules/typescript",
-    "react-search-panel": "file:..",
-    "vite": "file:../node_modules/vite",
-    "@vitejs/plugin-react": "file:../node_modules/@vitejs/plugin-react"
+    "axios": "^1.13.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-search-panel": "file:.."
   },
   "devDependencies": {
-    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.8"
   }
 }

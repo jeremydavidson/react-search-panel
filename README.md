@@ -1,90 +1,115 @@
 # React Search Panel
 
-A react search panel that expands, autocompletes, and support single or multi select.
+An expandable React search panel with autocomplete-style results. Results can render as links, checkboxes, or radio buttons, with optional selection chips.
 
 ## Demo
 
 ![React Search Panel](https://jeremydavidson.github.io/react-search-panel/react-search-panel-demo.gif)
 
-There is a [demonstration of react-search-panel](https://jeremydavidson.github.io/react-search-panel/demo) as coded in the `example` folder.
+- [Live demo](https://jeremydavidson.github.io/react-search-panel/demo) (`example/`)
+- [Storybook](https://jeremydavidson.github.io/react-search-panel/storybook)
+- [API docs](https://jeremydavidson.github.io/react-search-panel/doc)
 
-Many other variants of this component are demonstrated in this [Storybook demonstration](https://jeremydavidson.github.io/react-search-panel/storybook).
+## Requirements
 
-## Documentation
+- Node.js 20+
+- React 18 or 19
 
-Here is [documentation of the component API](https://jeremydavidson.github.io/react-search-panel/doc).
+## Install
 
-## Getting started
-
-### For development
-
-1. `npm install --save-dev react-search-panel`
-
-### Run example locally
-
-1. `git clone https://github.com/jeremydavidson/react-search-panel`
-1. `cd example`
-1. `npm install`
-1. `npm start`
+```bash
+npm install react-search-panel
+```
 
 ## Usage
 
-### Typescript example
-
-This is an example in Typescript with all available props:
-
 ```tsx
-import React from "react";
-import { SearchPanel } from "react-search-panel";
+import { useState } from "react"
+import {
+  SearchPanel,
+  SearchPanelVariant,
+  type SearchPanelChoice,
+} from "react-search-panel"
+import "react-search-panel/style.css"
 
-const App = () => {
-  const [input, setInput] = React.useState("");
-  const [selectedChoices, setSelectedChoices] = useState(choices);
+const choices: SearchPanelChoice[] = [
+  { key: "1", description: "First result" },
+  { key: "2", description: "Second result" },
+]
+
+export const App = () => {
+  const [input, setInput] = useState("")
+  const [selectedChoices, setSelectedChoices] = useState<SearchPanelChoice[]>([])
+
   return (
     <SearchPanel
       chips
       choices={choices}
+      clearLabel="Clear search"
       float
       maximumHeight={250}
-      onChange={event => setInput((event as React.ChangeEvent<HTMLInputElement>).target.value)}
+      noChoiceItem={{ key: "none", description: "None" }}
+      onChange={(event) => setInput(event.target.value)}
       onClear={() => setInput("")}
-      onFocus={event => handleFocus((event as React.FocusEvent<HTMLInputElement>).target.value)}
       onSelectionChange={setSelectedChoices}
-      noChoiceItem={noChoiceItem}
       placeholder="Search"
-      selectedChoices={selectedChoices}
+      preSelectedChoices={selectedChoices}
       shadow
       small
       value={input}
       variant={SearchPanelVariant.checkbox}
       width={300}
     />
-  );
+  )
 }
-export default App;
 ```
 
-### Javascript
+### Required props
 
-This is an example in Javascript with only the required props.
+- `choices`
+- `onChange`
+- `onSelectionChange`
+- `placeholder`
+- `value`
 
-```jsx
-import React from "react";
-import { SearchPanel } from "react-search-panel";
+## Local development
 
-const App = () => {
-  const [input, setInput] = React.useState("");
-  const [selectedChoices, setSelectedChoices] = useState(choices);
-  return (
-    <SearchPanel
-      choices={choices}
-      onChange={event => setInput(event.target.value)}
-      onSelectionChange={setSelectedChoices}
-      placeholder="Search"
-      selectedChoices={selectedChoices}
-      value={input}
-    />
-  );
-}
-export default App;
+```bash
+npm install
+npm run typecheck
+npm run lint
+npm run test
+npm run build
+npm run storybook
 ```
+
+### Example app
+
+```bash
+npm run build
+cd example
+npm install
+npm start
+```
+
+### End-to-end tests
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+## Scripts
+
+| Script | Description |
+| --- | --- |
+| `npm run build` | Build ESM/CJS bundles and type declarations |
+| `npm run test` | Unit tests with Vitest coverage (90%+ gate) |
+| `npm run test:e2e` | Playwright tests against Storybook |
+| `npm run storybook` | Component explorer |
+| `npm run typecheck` | TypeScript project check |
+| `npm run lint` | ESLint flat config |
+
+## License
+
+MIT

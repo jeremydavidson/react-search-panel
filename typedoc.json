@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["src/index.tsx"],
+  "out": "docs/doc",
+  "readme": "typedoc.md",
+  "exclude": ["**/*.{test,stories}.{ts,tsx}"]
+}

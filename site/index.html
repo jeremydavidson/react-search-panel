@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>react-search-panel</title>
+    <meta
+      name="description"
+      content="Expandable TypeScript React search panel with link, radio, and checkbox results plus optional selection chips."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,500;0,9..40,700;1,9..40,500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1a1c1e;
+        --muted: #5c6570;
+        --paper: #f3f0ea;
+        --panel: #ffffff;
+        --line: #d9d3c7;
+        --accent: #0b6e4f;
+        --accent-soft: #d8efe6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        color: var(--ink);
+        font-family: "DM Sans", sans-serif;
+        background:
+          radial-gradient(circle at 12% 18%, #e8f5ef 0%, transparent 42%),
+          radial-gradient(circle at 88% 8%, #efe8dc 0%, transparent 36%),
+          linear-gradient(160deg, #f7f4ee 0%, var(--paper) 55%, #ebe6dc 100%);
+      }
+
+      main {
+        width: min(920px, calc(100% - 2.5rem));
+        margin: 0 auto;
+        padding: 4.5rem 0 3.5rem;
+      }
+
+      .brand {
+        margin: 0 0 1.25rem;
+        color: var(--accent);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: clamp(1.7rem, 4vw, 2.4rem);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+      }
+
+      h1 {
+        margin: 0 0 1rem;
+        max-width: 16ch;
+        font-size: clamp(2.2rem, 6vw, 3.6rem);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 1.05;
+      }
+
+      .lede {
+        margin: 0 0 2rem;
+        max-width: 38rem;
+        color: var(--muted);
+        font-size: 1.125rem;
+        line-height: 1.55;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 2.5rem;
+      }
+
+      a.button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.75rem;
+        padding: 0.7rem 1.15rem;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        color: #fff;
+        background: var(--accent);
+        font: inherit;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      a.button.secondary {
+        color: var(--ink);
+        background: transparent;
+        border-color: var(--line);
+      }
+
+      a.button:hover {
+        filter: brightness(1.05);
+      }
+
+      .preview {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 1.25rem;
+        background: var(--panel);
+        box-shadow: 0 18px 40px rgba(26, 28, 30, 0.08);
+      }
+
+      .preview img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.85rem;
+        margin-top: 1.75rem;
+      }
+
+      .links a {
+        display: block;
+        padding: 1rem 1.1rem;
+        border: 1px solid var(--line);
+        border-radius: 0.9rem;
+        background: color-mix(in srgb, var(--panel) 80%, transparent);
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      .links a span {
+        display: block;
+        margin-top: 0.35rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .links a:hover {
+        background: var(--accent-soft);
+        border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+      }
+
+      footer {
+        margin-top: 2.5rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      footer a {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="brand">react-search-panel</p>
+      <h1>Search that expands into real choices.</h1>
+      <p class="lede">
+        A TypeScript React component for expandable, Google-style search results as
+        links, radios, or multi-select checkboxes—with optional chips, loading and
+        clear states, and React 18/19 support.
+      </p>
+      <div class="actions">
+        <a class="button" href="./demo/">Live demo</a>
+        <a class="button secondary" href="./storybook/">Storybook</a>
+        <a class="button secondary" href="./doc/">API docs</a>
+      </div>
+      <div class="preview">
+        <img
+          src="./react-search-panel-demo.gif"
+          alt="Animated demo of the react-search-panel component expanding search results"
+        />
+      </div>
+      <div class="links">
+        <a href="https://www.npmjs.com/package/react-search-panel">
+          npm
+          <span>Install the package</span>
+        </a>
+        <a href="https://github.com/jeremydavidson/react-search-panel">
+          GitHub
+          <span>Source and issues</span>
+        </a>
+        <a href="./README.md">
+          README
+          <span>Usage and scripts</span>
+        </a>
+      </div>
+      <footer>
+        MIT licensed ·
+        <a href="https://github.com/jeremydavidson/react-search-panel">jeremydavidson/react-search-panel</a>
+      </footer>
+    </main>
+  </body>
+</html>

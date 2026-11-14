@@ -7,7 +7,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build && rm -rf ../docs/demo && mv dist ../docs/demo",
+    "build": "vite build && mkdir -p ../docs && rm -rf ../docs/demo && mv dist ../docs/demo",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
